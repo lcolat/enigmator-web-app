@@ -1,61 +1,96 @@
-  /* The side navigation menu */
+/* The side navigation menu */
 .sidebar {
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: absolute;
+    height: 100%;
+    overflow: auto;
 }
 
-  /* Sidebar */
-.sidebar picture {
-  display: block;
-  padding: 16px;
-  text-decoration: none;
+/* Sidebar */
+.sidebar img {
+    margin-left: 162px;
+    margin-top: 2px;
+    position: relative;
+    display: inherit;
+    padding: 10px;
+    border-radius: 8px 0 0 8px;
 }
 
-  /* Sidebar links */
+.sidebar img:hover {
+    background-color: #b9b5b9;
+}
+
+/* Sidebar List */
+.sidebar ul {
+    margin: 0 0 0 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.sidebar li {
+    background: url("./Icon-Gear.svg") no-repeat left;
+
+    height: 53px;
+    padding-top: 3px;
+    padding-left: 30px;
+}
+
+/* Sidebar links */
 .sidebar a {
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
+    margin: 0;
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+    border-left-width: 10px;
+    border-left-color: #ac60e9;
 }
 
 /* Links on mouse-over */
 .sidebar a:hover {
-  background-color: #b9b5b9;
+    background-color: #b9b5b9;
 }
 
 .sidebar a:focus {
-  color: rgb(144, 47, 233);
-  text-decoration: none;
+    color: rgb(144, 47, 233);
+    text-decoration: none;
 }
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {
-  margin-left: 200px;
-  padding: 1px 16px;
-  height: 1000px;
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
 }
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        float: left;
+    }
+
+    .sidebar img {
+        display: none;
+    }
+
+    div.content {
+        margin-left: 0;
+    }
 }
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
 @media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
 }

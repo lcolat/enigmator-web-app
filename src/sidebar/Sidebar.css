@@ -31,8 +31,9 @@
 }
 
 .sidebar li {
-    background: url("./Icon-Gear.svg") no-repeat left;
-
+    font-family: FontAwesome, monospace;
+    background-image: element("\f2bb");
+    /*background: url("./Icon-Gear.svg") no-repeat left;*/
     height: 53px;
     padding-top: 3px;
     padding-left: 30px;
@@ -45,18 +46,17 @@
     color: black;
     padding: 16px;
     text-decoration: none;
-    border-left-width: 10px;
+    /*border-left-width: 10px;*/
     border-left-color: #ac60e9;
 }
 
 /* Links on mouse-over */
-.sidebar a:hover {
+.sidebar li:hover {
     background-color: #b9b5b9;
 }
 
 .sidebar a:focus {
     color: rgb(144, 47, 233);
-    text-decoration: none;
 }
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */

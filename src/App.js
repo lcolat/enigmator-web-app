@@ -11,7 +11,9 @@ import PrivateRoute from './privateRoute'
 import HomePage from './components/home-page'
 import UserService from './services/userService'
 
+//import import_icon from "./icon/import-font-awesome";
 import Sidebar from "./sidebar/Sidebar";
+
 
 class App extends Component {
 	state = {

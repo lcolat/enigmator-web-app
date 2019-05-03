@@ -2,41 +2,34 @@
 .sidebar {
     margin: 0;
     padding: 0;
-    width: 200px;
-    background-color: #f1f1f1;
+    width: 150px;
+    /*background-color: #f1f1f1;*/
+    background-color: #e9e5ea;
     position: absolute;
     height: 100%;
     overflow: auto;
 }
 
 /* Sidebar */
-.sidebar img {
-    margin-left: 162px;
+.moveSideBarButton {
+    margin-left: 112px;
     margin-top: 2px;
     position: relative;
-    display: inherit;
+    display: block;
     padding: 10px;
     border-radius: 8px 0 0 8px;
 }
 
-.sidebar img:hover {
+.moveSideBarButton:hover {
     background-color: #b9b5b9;
 }
 
 /* Sidebar List */
 .sidebar ul {
+    align-items: inherit;
     margin: 0 0 0 0;
     padding: 0;
     list-style-type: none;
-}
-
-.sidebar li {
-    font-family: FontAwesome, monospace;
-    background-image: element("\f2bb");
-    /*background: url("./Icon-Gear.svg") no-repeat left;*/
-    height: 53px;
-    padding-top: 3px;
-    padding-left: 30px;
 }
 
 /* Sidebar links */
@@ -46,18 +39,48 @@
     color: black;
     padding: 16px;
     text-decoration: none;
+    text-align: start;
     /*border-left-width: 10px;*/
-    border-left-color: #ac60e9;
-}
-
-/* Links on mouse-over */
-.sidebar li:hover {
-    background-color: #b9b5b9;
+    /*border-left-color: #ac60e9;*/
 }
 
 .sidebar a:focus {
     color: rgb(144, 47, 233);
 }
+
+/* Table */
+.sidebar table {
+    display: contents;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.sidebar tbody {
+    display: contents;
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* Row */
+
+.sidebar tr {
+    display: table;
+    width: 100%;
+    border: none;
+}
+
+.sidebar tr:hover {
+    background-color: #b9b5b9;
+}
+
+.sidebar .icon {
+    width: 30%;
+}
+
+.sidebar .section {
+    width: 70%;
+}
+
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {

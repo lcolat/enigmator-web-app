@@ -24,9 +24,8 @@ class SideBarState {
     }
 }
 
-let sideBarState = new SideBarState();
-
 function Sidebar() {
+    let sideBarState = new SideBarState();
     return (
         <div className="sidebar">
             <button className="moveSideBarButton" onClick={sideBarState.changeState()}>

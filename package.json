@@ -17,6 +17,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.0.1",
     "react-select": "^2.4.3"
+    "@trendmicro/react-sidenav": "^0.4.5",
+    "react-sidebar": "^3.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

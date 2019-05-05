@@ -1,9 +1,9 @@
 import React from "react";
-import Sidebar from "react-sidebar";
 
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import styled from "styled-components"
 
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
@@ -12,8 +12,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
+
 library.add(faAngleDoubleLeft, faHome, faAddressCard, faUserFriends, faPuzzlePiece,
     faPlusSquare, faUserPlus, faCrown, faComments, faInfoCircle, faSlidersH);
+
+// const StyledNav = styled(Nav);
 
 export default function SidebarReact() {
     return (
@@ -21,12 +24,13 @@ export default function SidebarReact() {
             onSelect={(selected) => {
                 // Add your code here
             }}
+            style={{backgroundColor: '#ae75e9'}}
         >
-            <SideNav.Toggle/>
-            <SideNav.Nav defaultSelected="home">
-                <NavItem eventKey="home">
-                    <NavIcon>
-                        <FontAwesomeIcon icon={"home"} color={"purple"} size={"lg"}/>
+            <Toggle/>
+            <Nav defaultSelected="home">
+                <NavItem eventKey="home" style={{color: '#fff'}}>
+                    <NavIcon style={{textColor: '#fff'}}>
+                        <FontAwesomeIcon icon={"home"} size={"lg"} color={"black"}/>
                     </NavIcon>
                     <NavText>
                         Home
@@ -34,7 +38,7 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="profile">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"address-card"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"address-card"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Profile
@@ -42,7 +46,7 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="friend">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"user-friends"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"user-friends"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Friend
@@ -50,7 +54,7 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="enigmas">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"puzzle-piece"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"puzzle-piece"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Enigmas
@@ -58,7 +62,7 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="create_enigma">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"plus-square"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"plus-square"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Create
@@ -66,7 +70,7 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="rank">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"crown"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"crown"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Rank
@@ -74,7 +78,7 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="forum">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"comments"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"comments"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Forum
@@ -82,7 +86,7 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="rgpd">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"info-circle"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"info-circle"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         RGPD
@@ -90,13 +94,13 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="settings">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"sliders-h"} color={"purple"} size={"lg"}/>
+                        <FontAwesomeIcon icon={"sliders-h"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Settings
                     </NavText>
                 </NavItem>
-            </SideNav.Nav>
+            </Nav>
         </SideNav>
     );
 }

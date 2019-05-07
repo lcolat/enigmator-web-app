@@ -1,9 +1,6 @@
 import React from "react";
 
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-// Be sure to include styles at some point, probably during your bootstraping
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import styled from "styled-components"
+import SideNav, {Toggle, Nav, NavItem, NavIcon, NavText} from "./StyledSidebarComponents";
 
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
@@ -16,7 +13,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 library.add(faAngleDoubleLeft, faHome, faAddressCard, faUserFriends, faPuzzlePiece,
     faPlusSquare, faUserPlus, faCrown, faComments, faInfoCircle, faSlidersH);
 
-// const StyledNav = styled(Nav);
 
 export default function SidebarReact() {
     return (
@@ -24,13 +20,12 @@ export default function SidebarReact() {
             onSelect={(selected) => {
                 // Add your code here
             }}
-            style={{backgroundColor: '#ae75e9'}}
         >
             <Toggle/>
             <Nav defaultSelected="home">
-                <NavItem eventKey="home" style={{color: '#fff'}}>
-                    <NavIcon style={{textColor: '#fff'}}>
-                        <FontAwesomeIcon icon={"home"} size={"lg"} color={"black"}/>
+                <NavItem eventKey="home">
+                    <NavIcon>
+                        <FontAwesomeIcon icon={"home"} size={"lg"}/>
                     </NavIcon>
                     <NavText>
                         Home

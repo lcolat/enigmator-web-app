@@ -82,7 +82,7 @@ const StyledNav = styled(Nav)`
 	}
 	&& > [class*="sidenav-navitem--"][class*="highlighted--"],
 	&& > [class*="sidenav-navitem--"][class*="highlighted--"]:hover {
-		// If a selected section is hover ....
+		// If a selected section is hover ...
 		/*> [class*="navitem--"]:hover {
 			//background-color: #b488e9;
 			// Color of name & icon when focus

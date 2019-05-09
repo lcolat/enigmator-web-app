@@ -12,8 +12,8 @@ import HomePage from './components/home-page'
 import UserService from './services/userService'
 
 //import import_icon from "./icon/import-font-awesome";
-import Sidebar from "./sidebar/Sidebar";
-import SidebarReact from "./sidebar/SidebarReact";
+import Sidebar from "./components/sidebar/Sidebar";
+import SidebarReact from "./components/sidebar/SidebarReact";
 
 class App extends Component {
 	state = {

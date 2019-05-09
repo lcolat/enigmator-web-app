@@ -1,6 +1,6 @@
 import React from "react";
 
-import SideNav, {Toggle, Nav, NavItem, NavIcon, NavText} from "./StyledSidebarComponents";
+import SideNav, {Toggle, Nav, NavItem, NavIcon, NavText} from "./style/StyledSidebarComponents";
 
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {

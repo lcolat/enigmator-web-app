@@ -85,6 +85,7 @@ const StyledNav = styled(Nav)`
 		// If a selected section is hover ...
 		/*> [class*="navitem--"]:hover {
 			//background-color: #b488e9;
+			
 			// Color of name & icon when focus
 			[class*="navicon--"],
 			[class*="navtext--"] {

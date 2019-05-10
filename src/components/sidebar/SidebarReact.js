@@ -2,16 +2,18 @@ import React from "react";
 
 import SideNav, {Toggle, Nav, NavItem, NavIcon, NavText} from "./style/StyledSidebarComponents";
 
-import {library} from "@fortawesome/fontawesome-svg-core";
-import {
-    faAngleDoubleLeft, faHome, faAddressCard, faUserFriends, faPuzzlePiece,
-    faPlusSquare, faUserPlus, faCrown, faComments, faInfoCircle, faSlidersH
-} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Home, AccountBox, Contacts, ImageSearch, AddBox, Stars, Forum, Info, Tune} from '@material-ui/icons';
 
 
-library.add(faAngleDoubleLeft, faHome, faAddressCard, faUserFriends, faPuzzlePiece,
-    faPlusSquare, faUserPlus, faCrown, faComments, faInfoCircle, faSlidersH);
+// import {library} from "@fortawesome/fontawesome-svg-core";
+// import {
+//     faAngleDoubleLeft, faHome, faAddressCard, faUserFriends, faPuzzlePiece,
+//     faPlusSquare, faUserPlus, faCrown, faComments, faInfoCircle, faSlidersH
+// } from "@fortawesome/free-solid-svg-icons";
+// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+// library.add(faAngleDoubleLeft, faHome, faAddressCard, faUserFriends, faPuzzlePiece,
+//     faPlusSquare, faUserPlus, faCrown, faComments, faInfoCircle, faSlidersH);
 
 
 export default function SidebarReact() {
@@ -25,7 +27,8 @@ export default function SidebarReact() {
             <Nav defaultSelected="home">
                 <NavItem eventKey="home">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"home"} size={"lg"}/>
+                        <Home fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"home"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Home
@@ -33,7 +36,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="profile">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"address-card"} size={"lg"}/>
+                        <AccountBox fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"address-card"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Profile
@@ -41,7 +45,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="friend">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"user-friends"} size={"lg"}/>
+                        <Contacts fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"user-friends"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Friend
@@ -49,7 +54,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="enigmas">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"puzzle-piece"} size={"lg"}/>
+                        <ImageSearch fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"puzzle-piece"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Enigmas
@@ -57,7 +63,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="create_enigma">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"plus-square"} size={"lg"}/>
+                        <AddBox fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"plus-square"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Create
@@ -65,7 +72,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="rank">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"crown"} size={"lg"}/>
+                        <Stars fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"crown"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Rank
@@ -73,7 +81,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="forum">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"comments"} size={"lg"}/>
+                        <Forum fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"comments"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Forum
@@ -81,7 +90,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="rgpd">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"info-circle"} size={"lg"}/>
+                        <Info fontSize={"large"}/>
+                        {/*<FontAwesomeIcon icon={"info-circle"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         RGPD
@@ -89,7 +99,8 @@ export default function SidebarReact() {
                 </NavItem>
                 <NavItem eventKey="settings">
                     <NavIcon>
-                        <FontAwesomeIcon icon={"sliders-h"} size={"lg"}/>
+                        <Tune fontSize={"large"} alignmentBaseline={"middle"}/>
+                        {/*<FontAwesomeIcon icon={"sliders-h"} size={"lg"}/>*/}
                     </NavIcon>
                     <NavText>
                         Settings

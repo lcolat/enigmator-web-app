@@ -33,8 +33,7 @@ const StyledNav = styled(Nav)`
 			> [class*="sidenav-subnavitem--"]:hover {
 				> [class*="navitem--"] {
 					color: #fff;
-				}	
-			
+				}
 			}
 			> [class*="sidenav-subnavitem--"]:hover {
 				> [class*="navitem--"] {
@@ -45,6 +44,7 @@ const StyledNav = styled(Nav)`
 				> [class*="navitem--"] {
 					color: #3c3842;
 				}
+				
 				> [class*="navitem--"]::before {
 					border-left: 2px solid #403b20;
 				}
@@ -106,7 +106,7 @@ const StyledNav = styled(Nav)`
 			[class*="navtext--"] {
 				&, > * {
 					color: #000;
-					font-style: italic;
+					font-weight: bold;
 				}
 			}
 			[class*="sidenav-nav-text--"] {

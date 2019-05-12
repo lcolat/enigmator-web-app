@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import {FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage} from '@material-ui/icons';
+import {TableHead} from "@material-ui/core";
 
 
 const actionsStyles = theme => ({
@@ -101,34 +103,57 @@ function createData(nameEnigma, dateLastTry) {
 const styles = theme => ({
 	root: {
 		width: '100%',
-		marginTop: theme.spacing.unit * 3,
+		// marginTop: theme.spacing.unit * 3,
 	},
 	table: {
 		minWidth: 500,
 	},
 	tableWrapper: {
 		overflowX: 'auto',
-	},
+	}
 });
 
-class CustomPaginationActionsTable extends React.Component {
+const theme = createMuiTheme({
+	overrides: {
+		MuiTableRow: {
+			root: {
+				//for the body
+				height: "100%"
+			},
+			head: {
+				//for the head
+				height: "100%"
+			},
+			footer: {
+				"& > td > div": {
+					height: "50%",
+					minHeight: "50%"
+				},
+				// backgroundColor: "grey",
+				height: "50%"
+			}
+		}
+	}
+});
+
+class TabUnresolvedEnigmas extends React.Component {
 	
-	formatDate = "HH:mm DD-MM-YY";
+	// formatDate = "HH:mm DD-MM-YY";
 	state = {
 		rows: [
-			createData('SuperEnigma', /*Moment(*/"23:36 10/05/19"/*, this.formatDate)*/), /*"23:36 10/05/19"*/
-			// createData('GuessHerName', "10:01 10/04/19"),
-			// createData('Who have 4-2-3 paws?', "02:59 02/05/19"),
-			// createData('What did the third Dwarf take?', "23:10 10/05/19"),
-			// createData('hihihi', "01:59 07/05/18"),
-			// createData('Yolooo', "20:46 10/01/19"),
-			// createData('Palindromatique', "23:59 31/12/18"),
-			// createData('<><<><<>>>>', "09:00 11/11/17"),
-			// createData('Cachochachat', "03:33 03/03/19"),
-			// createData('Lollipop', "07:11 26/08/19"),
-			// createData('<^>v><<<^^v', "04:26 10/05/19"),
-			// createData('MIAM', "20:36 10/08/17"),
-			// createData('Thanos has erase the half of this sentence...', "00:01 01/02/17"),
+			createData('SuperEnigma', "23:36 10/05/19"),
+			createData('GuessHerName', "10:01 10/04/19"),
+			createData('Who have 4-2-3 paws?', "02:59 02/05/19"),
+			createData('What did the third Dwarf take?', "23:10 10/05/19"),
+			createData('hihihi', "01:59 07/05/18"),
+			createData('Yolooo', "20:46 10/01/19"),
+			createData('Palindromatique', "23:59 31/12/18"),
+			createData('<><<><<>>>>', "09:00 11/11/17"),
+			createData('Cachochachat', "03:33 03/03/19"),
+			createData('Lollipop', "07:11 26/08/19"),
+			createData('<^>v><<<^^v', "04:26 10/05/19"),
+			createData('MIAM', "20:36 10/08/17"),
+			createData('Thanos has erase the half of this sentence...', "00:01 01/02/17")
 		].sort((a, b) => (a.date < b.date ? -1 : 1)),
 		page: 0,
 		rowsPerPage: 5,
@@ -148,50 +173,63 @@ class CustomPaginationActionsTable extends React.Component {
 		const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 		
 		return (
-			<Paper className={classes.root}>
-				<div className={classes.tableWrapper}>
-					<Table className={classes.table}>
-						<TableBody>
-							{rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-								<TableRow key={row.id}>
-									<TableCell component="th" scope="row">
-										{row.name}
-									</TableCell>
-									<TableCell align="right">{row.date}</TableCell>
+			<MuiThemeProvider theme={theme}>
+				<Paper className={classes.root}>
+					<div className={classes.tableWrapper}>
+						<Table className={classes.table}>
+							<TableHead>
+								<TableCell align="left" style={{height: 26}}>Enigmas Unresolved</TableCell>
+								<TableCell align="right" style={{height: 26}}>Date of Last Try</TableCell>
+							</TableHead>
+							<TableBody>
+								{rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+									<TableRow key={row.id}
+											  style={{height: 36, cursor: "pointer"}}
+											  onClick={() => {
+												  alert("Soon able to go to the enigma :)")
+											  }}
+											  hover
+									>
+										<TableCell component="th" scope="row">
+											{row.name}
+										</TableCell>
+										<TableCell align="right">{row.date}</TableCell>
+									</TableRow>
+								))}
+								{emptyRows > 0 && (
+									<TableRow style={{height: 36 * emptyRows}}>
+										<TableCell colSpan={6}/>
+									</TableRow>
+								)}
+							</TableBody>
+							<TableFooter className={classes.footer}>
+								<TableRow className={classes.footer}>
+									<TablePagination
+										rowsPerPageOptions={[]}
+										colSpan={3}
+										count={rows.length}
+										rowsPerPage={rowsPerPage}
+										page={page}
+										SelectProps={{
+											native: true,
+										}}
+										onChangePage={this.handleChangePage}
+										onChangeRowsPerPage={this.handleChangeRowsPerPage}
+										ActionsComponent={TablePaginationActionsWrapped}
+										style={{padding: 0, margin: 0}}
+									/>
 								</TableRow>
-							))}
-							{emptyRows > 0 && (
-								<TableRow style={{height: 48 * emptyRows}}>
-									<TableCell colSpan={6}/>
-								</TableRow>
-							)}
-						</TableBody>
-						<TableFooter>
-							<TableRow>
-								<TablePagination
-									rowsPerPageOptions={[5, 10, 25]}
-									colSpan={3}
-									count={rows.length}
-									rowsPerPage={rowsPerPage}
-									page={page}
-									SelectProps={{
-										native: true,
-									}}
-									onChangePage={this.handleChangePage}
-									onChangeRowsPerPage={this.handleChangeRowsPerPage}
-									ActionsComponent={TablePaginationActionsWrapped}
-								/>
-							</TableRow>
-						</TableFooter>
-					</Table>
-				</div>
-			</Paper>
+							</TableFooter>
+						</Table>
+					</div>
+				</Paper>
+			</MuiThemeProvider>
 		);
 	}
 }
 
-CustomPaginationActionsTable.propTypes = {
+TabUnresolvedEnigmas.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CustomPaginationActionsTable);
+export default withStyles(styles)(TabUnresolvedEnigmas);

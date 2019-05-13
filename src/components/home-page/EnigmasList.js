@@ -5,13 +5,13 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import Paper from "@material-ui/core/Paper";
-import {TableHead} from "@material-ui/core";
+import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import {LocalActivity} from "@material-ui/icons"
 
-export function enigmaItem(nameEnigma, creatorName, kind, difficulty, dateOfCreation, pointValue, description) {
-	return {}
-}
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import {toolTipsStyles} from "./ToolTipsStyles"
 
 let counter = 0;
 
@@ -41,8 +41,16 @@ const styles = theme => ({
 });
 
 class AlignItemsList extends React.Component {
+
+    handleArrowRef = node => {
+        this.setState({
+            arrowRef: node,
+        });
+    };
 	
 	state = {
+        arrowRef: null,
+
 		rows: [
 			createData('SuperEnigma',
 				"DamSaulGoodMan",
@@ -73,8 +81,6 @@ class AlignItemsList extends React.Component {
 				100,
 				"All the enigma is in the title ;), i hope you will follow the right way !")
 		].sort((a, b) => (a.date < b.date ? -1 : 1)),
-		page: 0,
-		rowsPerPage: 5,
 	};
 	
 	// const { classes } = props;
@@ -98,20 +104,45 @@ class AlignItemsList extends React.Component {
 						</TableHead>
 						<TableBody>
 							{rows.map(row => (
-								<TableRow key={row.id}
-										  style={{height: 36, cursor: "pointer"}}
-										  onClick={() => {
-											  alert("Soon able to go to the enigma :)")
-										  }}
-										  hover
-								>
-									<TableCell component="th" scope="row">{row.name}</TableCell>
-									<TableCell align="left" scope="row">{row.author}</TableCell>
-									<TableCell align="left">{row.type}</TableCell>
-									<TableCell align="left">{row.level}</TableCell>
-									<TableCell align="left">{row.date}</TableCell>
-									<TableCell align="left">{row.score}</TableCell>
-								</TableRow>
+                                <Tooltip
+                                    classes={{
+                                        popper: classes.htmlPopper,
+                                        tooltip: classes.htmlTooltip,
+                                    }}
+                                    PopperProps={{
+                                        popperOptions: {
+                                            modifiers: {
+                                                arrow: {
+                                                    enabled: Boolean(this.state.arrowRef),
+                                                    element: this.state.arrowRef,
+                                                },
+                                            },
+                                        },
+                                    }}
+                                    title={
+                                        <React.Fragment>
+                                            <Typography color="inherit">Tooltip with HTML</Typography>
+                                            <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.{' '}
+                                            {"It's very engaging. Right?"}
+                                            <span className={classes.arrow} ref={this.handleArrowRef}/>
+                                        </React.Fragment>
+                                    }
+                                >
+                                    <TableRow key={row.id}
+                                              style={{height: 36, cursor: "pointer"}}
+                                              onClick={() => {
+                                                  alert("Soon able to go to the enigma :)")
+                                              }}
+                                              hover
+                                    >
+                                        <TableCell component="th" scope="row">{row.name}</TableCell>
+                                        <TableCell align="left" scope="row">{row.author}</TableCell>
+                                        <TableCell align="left">{row.type}</TableCell>
+                                        <TableCell align="left">{row.level}</TableCell>
+                                        <TableCell align="left">{row.date}</TableCell>
+                                        <TableCell align="left">{row.score}</TableCell>
+                                    </TableRow>
+                                </Tooltip>
 							))}
 						</TableBody>
 					</Table>
@@ -125,4 +156,4 @@ AlignItemsList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AlignItemsList);
+export default withStyles(styles, toolTipsStyles)(AlignItemsList);

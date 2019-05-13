@@ -10,8 +10,9 @@ import TableRow from "@material-ui/core/TableRow";
 import {LocalActivity} from "@material-ui/icons"
 
 import Tooltip from '@material-ui/core/Tooltip';
+import Fade from '@material-ui/core/Fade';
 import Typography from '@material-ui/core/Typography';
-import {toolTipsStyles} from "./ToolTipsStyles"
+import {arrowGenerator} from "./ToolTipsStyles"
 
 let counter = 0;
 
@@ -37,6 +38,17 @@ const styles = theme => ({
 	},
 	inline: {
 		display: 'inline',
+	},
+	htmlPopper: arrowGenerator('#dadde9'),
+	htmlTooltip: {
+		backgroundColor: '#f5f5f9',
+		color: 'rgba(0, 0, 0, 0.87)',
+		maxWidth: 220,
+		fontSize: theme.typography.pxToRem(12),
+		border: '1px solid #dadde9',
+		'& b': {
+			fontWeight: theme.typography.fontWeightMedium,
+		},
 	},
 });
 
@@ -105,11 +117,13 @@ class AlignItemsList extends React.Component {
 						<TableBody>
 							{rows.map(row => (
                                 <Tooltip
-                                    classes={{
+									TransitionComponent={Fade}
+									TransitionProps={{timeout: 600}}
+									classes={{
                                         popper: classes.htmlPopper,
                                         tooltip: classes.htmlTooltip,
                                     }}
-                                    PopperProps={{
+									PopperProps={{
                                         popperOptions: {
                                             modifiers: {
                                                 arrow: {
@@ -119,11 +133,9 @@ class AlignItemsList extends React.Component {
                                             },
                                         },
                                     }}
-                                    title={
+									title={
                                         <React.Fragment>
-                                            <Typography color="inherit">Tooltip with HTML</Typography>
-                                            <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.{' '}
-                                            {"It's very engaging. Right?"}
+											<Typography color="inherit">{row.info}</Typography>
                                             <span className={classes.arrow} ref={this.handleArrowRef}/>
                                         </React.Fragment>
                                     }
@@ -156,4 +168,4 @@ AlignItemsList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, toolTipsStyles)(AlignItemsList);
+export default withStyles(styles)(AlignItemsList);

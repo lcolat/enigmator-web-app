@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import HomePage from "./components/home-page/TabUnresolvedEnigmas"
-import EnigmasList, {enigmaItem} from "./components/home-page/EnigmasList"
+import UserStatsResume from "./components/home-page/UserStatsResume"
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <EnigmasList/>
+        <UserStatsResume score={"100"} winNumber={"2"} globalRank={"75"} localRank={"8"}/>
       </div>
     );
   }

@@ -12,7 +12,6 @@ import {LocalActivity} from "@material-ui/icons"
 import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
 import Typography from '@material-ui/core/Typography';
-import {arrowGenerator} from "./ToolTipsStyles"
 
 let counter = 0;
 
@@ -39,11 +38,10 @@ const styles = theme => ({
 	inline: {
 		display: 'inline',
 	},
-	htmlPopper: arrowGenerator('#dadde9'),
 	htmlTooltip: {
 		backgroundColor: '#f5f5f9',
 		color: 'rgba(0, 0, 0, 0.87)',
-		maxWidth: 220,
+		//maxWidth: root.width,
 		fontSize: theme.typography.pxToRem(12),
 		border: '1px solid #dadde9',
 		'& b': {
@@ -120,7 +118,6 @@ class AlignItemsList extends React.Component {
 									TransitionComponent={Fade}
 									TransitionProps={{timeout: 600}}
 									classes={{
-                                        popper: classes.htmlPopper,
                                         tooltip: classes.htmlTooltip,
                                     }}
 									PopperProps={{

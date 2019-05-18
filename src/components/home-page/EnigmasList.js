@@ -50,7 +50,7 @@ const styles = theme => ({
 	},
 });
 
-class AlignItemsList extends React.Component {
+class EnigmasList extends React.Component {
 
     handleArrowRef = node => {
         this.setState({
@@ -161,8 +161,8 @@ class AlignItemsList extends React.Component {
 	}
 }
 
-AlignItemsList.propTypes = {
+EnigmasList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AlignItemsList);
+export default withStyles(styles)(EnigmasList);

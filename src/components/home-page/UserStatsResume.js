@@ -1,36 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
+import {Grid, Typography, Paper, ButtonBase} from "@material-ui/core";
 
 import defaultProfilePicture from "./default-profile-picture.jpg"
+import podiumPicture from "./podium.png"
 
 const styles = theme => ({
-	card: {
-		display: 'flex',
+	root: {
+		flexGrow: 1,
 	},
-	details: {
-		display: 'flex',
-		flexDirection: 'column',
+	paper: {
+		padding: 2,//theme.spacing.unit * 2,
+		//margin: 'auto',
 	},
-	content: {
-		flex: '1 0 auto',
+	paperStats: {
+		paddingTop: 4
 	},
-	cover: {
-		width: 150,
-		marginBottom: 90,
-		border: '0px solid black',
+	image: {
+		width: 200,
+		height: 110,
+		border: '3px solid purple',
 		borderRadius: '6px!important'
 	},
-	controls: {
-		display: 'flex',
-		alignItems: 'center',
-		paddingLeft: theme.spacing.unit,
-		paddingBottom: theme.spacing.unit,
+	img: {
+		margin: 'auto',
+		display: 'block',
+		maxWidth: "100%",
+		maxHeight: "100%",
+		borderRadius: '6px!important'
 	}
 });
 
@@ -38,67 +36,92 @@ function UserStatsResume(props) {
 	const {classes, theme, score, winNumber, globalRank, localRank, profilePicture} = props;
 	
 	return (
-		<Card className={classes.card}>
-			<div className={classes.details}>
-				<CardContent className={classes.content}>
-					<Grid container alignItems="center">
-						<Grid item xs>
-							<Typography gutterBottom variant="h4">
-								Score
-							</Typography>
-						</Grid>
-						<Grid item>
-							<Typography gutterBottom variant="h6">
-								{score}
-							</Typography>
-						</Grid>
+		<div className={classes.root}>
+			<Grid container>
+				<Grid xs container direction={"column"}>
+					<Grid item xs>
+						<Paper className={classes.paperStats}>
+							<Grid xs container direction={"row"}>
+								<Grid item xs>
+									<Typography gutterBottom variant="h4" align={"left"}>
+										Score
+									</Typography>
+								</Grid>
+								<Grid item xs>
+									<Typography variant="h4" align={"center"}>
+										{score}
+									</Typography>
+								</Grid>
+							</Grid>
+						</Paper>
+						<Paper className={classes.paperStats}>
+							<Grid container direction={"row"}>
+								<Grid item xs>
+									<Typography gutterBottom variant="h4" align={"left"}>
+										Win
+									</Typography>
+								</Grid>
+								<Grid item xs>
+									<Typography variant="h4" align={"center"}>
+										{winNumber}
+									</Typography>
+								</Grid>
+							</Grid>
+						</Paper>
 					</Grid>
-					<Grid container alignItems="center">
-						<Grid item xs>
-							<Typography gutterBottom variant="h4">
-								Win
-							</Typography>
-						</Grid>
-						<Grid item>
-							<Typography gutterBottom variant="h6">
-								{winNumber}
-							</Typography>
-						</Grid>
+				</Grid>
+				<Grid item>
+					<ButtonBase className={classes.image}>
+						<img className={classes.img}
+							 alt="complex"
+							 src={profilePicture}/>
+					</ButtonBase>
+				</Grid>
+			</Grid>
+			<Grid container>
+				<Grid item>
+					<img className={classes.img} alt="complex" src={podiumPicture}/>
+				</Grid>
+				<Grid xs container direction={"column"}>
+					<Grid item xs>
+						<Paper className={classes.paperStats}>
+							<Grid xs container direction={"row"}>
+								<Grid item xs>
+									<Typography gutterBottom variant="h4" align={"left"} noWrap>
+										Global Rank
+									</Typography>
+								</Grid>
+								<Grid item xs>
+									<Typography variant="h4" align={"center"}>
+										{globalRank}
+									</Typography>
+								</Grid>
+							</Grid>
+						</Paper>
+						<Paper className={classes.paperStats}>
+							<Grid container direction={"row"}>
+								<Grid item xs>
+									<Typography gutterBottom variant="h4" align={"left"} noWrap>
+										Local Rank
+									</Typography>
+								</Grid>
+								<Grid item xs>
+									<Typography variant="h4" align={"center"}>
+										{localRank}
+									</Typography>
+								</Grid>
+							</Grid>
+						</Paper>
 					</Grid>
-					<Grid container alignItems="center">
-						<Grid item xs>
-							<Typography gutterBottom variant="h4">
-								Global Rank
-							</Typography>
-						</Grid>
-						<Grid item>
-							<Typography gutterBottom variant="h6">
-								{globalRank}
-							</Typography>
-						</Grid>
-					</Grid>
-					<Grid container alignItems="center">
-						<Grid item xs>
-							<Typography gutterBottom variant="h4">
-								Local Rank
-							</Typography>
-						</Grid>
-						<Grid item>
-							<Typography gutterBottom variant="h6">
-								{localRank}
-							</Typography>
-						</Grid>
-					</Grid>
-				</CardContent>
-			</div>
-			<CardMedia
-				className={classes.cover}
-				image={defaultProfilePicture}
-				title="Avatar"
-			/>
-		</Card>
+				</Grid>
+			</Grid>
+		</div>
 	);
 }
+
+UserStatsResume.defaultProps = {
+	profilePicture: defaultProfilePicture
+};
 
 UserStatsResume.propTypes = {
 	classes: PropTypes.object.isRequired,
@@ -108,7 +131,7 @@ UserStatsResume.propTypes = {
 	winNumber: PropTypes.number.isRequired,
 	globalRank: PropTypes.number.isRequired,
 	localRank: PropTypes.number.isRequired,
-	// avatar: PropTypes.picture
+	profilePicture: PropTypes.element
 };
 
 export default withStyles(styles, {withTheme: true})(UserStatsResume);

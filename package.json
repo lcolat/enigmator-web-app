@@ -4,9 +4,15 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "3.9.3",
+    "@material-ui/icons": "latest",
+    "classnames": "latest",
+    "downshift": "^3.2.10",
+    "lodash": "latest",
+    "prop-types": "latest",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-scripts": "2.1.8"
+    "react-scripts": "^3.0.1",
+    "react-select": "^2.4.3"
   },
   "scripts": {
     "start": "react-scripts start",

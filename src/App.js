@@ -10,6 +10,10 @@ import theme from './theme'
 import PrivateRoute from './privateRoute';
 
 
+import UserStatsResume from "./components/home-page/UserStatsResume"
+import HomePage from "./components/home-page";
+
+
 class App extends Component {
   render() {
     return (
@@ -20,11 +24,11 @@ class App extends Component {
             <Route path="/login" component={Authentication} />
             <Route path="/forgotten-password" component={ForgottentPassword} />
             <Route path="/new-account" component={NewAccount} />
+            <PrivateRoute path="/home" component={HomePage}/>
             <PrivateRoute path="/" />
           </Switch>
         </div> 
       </MuiThemeProvider>
-
     );
   }
 }

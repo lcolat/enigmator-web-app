@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import {withStyles} from "@material-ui/core"
 import {
 	TableHead, TableRow, TableCell, TablePagination,
 	TableSortLabel, Table, TableBody
 } from "@material-ui/core"
-import {Checkbox, Tooltip, Paper} from "@material-ui/core"
+import {Tooltip, Paper} from "@material-ui/core"
+import {DonutSmall} from "@material-ui/icons";
 
-let counter = 0;
+import {mapUserStatusColor} from "../../model/User";
 
-function createData(status, rank, pseudo, victory, score) {
-	counter += 1;
-	return {id: counter, status, rank, pseudo, victory, score};
-}
 
 function desc(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -38,11 +36,11 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-	{id: 'status', numeric: false, disablePadding: true, label: 'Status'},
-	{id: 'rank', numeric: true, disablePadding: false, label: 'Rank'},
-	{id: 'pseudo', numeric: true, disablePadding: false, label: 'Player'},
-	{id: 'victory', numeric: true, disablePadding: false, label: 'Win'},
-	{id: 'score', numeric: true, disablePadding: false, label: 'Score'},
+	{id: 'status', align: "center", disablePadding: true, label: ''},
+	{id: 'rank', align: "left", disablePadding: false, label: 'Rank'},
+	{id: 'pseudo', align: "left", disablePadding: false, label: 'Player'},
+	{id: 'victory', align: "left", disablePadding: false, label: 'Win'},
+	{id: 'score', align: "left", disablePadding: false, label: 'Score'},
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -60,7 +58,7 @@ class EnhancedTableHead extends React.Component {
 						row => (
 							<TableCell
 								key={row.id}
-								align={row.numeric ? 'right' : 'left'}
+								align={row.align}
 								padding={row.disablePadding ? 'none' : 'default'}
 								sortDirection={orderBy === row.id ? order : false}
 							>
@@ -96,22 +94,27 @@ EnhancedTableHead.propTypes = {
 	rowCount: PropTypes.number.isRequired,
 };
 
-class EnhancedTable extends React.Component {
+
+const styles = theme => ({
+	root: {
+		width: '100%',
+		marginTop: theme.spacing.unit * 2,
+	},
+	table: {
+		//minWidth: 1020,
+	},
+	tableWrapper: {
+		overflowX: 'auto',
+	},
+});
+
+class TableFriends extends React.Component {
 	state = {
 		order: 'asc',
 		orderBy: 'rank',
 		selected: [],
-		data: [
-			createData('connected', 1, "DamsSaulGoodMan", 150, 9999),
-			createData('connected', 9999, "Kalfa", 0, 0),
-			createData('disconnected', 2, "Kudo", 160, 8888),
-			createData('absent', 3, "LegalizeCanasucre", 120, 8542),
-			createData('dot not disturb', 69, "LaMereARaynal", 50, 752),
-			createData('dot not disturb', 6969, "LaSoeurARaynal", 10, 20),
-			createData('dot not disturb', 4, "LeChienARaynal", 103, 624)
-		],
-		page: 0,
-		rowsPerPage: 5,
+		data: this.props.data,
+		page: 0
 	};
 	
 	handleRequestSort = (event, property) => {
@@ -154,20 +157,11 @@ class EnhancedTable extends React.Component {
 		this.setState({selected: newSelected});
 	};
 	
-	handleChangePage = (event, page) => {
-		this.setState({page});
-	};
-	
-	handleChangeRowsPerPage = event => {
-		this.setState({rowsPerPage: event.target.value});
-	};
-	
 	isSelected = id => this.state.selected.indexOf(id) !== -1;
 	
 	render() {
 		const {classes} = this.props;
-		const {data, order, orderBy, selected, rowsPerPage, page} = this.state;
-		const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+		const {data, order, orderBy, selected} = this.state;
 		
 		return (
 			<Paper className={classes.root}>
@@ -183,60 +177,40 @@ class EnhancedTable extends React.Component {
 						/>
 						<TableBody>
 							{stableSort(data, getSorting(order, orderBy))
-								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								.map(n => {
-									const isSelected = this.isSelected(n.id);
+								.map(row => {
+									const isSelected = this.isSelected(row.id);
 									return (
 										<TableRow
 											hover
-											onClick={event => this.handleClick(event, n.id)}
+											onClick={event => this.handleClick(event, row.id)}
 											role="checkbox"
 											aria-checked={isSelected}
 											tabIndex={-1}
-											key={n.id}
+											key={row.id}
 											selected={isSelected}
 										>
-											<TableCell padding="checkbox">
-												<Checkbox checked={isSelected}/>
+											<TableCell align={"center"} component="th" scope="row" padding="none">
+												<Tooltip title={row.status}>
+													<DonutSmall style={{color: mapUserStatusColor.get(row.status)}}/>
+												</Tooltip>
 											</TableCell>
-											<TableCell component="th" scope="row" padding="none">
-												{n.name}
-											</TableCell>
-											<TableCell align="right">{n.calories}</TableCell>
-											<TableCell align="right">{n.fat}</TableCell>
-											<TableCell align="right">{n.carbs}</TableCell>
-											<TableCell align="right">{n.protein}</TableCell>
+											<TableCell align="left">{row.rank}</TableCell>
+											<TableCell align="left">{row.pseudo}</TableCell>
+											<TableCell align="left">{row.victory}</TableCell>
+											<TableCell align="left">{row.score}</TableCell>
 										</TableRow>
 									);
 								})}
-							{emptyRows > 0 && (
-								<TableRow style={{height: 49 * emptyRows}}>
-									<TableCell colSpan={6}/>
-								</TableRow>
-							)}
 						</TableBody>
 					</Table>
 				</div>
-				<TablePagination
-					rowsPerPageOptions={[5, 10, 25]}
-					component="div"
-					count={data.length}
-					rowsPerPage={rowsPerPage}
-					page={page}
-					backIconButtonProps={{
-						'aria-label': 'Previous Page',
-					}}
-					nextIconButtonProps={{
-						'aria-label': 'Next Page',
-					}}
-					onChangePage={this.handleChangePage}
-					onChangeRowsPerPage={this.handleChangeRowsPerPage}
-				/>
 			</Paper>
 		);
 	}
 }
 
-EnhancedTable.propTypes = {
+TableFriends.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
+
+export default withStyles(styles)(TableFriends);

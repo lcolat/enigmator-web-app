@@ -88,7 +88,7 @@ const styles = theme => ({
 		marginTop: theme.spacing.unit * 3.5,
 		marginLeft: theme.spacing.unit * 2,
 		flexGrow: 1,
-		height: 10,
+		height: 10
 	},
 	container: {
 		flexGrow: 1,
@@ -128,7 +128,7 @@ function IntegrationDownshift(props) {
 							classes,
 							InputProps: getInputProps({
 								placeholder: 'Search Friend',
-							}),
+							})
 						})}
 						<div {...getMenuProps()}>
 							{isOpen ? (
@@ -140,7 +140,7 @@ function IntegrationDownshift(props) {
 											itemProps: getItemProps({item: suggestion.label}),
 											highlightedIndex,
 											selectedItem,
-										}),
+										})
 									)}
 								</Paper>
 							) : null}

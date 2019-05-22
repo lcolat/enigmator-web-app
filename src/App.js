@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import TabFriends from "./components/friend-page/TabFriends"
+import FriendsView from "./components/friend-page/index"
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <TabFriends/>
+        <FriendsView/>
       </div>
     );
   }

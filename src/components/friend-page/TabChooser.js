@@ -9,44 +9,26 @@ import {AllInclusive, Rowing, SupervisedUserCircle, Whatshot, PersonAdd} from '@
 
 import SearchPick from "../../commun/SearchPick"
 import Button from "@material-ui/core/Button";
+import {Grid} from "@material-ui/core";
 
 
-const stylesButton = theme => ({
+const styles = theme => ({
 	root: {
+		//flexGrow: 3,
+		maxWidth: "100%",
+	},
+	rootButton: {
 		marginTop: theme.spacing.unit * 2,
-		//marginBottom: 0,
-		flexGrow: 1,
+		marginRight: 0,
+		//flexGrow: 1,
 	},
 	button: {
 		margin: theme.spacing.unit
 	},
-	rightIcon: {
+	buttonRightIcon: {
 		marginLeft: theme.spacing.unit
 	}
 });
-
-function ButtonAddFriend(props) {
-	const {classes} = props;
-	
-	return (
-		<div className={classes.root}>
-			<Button cl variant="contained" color="primary" className={classes.button}>
-				ADD
-				<PersonAdd className={classes.rightIcon}/>
-			</Button>
-		</div>
-	);
-}
-
-const buttonAddFriend = withStyles(stylesButton)(ButtonAddFriend);
-
-
-const styles = {
-	root: {
-		flexGrow: 1,
-		maxWidth: "100%",
-	}
-};
 
 class TabChooser extends React.Component {
 	state = {
@@ -62,20 +44,27 @@ class TabChooser extends React.Component {
 		
 		return (
 			<Paper square className={classes.root}>
-				<Tabs
-					value={this.state.value}
-					onChange={this.handleChange}
-					variant="fullWidth"
-					indicatorColor="secondary"
-					textColor="secondary"
-				>
-					<Tab icon={<AllInclusive/>} label="ALL"/>
-					<Tab icon={<Rowing/>} label="SOLO"/>
-					<Tab icon={<SupervisedUserCircle/>} label="MULTI"/>
-					<Tab icon={<Whatshot/>} label="BATTLE"/>
-					<Tab component={SearchPick}/>
-					<Tab component={buttonAddFriend}/>
-				</Tabs>
+				<Grid container direction={"row"}>
+					<Tabs
+						value={this.state.value}
+						onChange={this.handleChange}
+						variant="fullWidth"
+						indicatorColor="secondary"
+						textColor="secondary"
+					>
+						<Tab icon={<AllInclusive/>} label="ALL"/>
+						<Tab icon={<Rowing/>} label="SOLO"/>
+						<Tab icon={<SupervisedUserCircle/>} label="MULTI"/>
+						<Tab icon={<Whatshot/>} label="BATTLE"/>
+					</Tabs>
+					<SearchPick/>
+					<div className={classes.rootButton}>
+						<Button cl variant="contained" color="primary" className={classes.button}>
+							ADD
+							<PersonAdd className={classes.buttonRightIcon}/>
+						</Button>
+					</div>
+				</Grid>
 			</Paper>
 		);
 	}

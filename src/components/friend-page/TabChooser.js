@@ -40,7 +40,7 @@ class TabChooser extends React.Component {
 	};
 	
 	render() {
-		const {classes} = this.props;
+		const {classes, onClickHandler} = this.props;
 		
 		return (
 			<Paper square className={classes.root}>
@@ -52,7 +52,7 @@ class TabChooser extends React.Component {
 						indicatorColor="secondary"
 						textColor="secondary"
 					>
-						<Tab icon={<AllInclusive/>} label="ALL"/>
+						<Tab icon={<AllInclusive/>} label="ALL" onClick={onClickHandler}/>
 						<Tab icon={<Rowing/>} label="SOLO"/>
 						<Tab icon={<SupervisedUserCircle/>} label="MULTI"/>
 						<Tab icon={<Whatshot/>} label="BATTLE"/>

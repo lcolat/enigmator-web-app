@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom'
 
 class Authentication extends Component {
 	state = {
@@ -48,9 +48,9 @@ class Authentication extends Component {
 					/>
 				</div>
                 <div className="forgottenPassword">
-                    <Link>
-                        Mot de passe oublié ?
-                    </Link>
+					<Link to="/forgotten-password">
+						Mot de passe oublié :(?
+					</Link>
                 </div>
 				<div className="loginBtn">
 					<Button

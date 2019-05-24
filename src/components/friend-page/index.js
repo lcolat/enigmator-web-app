@@ -62,7 +62,7 @@ class FriendsView extends React.Component {
 	render() {
 		return (
 			<div>
-				<TabChooser onClickHandler={() => alert("toto")}/>
+				<TabChooser onClickHandler={(comp) => alert(comp.value)}/>
 				<TableFriends data={friendsList.get(this.state.categories)}/>
 			</div>
 		);

@@ -34,10 +34,17 @@ class TabChooser extends React.Component {
 	state = {
 		value: 0,
 	};
+	props = {
+		type: ["ALL"]
+	};
 	
 	handleChange = (event, value) => {
 		this.setState({value});
 	};
+	
+	static onClickHandler(label) {
+		return label
+	}
 	
 	render() {
 		const {classes, onClickHandler} = this.props;
@@ -52,7 +59,7 @@ class TabChooser extends React.Component {
 						indicatorColor="secondary"
 						textColor="secondary"
 					>
-						<Tab icon={<AllInclusive/>} label="ALL" onClick={onClickHandler}/>
+						<Tab icon={<AllInclusive/>} label="ALL" onClick={onClickHandler(this.props.type[this.state])}/>
 						<Tab icon={<Rowing/>} label="SOLO"/>
 						<Tab icon={<SupervisedUserCircle/>} label="MULTI"/>
 						<Tab icon={<Whatshot/>} label="BATTLE"/>

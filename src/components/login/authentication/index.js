@@ -84,7 +84,9 @@ class Authentication extends Component {
 					/>
 				</div>
 				<div className="forgottenPassword">
-					<Link>Mot de passe oublié ?</Link>
+				    <Link to="/forgotten-password">
+						Mot de passe oublié :(?
+					</Link>
 				</div>
 				<div className="loginBtn">
 					<Button
@@ -110,3 +112,4 @@ class Authentication extends Component {
 }
 
 export default withStyles(style, { withTheme: true })(Authentication)
+

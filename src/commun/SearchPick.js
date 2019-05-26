@@ -8,17 +8,6 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 
 
-const suggestions = [
-	{label: 'DamsSaulGoodMan'},
-	{label: 'Kalfa'},
-	{label: 'Kudo'},
-	{label: 'LegalizeCanasucre'},
-	{label: 'LaMereARaynal'},
-	{label: 'LaSoeurARaynal'},
-	{label: 'LeChienARaynal'}
-];
-
-
 function renderInput(inputProps) {
 	const {InputProps, classes, ref, ...other} = inputProps;
 	
@@ -64,7 +53,7 @@ renderSuggestion.propTypes = {
 	suggestion: PropTypes.shape({label: PropTypes.string}).isRequired,
 };
 
-function getSuggestions(value) {
+function getSuggestions(value, suggestions) {
 	const inputValue = deburr(value.trim()).toLowerCase();
 	const inputLength = inputValue.length;
 	let count = 0;
@@ -107,8 +96,8 @@ const styles = theme => ({
 });
 
 
-function IntegrationDownshift(props) {
-	const {classes} = props;
+function SearchPick(props) {
+	const {classes, suggestions} = props;
 	
 	return (
 		<div className={classes.root}>
@@ -133,7 +122,7 @@ function IntegrationDownshift(props) {
 						<div {...getMenuProps()}>
 							{isOpen ? (
 								<Paper className={classes.paper} square>
-									{getSuggestions(inputValue).map((suggestion, index) =>
+									{getSuggestions(inputValue, suggestions).map((suggestion, index) =>
 										renderSuggestion({
 											suggestion,
 											index,
@@ -152,8 +141,8 @@ function IntegrationDownshift(props) {
 	);
 }
 
-IntegrationDownshift.propTypes = {
+SearchPick.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(IntegrationDownshift);
+export default withStyles(styles)(SearchPick);

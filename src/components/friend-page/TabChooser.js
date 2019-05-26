@@ -4,12 +4,11 @@ import Paper from '@material-ui/core/Paper';
 import {withStyles} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
+import {Grid} from "@material-ui/core";
 import {AllInclusive, Rowing, SupervisedUserCircle, Whatshot, PersonAdd} from '@material-ui/icons';
 
 import SearchPick from "../../commun/SearchPick"
-import Button from "@material-ui/core/Button";
-import {Grid} from "@material-ui/core";
+import AddFriendButton from "./AddFriendButton"
 
 
 const styles = theme => ({
@@ -22,32 +21,23 @@ const styles = theme => ({
 		marginRight: 0,
 		//flexGrow: 1,
 	},
-	button: {
-		margin: theme.spacing.unit
-	},
-	buttonRightIcon: {
-		marginLeft: theme.spacing.unit
-	}
 });
 
+const tabType = ["ALL", "SOLO", "MULTI", "BATTLE"];
+
 class TabChooser extends React.Component {
+	
 	state = {
 		value: 0,
-	};
-	props = {
-		type: ["ALL"]
 	};
 	
 	handleChange = (event, value) => {
 		this.setState({value});
+		this.props.changeTable(tabType[value]);
 	};
-	
-	static onClickHandler(label) {
-		return label
-	}
-	
+
 	render() {
-		const {classes, onClickHandler} = this.props;
+		const {classes, friendList} = this.props;
 		
 		return (
 			<Paper square className={classes.root}>
@@ -59,17 +49,14 @@ class TabChooser extends React.Component {
 						indicatorColor="secondary"
 						textColor="secondary"
 					>
-						<Tab icon={<AllInclusive/>} label="ALL" onClick={onClickHandler(this.props.type[this.state])}/>
-						<Tab icon={<Rowing/>} label="SOLO"/>
-						<Tab icon={<SupervisedUserCircle/>} label="MULTI"/>
-						<Tab icon={<Whatshot/>} label="BATTLE"/>
+						<Tab icon={<AllInclusive/>} label={tabType[0]}/>
+						<Tab icon={<Rowing/>} label={tabType[1]}/>
+						<Tab icon={<SupervisedUserCircle/>} label={tabType[2]}/>
+						<Tab icon={<Whatshot/>} label={tabType[3]}/>
 					</Tabs>
-					<SearchPick/>
+					<SearchPick suggestions={friendList}/>
 					<div className={classes.rootButton}>
-						<Button cl variant="contained" color="primary" className={classes.button}>
-							ADD
-							<PersonAdd className={classes.buttonRightIcon}/>
-						</Button>
+						<AddFriendButton/>
 					</div>
 				</Grid>
 			</Paper>

@@ -113,7 +113,7 @@ class TableFriends extends React.Component {
 		order: 'asc',
 		orderBy: 'rank',
 		selected: [],
-		data: this.props.data,
+		//data: this.props.data,
 		page: 0
 	};
 	
@@ -160,8 +160,8 @@ class TableFriends extends React.Component {
 	isSelected = id => this.state.selected.indexOf(id) !== -1;
 	
 	render() {
-		const {classes} = this.props;
-		const {data, order, orderBy, selected} = this.state;
+		const {classes, data} = this.props;
+		const {order, orderBy, selected} = this.state;
 		
 		return (
 			<Paper className={classes.root}>

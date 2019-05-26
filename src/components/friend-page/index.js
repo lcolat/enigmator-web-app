@@ -45,12 +45,17 @@ const battleFriendsList = [
 	createData('dot not disturb', 40, "LeChienARaynal", 3, 624)
 ];
 
-const friendsList = new Map([
+const friendsListByType = new Map([
 	["ALL", allFriendsList],
 	["SOLO", soloFriendsList],
 	["MULTI", multiFriendsList],
 	["BATTLE", battleFriendsList]
 ]);
+
+const suggestions = allFriendsList.map(function (friend) {
+	return {label: friend.pseudo};
+});
+
 
 class FriendsView extends React.Component {
 	
@@ -58,12 +63,19 @@ class FriendsView extends React.Component {
 		categories: "ALL"
 	};
 	
+	handleChangeTable = (category) => {
+		this.setState({
+			categories: category
+		});
+		//alert(category);
+	};
+	
 	
 	render() {
 		return (
 			<div>
-				<TabChooser onClickHandler={(comp) => alert(comp.value)}/>
-				<TableFriends data={friendsList.get(this.state.categories)}/>
+				<TabChooser changeTable={this.handleChangeTable} friendList={suggestions}/>
+				<TableFriends data={friendsListByType.get(this.state.categories)}/>
 			</div>
 		);
 	}

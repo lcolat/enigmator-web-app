@@ -3,8 +3,9 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel} from '@material-ui/core';
-import {Toolbar, Typography, Paper, IconButton, FormControlLabel, Switch} from '@material-ui/core';
+import {Toolbar, Typography, Paper, IconButton, FormControlLabel, Switch, Button} from '@material-ui/core';
 
+import {ThumbUp, Forum} from "@material-ui/icons";
 import {lighten} from '@material-ui/core/styles/colorManipulator';
 
 function createData(name, creator, kind, difficulty, date, value, description, status, likes, likedByUser) {
@@ -90,7 +91,7 @@ const headRows = [
 ];
 
 function EnhancedTableHead(props) {
-	const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
+	const {order, orderBy, onRequestSort} = props;
 	const createSortHandler = property => event => {
 		onRequestSort(event, property);
 	};
@@ -175,22 +176,6 @@ const EnhancedTableToolbar = props => {
 					</Typography>
 				)}
 			</div>
-			<div className={classes.spacer}/>
-			<div className={classes.actions}>
-				{numSelected > 0 ? (
-					<Tooltip title="Delete">
-						<IconButton aria-label="Delete">
-							<DeleteIcon/>
-						</IconButton>
-					</Tooltip>
-				) : (
-					<Tooltip title="Filter list">
-						<IconButton aria-label="Filter list">
-							<FilterListIcon/>
-						</IconButton>
-					</Tooltip>
-				)}
-			</div>
 		</Toolbar>
 	);
 };
@@ -214,6 +199,9 @@ const useStyles = makeStyles(theme => ({
 	tableWrapper: {
 		overflowX: 'auto',
 	},
+	rightIcon: {
+		marginLeft: theme.spacing(1),
+	}
 }));
 
 function EnhancedTable() {
@@ -223,7 +211,9 @@ function EnhancedTable() {
 	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
-	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	
+	const [liked] = React.useState(false);
+	
 	
 	function handleRequestSort(event, property) {
 		const isDesc = orderBy === property && order === 'desc';
@@ -260,21 +250,11 @@ function EnhancedTable() {
 		setSelected(newSelected);
 	}
 	
-	function handleChangePage(event, newPage) {
-		setPage(newPage);
-	}
-	
-	function handleChangeRowsPerPage(event) {
-		setRowsPerPage(+event.target.value);
-	}
-	
 	function handleChangeDense(event) {
 		setDense(event.target.checked);
 	}
 	
 	const isSelected = name => selected.indexOf(name) !== -1;
-	
-	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 	
 	return (
 		<div className={classes.root}>
@@ -296,7 +276,6 @@ function EnhancedTable() {
 						/>
 						<TableBody>
 							{stableSort(rows, getSorting(order, orderBy))
-								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(row => {
 									const isItemSelected = isSelected(row.name);
 									return (
@@ -309,42 +288,33 @@ function EnhancedTable() {
 											key={row.name}
 											selected={isItemSelected}
 										>
-											<TableCell padding="checkbox">
-												<Checkbox checked={isItemSelected}/>
+											<TableCell>
+												<Button variant="contained"
+												        color={row.likedByUser ? "green" : "primary"}
+												        className={classes.button}>
+													{row.likes}
+													<ThumbUp className={classes.rightIcon}>send</ThumbUp>
+												</Button>
 											</TableCell>
 											<TableCell component="th" scope="row" padding="none">
 												{row.name}
 											</TableCell>
-											<TableCell align="right">{row.calories}</TableCell>
-											<TableCell align="right">{row.fat}</TableCell>
-											<TableCell align="right">{row.carbs}</TableCell>
-											<TableCell align="right">{row.protein}</TableCell>
+											<TableCell align="right">{row.name}</TableCell>
+											<TableCell align="right">{row.creator}</TableCell>
+											<TableCell align="right">{row.kind}</TableCell>
+											<TableCell align="right">{row.difficulty}</TableCell>
+											<TableCell align="right">{row.date}</TableCell>
+											<TableCell align="right">{row.value}</TableCell>
+											<TableCell align="right">{row.status}</TableCell>
+											<TableCell align="right">
+												<Forum fontSize={"large"}/>
+											</TableCell>
 										</TableRow>
 									);
 								})}
-							{emptyRows > 0 && (
-								<TableRow style={{height: 49 * emptyRows}}>
-									<TableCell colSpan={6}/>
-								</TableRow>
-							)}
 						</TableBody>
 					</Table>
 				</div>
-				<TablePagination
-					rowsPerPageOptions={[5, 10, 25]}
-					component="div"
-					count={rows.length}
-					rowsPerPage={rowsPerPage}
-					page={page}
-					backIconButtonProps={{
-						'aria-label': 'Previous Page',
-					}}
-					nextIconButtonProps={{
-						'aria-label': 'Next Page',
-					}}
-					onChangePage={handleChangePage}
-					onChangeRowsPerPage={handleChangeRowsPerPage}
-				/>
 			</Paper>
 			<FormControlLabel
 				control={<Switch checked={dense} onChange={handleChangeDense}/>}

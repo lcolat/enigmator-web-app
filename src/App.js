@@ -11,6 +11,7 @@ import theme from './theme'
 import PrivateRoute from './privateRoute';
 import HomePage from "./components/home-page";
 
+import TableEnigma from "./components/enigmas-list/TableEnigma"
 
 class App extends Component {
 	render() {
@@ -18,14 +19,7 @@ class App extends Component {
 			<MuiThemeProvider theme={theme}>
 				<div className="App">
 					<Header/>
-					{/*<Switch>*/}
-					{/*  <Route path="/login" component={Authentication} />*/}
-					{/*  <Route path="/forgotten-password" component={ForgottentPassword} />*/}
-					{/*  <Route path="/new-account" component={NewAccount} />*/}
-					{/*  <PrivateRoute path="/home" component={HomePage}/>*/}
-					{/*  <PrivateRoute path="/profile" component={Profile}/>*/}
-					{/*  <PrivateRoute path="/" />*/}
-					{/*</Switch>*/}
+					<TableEnigma/>
 				</div>
 			</MuiThemeProvider>
 		);

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 import {TextField, MenuItem, Avatar, Typography, Grid} from "@material-ui/core";
 
-import defaultProfilePicture from "./default-profile-picture.jpg"
+import defaultProfilePicture from "../../media/default-profile-picture.jpg"
 
 
 const styles = theme => ({

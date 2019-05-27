@@ -2,10 +2,19 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
-import {Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel} from '@material-ui/core';
+import {
+	Grid,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TablePagination,
+	TableRow,
+	TableSortLabel
+} from '@material-ui/core';
 import {Toolbar, Typography, Paper, IconButton, FormControlLabel, Switch, Button} from '@material-ui/core';
 
-import {ThumbUp, Forum} from "@material-ui/icons";
+import {ThumbUp, Forum, LocalActivity, Subject, Photo, MusicNote} from "@material-ui/icons";
 import {lighten} from '@material-ui/core/styles/colorManipulator';
 
 function createData(name, creator, kind, difficulty, date, value, description, status, likes, likedByUser) {
@@ -81,13 +90,16 @@ function getSorting(order, orderBy) {
 
 //name, creator, kind, difficulty, date, value, description, status, likes, likedByUser)
 const headRows = [
-	{id: 'likes', numeric: true, disablePadding: false, label: "Likes"},
-	{id: 'name', numeric: false, disablePadding: true, label: 'Name'},
-	{id: 'creator', numeric: true, disablePadding: false, label: 'Creator'},
-	{id: 'kind', numeric: true, disablePadding: false, label: 'Kind'},
-	{id: 'difficulty', numeric: true, disablePadding: false, label: 'Level'},
-	{id: 'date', numeric: true, disablePadding: false, label: "Date"},
-	{id: 'status', numeric: true, disablePadding: false, label: "Date"},
+	{id: 'likes', align: "center", disablePadding: false, label: "Like"},
+	{id: 'name', align: "left", disablePadding: true, label: 'Name'},
+	{id: 'creator', align: "left", disablePadding: false, label: 'Creator'},
+	{id: 'kind', align: "left", disablePadding: false, label: 'Kind'},
+	{id: 'difficulty', align: "left", disablePadding: false, label: 'Level'},
+	{id: 'date', align: "left", disablePadding: false, label: "Date"},
+	{id: 'value', align: "left", disablePadding: false, label: "Coins"},
+	{id: 'status', align: "left", disablePadding: false, label: "Status"},
+	{id: 'forum', align: "center", disablePadding: false, label: "Forum"}
+	
 ];
 
 function EnhancedTableHead(props) {
@@ -102,7 +114,7 @@ function EnhancedTableHead(props) {
 				{headRows.map(row => (
 					<TableCell
 						key={row.id}
-						align={row.numeric ? 'right' : 'left'}
+						align={row.align}
 						padding={row.disablePadding ? 'none' : 'default'}
 						sortDirection={orderBy === row.id ? order : false}
 					>
@@ -111,7 +123,16 @@ function EnhancedTableHead(props) {
 							direction={order}
 							onClick={createSortHandler(row.id)}
 						>
-							{row.label}
+							{(function () {
+								switch (row.label) {
+									case 'Like':
+										return <ThumbUp fontSize={"small"}/>;
+									case 'Coins':
+										return <LocalActivity fontSize={"small"}/>;
+									default:
+										return row.label;
+								}
+							})()}
 						</TableSortLabel>
 					</TableCell>
 				))}
@@ -155,34 +176,34 @@ const useToolbarStyles = makeStyles(theme => ({
 	},
 }));
 
-const EnhancedTableToolbar = props => {
-	const classes = useToolbarStyles();
-	const {numSelected} = props;
-	
-	return (
-		<Toolbar
-			className={clsx(classes.root, {
-				[classes.highlight]: numSelected > 0,
-			})}
-		>
-			<div className={classes.title}>
-				{numSelected > 0 ? (
-					<Typography color="inherit" variant="subtitle1">
-						{numSelected} selected
-					</Typography>
-				) : (
-					<Typography variant="h6" id="tableTitle">
-						Nutrition
-					</Typography>
-				)}
-			</div>
-		</Toolbar>
-	);
-};
+// const EnhancedTableToolbar = props => {
+// 	const classes = useToolbarStyles();
+// 	const {numSelected} = props;
+//
+// 	return (
+// 		<Toolbar
+// 			className={clsx(classes.root, {
+// 				[classes.highlight]: numSelected > 0,
+// 			})}
+// 		>
+// 			<div className={classes.title}>
+// 				{numSelected > 0 ? (
+// 					<Typography color="inherit" variant="subtitle1">
+// 						{numSelected} selected
+// 					</Typography>
+// 				) : (
+// 					<Typography variant="h6" id="tableTitle">
+// 						Nutrition
+// 					</Typography>
+// 				)}
+// 			</div>
+// 		</Toolbar>
+// 	);
+// };
 
-EnhancedTableToolbar.propTypes = {
-	numSelected: PropTypes.number.isRequired,
-};
+// EnhancedTableToolbar.propTypes = {
+// 	numSelected: PropTypes.number.isRequired,
+// };
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -194,7 +215,7 @@ const useStyles = makeStyles(theme => ({
 		marginBottom: theme.spacing(2),
 	},
 	table: {
-		minWidth: 750,
+		minWidth: 500,
 	},
 	tableWrapper: {
 		overflowX: 'auto',
@@ -203,6 +224,17 @@ const useStyles = makeStyles(theme => ({
 		marginLeft: theme.spacing(1),
 	}
 }));
+
+function kind(value) {
+	switch (value) {
+		case 'text':
+			return <Subject fontSize={"small"}/>;
+		case 'audio':
+			return <MusicNote fontSize={"small"}/>;
+		case "picture":
+			return <Photo fontSize={"small"}/>;
+	}
+}
 
 function EnhancedTable() {
 	const classes = useStyles();
@@ -259,7 +291,7 @@ function EnhancedTable() {
 	return (
 		<div className={classes.root}>
 			<Paper className={classes.paper}>
-				<EnhancedTableToolbar numSelected={selected.length}/>
+				{/*<EnhancedTableToolbar numSelected={selected.length}/>*/}
 				<div className={classes.tableWrapper}>
 					<Table
 						className={classes.table}
@@ -290,7 +322,7 @@ function EnhancedTable() {
 										>
 											<TableCell>
 												<Button variant="contained"
-												        color={row.likedByUser ? "green" : "primary"}
+												        color={row.likedByUser ? "thumbUpLiked" : "secondary"}
 												        className={classes.button}>
 													{row.likes}
 													<ThumbUp className={classes.rightIcon}>send</ThumbUp>
@@ -299,15 +331,18 @@ function EnhancedTable() {
 											<TableCell component="th" scope="row" padding="none">
 												{row.name}
 											</TableCell>
-											<TableCell align="right">{row.name}</TableCell>
-											<TableCell align="right">{row.creator}</TableCell>
-											<TableCell align="right">{row.kind}</TableCell>
-											<TableCell align="right">{row.difficulty}</TableCell>
-											<TableCell align="right">{row.date}</TableCell>
-											<TableCell align="right">{row.value}</TableCell>
-											<TableCell align="right">{row.status}</TableCell>
-											<TableCell align="right">
-												<Forum fontSize={"large"}/>
+											<TableCell align="left">{row.creator}</TableCell>
+											<TableCell align="left">{kind(row.kind)}</TableCell>
+											<TableCell align="left">{row.difficulty}</TableCell>
+											<TableCell align="left">{row.date}</TableCell>
+											<TableCell align="left">{row.value}</TableCell>
+											<TableCell align="left">{row.status}</TableCell>
+											<TableCell align="center">
+												<Button variant="contained"
+												        color={"primary"}
+												        className={classes.button}>
+													<Forum fontSize={"large"}/>
+												</Button>
 											</TableCell>
 										</TableRow>
 									);
@@ -316,10 +351,12 @@ function EnhancedTable() {
 					</Table>
 				</div>
 			</Paper>
-			<FormControlLabel
-				control={<Switch checked={dense} onChange={handleChangeDense}/>}
-				label="Dense padding"
-			/>
+			<Grid container justify={"flex-end"}>
+				<FormControlLabel
+					control={<Switch checked={dense} onChange={handleChangeDense}/>}
+					label="Reduce"
+				/>
+			</Grid>
 		</div>
 	);
 }

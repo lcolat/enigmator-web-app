@@ -64,7 +64,7 @@ class EnhancedTableHead extends React.Component {
 							>
 								<Tooltip
 									title="Sort"
-									placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+									placement={row.align ? 'bottom-end' : 'bottom-start'}
 									enterDelay={300}
 								>
 									<TableSortLabel

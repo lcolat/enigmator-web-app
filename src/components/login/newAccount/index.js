@@ -10,8 +10,8 @@ class NewAccount extends Component {
 		pseudo: '',
 		firstname: '',
 		lastname: '',
-		email:'',
-		birthdate:'',
+		email: '',
+		birthdate: '',
 		password: '',
 		passwordConfirmation: ''
 	}
@@ -30,7 +30,12 @@ class NewAccount extends Component {
 
 	render() {
 		return (
-			<FormControl >
+			<FormControl>
+				<img
+					alt="Enigmator"
+					src={process.env.PUBLIC_URL + '/img/logo_long.png'}
+					style={{ width: '30vw' }}
+				/>
 				<FormLabel component="legend">Inscription</FormLabel>
 				<div className="main">
 					<div className="pseudo">
@@ -76,11 +81,11 @@ class NewAccount extends Component {
 							value={this.state.birthdate}
 							onChange={this.handleChange}
 							InputLabelProps={{
-								shrink: true,
-							  }}
+								shrink: true
+							}}
 						/>
 					</div>
-					
+
 					<div className="email">
 						<TextField
 							id="email"
@@ -118,10 +123,7 @@ class NewAccount extends Component {
 						/>
 					</div>
 					<div className="loginBtn">
-						<Button
-							variant="contained"
-							color="primary"
-							type="submit">
+						<Button variant="contained" color="primary" type="submit">
 							Enregistrer
 						</Button>
 					</div>

@@ -3,13 +3,13 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
 class ForgottentPassword extends Component {
-    state = {
+	state = {
 		login: ''
 	}
 	handleClick = () => {
-        this.props.history.push({
-            pathname: '/home'
-        })
+		this.props.history.push({
+			pathname: '/home'
+		})
 	}
 
 	handleChange = event => {
@@ -20,6 +20,11 @@ class ForgottentPassword extends Component {
 	render() {
 		return (
 			<div className="main">
+				<img
+					alt="Enigmator"
+					src={process.env.PUBLIC_URL + '/img/logo_long.png'}
+					style={{ width: '30vw' }}
+				/>
 				<div className="login">
 					<TextField
 						id="login"
@@ -36,7 +41,7 @@ class ForgottentPassword extends Component {
 						variant="contained"
 						color="primary"
 						onClick={this.handleClick}>
-                        Envoyer
+						Envoyer
 					</Button>
 				</div>
 			</div>

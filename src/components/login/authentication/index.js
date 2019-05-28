@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
+import { Link as RouterLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
 
 class Authentication extends Component {
 	state = {
-		login: {
+		email: {
 			value: '',
 			error: false,
 			helperText: ''
@@ -35,12 +36,23 @@ class Authentication extends Component {
 	}
 	handleConnection = () => {
 		if (this.validateForm()) {
-			if (/*loginfunction*/ false) {
+			if (
+				this.props.userService.authenticate(
+					this.state.email.value,
+					this.state.password.value
+				)
+			) {
 				this.props.history.push({
 					pathname: '/home'
 				})
 			}
 		}
+	}
+
+	handleLogUp = () => {
+		this.props.history.push({
+			pathname: '/logup'
+		})
 	}
 
 	handleChange = event => {
@@ -53,18 +65,23 @@ class Authentication extends Component {
 	render() {
 		const classes = this.props.classes
 		return (
-			<div className="main">
-				<div className="login">
+			<div className="main" style={{ background: '#ae75e9' }}>
+				<img
+					alt="Enigmator"
+					src={process.env.PUBLIC_URL + '/img/logo_long.png'}
+					style={{ width: '30vw' }}
+				/>
+				<div className="email">
 					<TextField
-						id="login"
-						name="login"
+						id="email"
+						name="email"
 						label="Email"
 						placeholder="Saisissez votre email"
 						margin="normal"
 						required={true}
-						helperText={this.state.login.helperText}
-						error={this.state.login.error}
-						value={this.state.login.value}
+						helperText={this.state.email.helperText}
+						error={this.state.email.error}
+						value={this.state.email.value}
 						onChange={this.handleChange}
 					/>
 				</div>
@@ -84,15 +101,17 @@ class Authentication extends Component {
 					/>
 				</div>
 				<div className="forgottenPassword">
-				    <Link to="/forgotten-password">
-						Mot de passe oublié :(?
+					<Link>
+						<RouterLink to="/forgotten-password">
+							Mot de passe oublié :(?
+						</RouterLink>
 					</Link>
 				</div>
-				<div className="loginBtn">
+				<div className="emailBtn">
 					<Button
 						className={classes.button}
 						variant="contained"
-						color="primary"
+						color="secondary"
 						onClick={this.handleConnection}>
 						Connexion
 					</Button>
@@ -101,8 +120,8 @@ class Authentication extends Component {
 					<Button
 						className={classes.button}
 						variant="contained"
-						color="primary"
-						onClick={this.handleInscription}>
+						color="secondary"
+						onClick={this.handleLogUp}>
 						Inscription
 					</Button>
 				</div>
@@ -112,4 +131,3 @@ class Authentication extends Component {
 }
 
 export default withStyles(style, { withTheme: true })(Authentication)
-

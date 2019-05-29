@@ -60,7 +60,7 @@ class Drawer extends PureComponent {
 				icon: <Tune fontSize={'large'} />
 			}
 		]
-		const { classes, handleDrawerClose, open, theme } = this.props
+		const { classes, handleDrawer, open } = this.props
 		return (
 			<MaterialDrawer
 				variant="permanent"
@@ -75,7 +75,8 @@ class Drawer extends PureComponent {
 					})
 				}}
 				anchor={'left'}
-				open={open}>
+				open={open}
+				onClose={handleDrawer}>
 				<div className={classes.toolbar} />
 				<List color="primary">
 					{menuItems.map((item, index) => (

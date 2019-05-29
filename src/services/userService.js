@@ -7,7 +7,6 @@ export default class UserService {
 	pseudo = ''
 	firstName = ''
 	lastName = ''
-	token = ''
 	constructor() {
 		if (UserService.instance !== undefined) {
 			throw new Error('Constructor call more than one time !')
@@ -20,6 +19,15 @@ export default class UserService {
 
 		return UserService.instance
 	}
+	setAccessToken = accessToken => {
+		localStorage.setItem('accessToken', accessToken)
+	}
+	getAccessToken = () => {
+		return localStorage.getItem('accessToken')
+	}
+	deleteAccessToken = () => {
+		localStorage.removeItem('accessToken')
+	}
 	authenticate = async (email, password) => {
 		const req = {
 			password: password,
@@ -27,7 +35,7 @@ export default class UserService {
 		}
 		try {
 			const res = await axios.post(`${SERVER_URL}/UserEnigmators/login`, req)
-			localStorage.setItem('accessToken', res.data.id)
+			this.setAccessToken(res.data.id)
 			return true
 		} catch (err) {
 			switch (err.response.status) {
@@ -44,13 +52,21 @@ export default class UserService {
 	}
 
 	isLogin = () => {
-		if (localStorage.getItem('accessToken')) {
+		if (this.getAccessToken()) {
 			return true
 		}
 		return false
 	}
 
-	logout = () => {
-		localStorage.removeItem('accessToken')
+	logout = async () => {
+		try {
+			await axios.post(
+				`${SERVER_URL}/UserEnigmators/logout?access_token=${this.getAccessToken()}`
+			)
+			this.deleteAccessToken()
+			return true
+		} catch (err) {
+			throw err
+		}
 	}
 }

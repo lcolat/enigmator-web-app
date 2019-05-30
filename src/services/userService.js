@@ -21,6 +21,7 @@ export default class UserService {
 	}
 	setAccessToken = accessToken => {
 		localStorage.setItem('accessToken', accessToken)
+		//TODO: use more secure store
 	}
 	getAccessToken = () => {
 		return localStorage.getItem('accessToken')
@@ -66,7 +67,7 @@ export default class UserService {
 			this.deleteAccessToken()
 			return true
 		} catch (err) {
-			throw err
+			throw new Error(err)
 		}
 	}
 }

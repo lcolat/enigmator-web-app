@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Grid, Typography, Paper, ButtonBase} from "@material-ui/core";
 
-import defaultProfilePicture from "./default-profile-picture.jpg"
-import podiumPicture from "./podium.png"
+import defaultProfilePicture from "../../media/default-profile-picture.jpg"
+import podiumPicture from "../../media/podium.png"
 
 const styles = theme => ({
 	root: {

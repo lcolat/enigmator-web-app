@@ -5,22 +5,30 @@ import Profile from './components/profile/index'
 import Authentication from './components/login/authentication'
 import ForgottentPassword from './components/login/forgottenPassword'
 import NewAccount from './components/login/newAccount'
-import './App.css'
 import theme from './theme'
 import PrivateRoute from './privateRoute'
 import HomePage from './components/home-page'
 import UserService from './services/userService'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+	app: {
+		textAlign: 'center',
+		background: 'white',
+		display: 'flex'
+	}
+})
 
 class App extends Component {
 	state = {
 		userService: UserService.getInstance()
 	}
-	componentWillMount() {}
 	render() {
 		const userService = this.state.userService
+		const { classes } = this.props
 		return (
 			<MuiThemeProvider theme={theme}>
-				<div className="App">
+				<div className={classes.app}>
 					<Switch>
 						<Route
 							path="/login"
@@ -39,4 +47,4 @@ class App extends Component {
 	}
 }
 
-export default App
+export default withStyles(styles, { withTheme: true })(App)

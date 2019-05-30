@@ -24,7 +24,6 @@ class App extends Component {
 		userService: UserService.getInstance()
 	}
 	render() {
-		console.log(this.props.theme)
 		const userService = this.state.userService
 		const { classes } = this.props
 		return (

@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import { Grid } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import Link from '@material-ui/core/Link'
 import { Link as RouterLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
 
 class Authentication extends Component {
 	state = {
@@ -35,16 +38,20 @@ class Authentication extends Component {
 		})
 		return isValid
 	}
-	handleConnection = () => {
+	handleConnection = async () => {
 		if (this.validateForm()) {
-			if (
-				this.props.userService.authenticate(
-					this.state.email.value,
-					this.state.password.value
-				)
-			) {
+			const res = await this.props.userService.authenticate(
+				this.state.email.value,
+				this.state.password.value
+			)
+			if (res === true) {
 				this.props.history.push({
 					pathname: '/home'
+				})
+			} else {
+				createNotification({
+					level: Level.ERROR,
+					message: res
 				})
 			}
 		}
@@ -113,11 +120,9 @@ class Authentication extends Component {
 						</Grid>
 						<Grid item xs>
 							<div className="forgottenPassword">
-								<Link>
-									<RouterLink to="/forgotten-password">
-										Mot de passe oublié :(?
-									</RouterLink>
-								</Link>
+								<RouterLink to="/forgotten-password">
+									Mot de passe oublié :(?
+								</RouterLink>
 							</div>
 						</Grid>
 						<Grid item xs>

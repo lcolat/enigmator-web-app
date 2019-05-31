@@ -24,7 +24,8 @@ const PrivateRoute = ({
 								className={classes.content}
 								container
 								direction={'column'}
-								justify={'space-around'}>
+								justify={'space-around'}
+								spacing={2}>
 								<Component {...rest} {...props} />
 							</Grid>
 						</main>

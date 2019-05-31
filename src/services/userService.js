@@ -1,22 +1,21 @@
+import api from 'services/api'
 export default class UserService {
 	static instance = undefined
-	api = undefined
-	constructor(api) {
+	constructor() {
 		if (UserService.instance !== undefined) {
 			throw new Error('Constructor call more than one time !')
 		}
-		this.api = api
 	}
 
-	static getInstance(api) {
+	static getInstance() {
 		if (UserService.instance === undefined) {
-			UserService.instance = new UserService(api)
+			UserService.instance = new UserService()
 		}
 
 		return UserService.instance
 	}
 	setAccessToken = accessToken => {
-		this.api.defaults.headers.common['Authorization'] = accessToken
+		api.defaults.headers.common['Authorization'] = accessToken
 		localStorage.setItem('accessToken', accessToken)
 		//TODO: use more secure store
 	}
@@ -32,18 +31,18 @@ export default class UserService {
 			email: email
 		}
 		try {
-			const res = await this.api.post('/UserEnigmators/login', req)
+			const res = await api.post('/UserEnigmators/login', req)
 			this.setAccessToken(res.data.id)
 			this.id = res.data.userId
 			return true
 		} catch (err) {
 			switch (err.response.status) {
 				case 401:
-					return 'Bad credential'
+					return 'Identifiants incorrects'
 				case 404:
 					return "User doesn't exist"
 				default:
-					return 'Error'
+					return err
 			}
 		}
 	}
@@ -59,13 +58,12 @@ export default class UserService {
 			}
 		}
 		try {
-			const res = await this.api.get(url)
+			const res = await api.get(url)
 			return res.data
 		} catch (err) {
 			switch (err.response.status) {
 				case 401:
-					console.error('Bad credential')
-					break
+					throw new Error('Bad credential')
 				case 404:
 					console.error("User doesn't exist")
 					break
@@ -84,7 +82,7 @@ export default class UserService {
 
 	logout = async () => {
 		try {
-			await this.api.post(
+			await api.post(
 				`/UserEnigmators/logout?access_token=${this.getAccessToken()}`
 			)
 			this.deleteAccessToken()
@@ -103,7 +101,7 @@ export default class UserService {
 			inscription_date: Date.now()
 		}
 		try {
-			await this.api.post('/UserEnigmators', req)
+			await api.post('/UserEnigmators', req)
 			return true
 		} catch (err) {
 			throw new Error(err)

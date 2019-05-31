@@ -4,6 +4,10 @@ import TextField from '@material-ui/core/TextField'
 import { Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
 
 class ForgottentPassword extends Component {
 	state = {
@@ -32,6 +36,10 @@ class ForgottentPassword extends Component {
 
 	handleClick = () => {
 		if (this.validateForm()) {
+			createNotification({
+				level: Level.INFO,
+				message: 'Un email pour redéfinir votre mot de passe vous a été envoyé'
+			})
 			this.props.history.push({
 				pathname: '/login'
 			})

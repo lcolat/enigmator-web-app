@@ -1,10 +1,5 @@
-const axios = require('axios')
 const UserService = require('../userService').default
-const userService = UserService.getInstance(
-	axios.create({
-		baseURL: 'http://3.19.31.245:3000/api'
-	})
-)
+const userService = UserService.getInstance()
 const testUser = {
 	id: 3,
 	Classement: null,

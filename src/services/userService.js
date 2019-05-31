@@ -1,21 +1,22 @@
-import api from './api'
 export default class UserService {
 	static instance = undefined
-
-	constructor() {
+	api = undefined
+	constructor(api) {
 		if (UserService.instance !== undefined) {
 			throw new Error('Constructor call more than one time !')
 		}
+		this.api = api
 	}
-	static getInstance = () => {
+
+	static getInstance(api) {
 		if (UserService.instance === undefined) {
-			UserService.instance = new UserService()
+			UserService.instance = new UserService(api)
 		}
 
 		return UserService.instance
 	}
 	setAccessToken = accessToken => {
-		api.defaults.headers.common['Authorization'] = accessToken
+		this.api.defaults.headers.common['Authorization'] = accessToken
 		localStorage.setItem('accessToken', accessToken)
 		//TODO: use more secure store
 	}
@@ -31,20 +32,18 @@ export default class UserService {
 			email: email
 		}
 		try {
-			const res = await api.post('/UserEnigmators/login', req)
+			const res = await this.api.post('/UserEnigmators/login', req)
 			this.setAccessToken(res.data.id)
 			this.id = res.data.userId
 			return true
 		} catch (err) {
 			switch (err.response.status) {
 				case 401:
-					console.error('Bad credential')
-					break
+					return 'Bad credential'
 				case 404:
-					console.error("User doesn't exist")
-					break
+					return "User doesn't exist"
 				default:
-					console.error('error')
+					return 'Error'
 			}
 		}
 	}
@@ -60,7 +59,7 @@ export default class UserService {
 			}
 		}
 		try {
-			const res = await api.get(url)
+			const res = await this.api.get(url)
 			return res.data
 		} catch (err) {
 			switch (err.response.status) {
@@ -85,7 +84,7 @@ export default class UserService {
 
 	logout = async () => {
 		try {
-			await this.axios.post(
+			await this.api.post(
 				`/UserEnigmators/logout?access_token=${this.getAccessToken()}`
 			)
 			this.deleteAccessToken()
@@ -104,7 +103,7 @@ export default class UserService {
 			inscription_date: Date.now()
 		}
 		try {
-			await this.axios.post('/UserEnigmators', req)
+			await this.api.post('/UserEnigmators', req)
 			return true
 		} catch (err) {
 			throw new Error(err)

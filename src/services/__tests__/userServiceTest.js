@@ -31,3 +31,7 @@ it('Login should return bad credential', async function() {
 		'Bad credential'
 	)
 })
+
+it('Should get current user detail', async function() {
+	expect(await userService.get(testUser.id)).toEqual(testUser)
+})

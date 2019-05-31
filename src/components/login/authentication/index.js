@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Grid } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
@@ -65,67 +66,81 @@ class Authentication extends Component {
 	render() {
 		const classes = this.props.classes
 		return (
-			<div className="main" style={{ background: '#ae75e9' }}>
-				<img
-					alt="Enigmator"
-					src={process.env.PUBLIC_URL + '/img/logo_long.png'}
-					style={{ width: '30vw' }}
-				/>
-				<div className="email">
-					<TextField
-						id="email"
-						name="email"
-						label="Email"
-						placeholder="Saisissez votre email"
-						margin="normal"
-						required={true}
-						helperText={this.state.email.helperText}
-						error={this.state.email.error}
-						value={this.state.email.value}
-						onChange={this.handleChange}
-					/>
+			<Grid container direction={'column'} justify={'center'}>
+				<div className="main" style={{ background: '#ae75e9' }}>
+					<Grid item xs>
+						<img
+							className={classes.enigmatorLogo}
+							alt="Enigmator"
+							src={process.env.PUBLIC_URL + '/img/logo_long.png'}
+						/>
+					</Grid>
+					<Grid
+						className={classes.content}
+						container
+						direction={'column'}
+						justify={'center'}>
+						<Grid item xs>
+							<TextField
+								className={classes.email}
+								id="email"
+								name="email"
+								label="Email"
+								placeholder="Saisissez votre email"
+								margin="normal"
+								required={true}
+								helperText={this.state.email.helperText}
+								error={this.state.email.error}
+								value={this.state.email.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<TextField
+								className={classes.password}
+								id="password"
+								name="password"
+								label="Mot de passe"
+								type="password"
+								placeholder="Saisissez votre mot de passe"
+								margin="normal"
+								required={true}
+								helperText={this.state.password.helperText}
+								error={this.state.password.error}
+								value={this.state.password.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<div className="forgottenPassword">
+								<Link>
+									<RouterLink to="/forgotten-password">
+										Mot de passe oublié :(?
+									</RouterLink>
+								</Link>
+							</div>
+						</Grid>
+						<Grid item xs>
+							<Button
+								className={classes.button}
+								variant="contained"
+								color="secondary"
+								onClick={this.handleConnection}>
+								Connexion
+							</Button>
+						</Grid>
+						<Grid item xs>
+							<Button
+								className={classes.button}
+								variant="contained"
+								color="secondary"
+								onClick={this.handleLogUp}>
+								Inscription
+							</Button>
+						</Grid>
+					</Grid>
 				</div>
-				<div className="password">
-					<TextField
-						id="password"
-						name="password"
-						label="Mot de passe"
-						type="password"
-						placeholder="Saisissez votre mot de passe"
-						margin="normal"
-						required={true}
-						helperText={this.state.password.helperText}
-						error={this.state.password.error}
-						value={this.state.password.value}
-						onChange={this.handleChange}
-					/>
-				</div>
-				<div className="forgottenPassword">
-					<Link>
-						<RouterLink to="/forgotten-password">
-							Mot de passe oublié :(?
-						</RouterLink>
-					</Link>
-				</div>
-				<div className="emailBtn">
-					<Button
-						className={classes.button}
-						variant="contained"
-						color="secondary"
-						onClick={this.handleConnection}>
-						Connexion
-					</Button>
-				</div>
-				<div className="signUpBtn">
-					<Button
-						className={classes.button}
-						variant="contained"
-						color="secondary"
-						onClick={this.handleLogUp}>
-						Inscription
-					</Button>
-				</div>
-			</div>
+			</Grid>
 		)
 	}
 }

@@ -3,7 +3,7 @@ import Header from './header'
 import Drawer from './drawer'
 import useStyles from './style'
 
-export default function HeaderDrawer() {
+export default function HeaderDrawer(props) {
 	const classes = useStyles()
 	const [open, setOpen] = React.useState(false)
 	function handleDrawer() {
@@ -11,8 +11,18 @@ export default function HeaderDrawer() {
 	}
 	return (
 		<>
-			<Header classes={classes} handleDrawer={handleDrawer} open={open} />
-			<Drawer classes={classes} open={open} handleDrawer={handleDrawer} />
+			<Header
+				{...props}
+				classes={classes}
+				handleDrawer={handleDrawer}
+				open={open}
+			/>
+			<Drawer
+				{...props}
+				classes={classes}
+				open={open}
+				handleDrawer={handleDrawer}
+			/>
 		</>
 	)
 }

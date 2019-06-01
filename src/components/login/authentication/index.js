@@ -46,7 +46,7 @@ class Authentication extends Component {
 			)
 			if (res === true) {
 				this.props.history.push({
-					pathname: '/home'
+					pathname: '/'
 				})
 			} else {
 				createNotification({

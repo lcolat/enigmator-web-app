@@ -22,39 +22,84 @@ class Drawer extends PureComponent {
 		const menuItems = [
 			{
 				text: 'Home',
-				icon: <Home fontSize={'large'} />
+				icon: <Home fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/'
+					})
+				}
 			},
 			{
 				text: 'Profile',
-				icon: <AccountBox fontSize={'large'} />
+				icon: <AccountBox fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/profile'
+					})
+				}
 			},
 			{
 				text: 'Friends',
-				icon: <Contacts fontSize={'large'} />
+				icon: <Contacts fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/friends'
+					})
+				}
 			},
 			{
 				text: 'Enigmas',
-				icon: <ImageSearch fontSize={'large'} />
+				icon: <ImageSearch fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/enigmas'
+					})
+				}
 			},
 			{
 				text: 'Create',
-				icon: <AddBox fontSize={'large'} />
+				icon: <AddBox fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/create-enigmas'
+					})
+				}
 			},
 			{
 				text: 'Rank',
-				icon: <Stars fontSize={'large'} />
+				icon: <Stars fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/rank'
+					})
+				}
 			},
 			{
 				text: 'Forum',
-				icon: <Forum fontSize={'large'} />
+				icon: <Forum fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/forum'
+					})
+				}
 			},
 			{
 				text: 'RGPD',
-				icon: <Info fontSize={'large'} />
+				icon: <Info fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/rgpd'
+					})
+				}
 			},
 			{
 				text: 'Settings',
-				icon: <Tune fontSize={'large'} />
+				icon: <Tune fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/settings'
+					})
+				}
 			}
 		]
 		const { classes, handleDrawer, open } = this.props
@@ -77,7 +122,7 @@ class Drawer extends PureComponent {
 				<div className={classes.toolbar} />
 				<List color="primary">
 					{menuItems.map((item, index) => (
-						<ListItem button key={index}>
+						<ListItem button key={index} onClick={item.handleClick}>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText primary={item.text} />
 						</ListItem>

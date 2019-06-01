@@ -46,7 +46,7 @@ class Authentication extends Component {
 			)
 			if (res === true) {
 				this.props.history.push({
-					pathname: '/home'
+					pathname: '/'
 				})
 			} else {
 				createNotification({
@@ -72,6 +72,7 @@ class Authentication extends Component {
 
 	render() {
 		const classes = this.props.classes
+		document.body.style.backgroundColor = '#ae75e9'
 		return (
 			<Grid container direction={'column'} justify={'center'}>
 				<div className="main" style={{ background: '#ae75e9' }}>

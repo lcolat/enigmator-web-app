@@ -54,13 +54,14 @@ class Header extends PureComponent {
 						})}>
 						{!open ? <MenuIcon /> : <ClearIcon />}
 					</IconButton>
-					<Typography variant="h6" color="inherit">
+					<Typography variant="h6" color="inherit" className={classes.title}>
 						Enigmator
 					</Typography>
 					<IconButton
 						color="inherit"
-						aria-label="Open drawer"
+						aria-label="Logout user"
 						onClick={this.handleLogout}
+						edge="end"
 						className={classes.logout}>
 						<ExitIcon />
 					</IconButton>

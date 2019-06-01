@@ -15,9 +15,9 @@ const PrivateRoute = ({
 		<Route
 			{...rest}
 			render={props =>
-				userService.isLogin ? (
+				userService.isLogin() ? (
 					<>
-						<HeaderDrawer />
+						<HeaderDrawer {...props} />
 						<main>
 							<div className={classes.toolbar} />
 							<Grid

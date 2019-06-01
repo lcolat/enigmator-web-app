@@ -88,7 +88,7 @@ export default class UserService {
 			this.deleteAccessToken()
 			return true
 		} catch (err) {
-			throw new Error(err)
+			return err
 		}
 	}
 

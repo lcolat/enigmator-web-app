@@ -1,34 +1,55 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { Route, Switch } from 'react-router-dom'
-import Header from './components/header'
-import Profile from "./components/profile/index"
-import Authentication from './components/login/authentication'
-import ForgottentPassword from './components/login/forgottenPassword'
-import NewAccount from './components/login/newAccount'
-import './App.css';
+
+import {Authentication, ForgottenPassword, NewAccount} from "./components"
+import {HomePage} from './components'
+import {Profile} from './components'
+import {FriendPage} from './components'
+import {EnigmasList} from './components'
+
+import PrivateRoute from './privateRoute'
+import UserService from './services/userService'
+
 import theme from './theme'
-import PrivateRoute from './privateRoute';
-import HomePage from "./components/home-page";
+import './App.css'
 
 
 class App extends Component {
+	state = {
+		userService: UserService.getInstance()
+	};
+	
+	componentWillMount() {
+	}
 	render() {
+		const userService = this.state.userService;
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div className="App">
-					<Header/>
 					<Switch>
-						<Route path="/login" component={Authentication}/>
-						<Route path="/forgotten-password" component={ForgottentPassword}/>
-						<Route path="/new-account" component={NewAccount}/>
-						<PrivateRoute path="/home" component={HomePage}/>
+						<Route
+							path="/login"
+							render={props => (
+								<Authentication {...props} userService={userService}/>
+							)}
+						/>
+						<Route path="/forgotten-password" component={ForgottenPassword}/>
+						<Route path="/logup" component={NewAccount}/>
+						<PrivateRoute path="/" component={HomePage}/>
 						<PrivateRoute path="/profile" component={Profile}/>
-						<PrivateRoute path="/"/>
+						<PrivateRoute path={"/friends"} component={FriendPage}/>
+						<PrivateRoute path={"/enigmas"} component={EnigmasList}/>
 					</Switch>
 				</div>
 			</MuiThemeProvider>
-		);
+		)
 	}
 }
 
+// {
+// 	"password": "zaaa",
+// 	"email": "bb.zz@gmail.com"
+// }
+
+export default App

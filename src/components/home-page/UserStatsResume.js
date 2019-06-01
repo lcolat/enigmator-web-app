@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Grid, Typography, Paper, ButtonBase} from "@material-ui/core";
 
-import defaultProfilePicture from "../../media/default-profile-picture.jpg"
-import podiumPicture from "../../media/podium.png"
-
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
@@ -80,7 +77,7 @@ function UserStatsResume(props) {
 			</Grid>
 			<Grid container>
 				<Grid item>
-					<img className={classes.img} alt="complex" src={podiumPicture}/>
+					<img className={classes.img} alt="complex" src={process.env.PUBLIC_URL + '/img/podium.png'}/>
 				</Grid>
 				<Grid xs container direction={"column"}>
 					<Grid item xs>
@@ -120,7 +117,7 @@ function UserStatsResume(props) {
 }
 
 UserStatsResume.defaultProps = {
-	profilePicture: defaultProfilePicture
+	profilePicture: process.env.PUBLIC_URL + '/img/default-profile-picture.png'
 };
 
 UserStatsResume.propTypes = {

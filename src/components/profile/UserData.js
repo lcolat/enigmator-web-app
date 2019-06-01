@@ -5,8 +5,6 @@ import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 import {TextField, MenuItem, Avatar, Typography, Grid} from "@material-ui/core";
 
-import defaultProfilePicture from "../../media/default-profile-picture.jpg"
-
 
 const styles = theme => ({
 	container: {
@@ -104,7 +102,9 @@ class UserData extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-					<Avatar alt="Remy Sharp" src={defaultProfilePicture} className={classes.avatar}/>
+					<Avatar alt="Remy Sharp"
+					        src={process.env.PUBLIC_URL + '/img/default-profile-picture.png'}
+					        className={classes.avatar}/>
 				</Grid>
 				<Grid container direction={"column"}>
 					<Grid item xl>

@@ -37,14 +37,14 @@ class TabChooser extends React.Component {
 	};
 
 	render() {
-		const {classes, friendList} = this.props;
+		const {classes, friendList, handleChange} = this.props;
 		
 		return (
 			<Paper square className={classes.root}>
 				<Grid container direction={"row"}>
 					<Tabs
 						value={this.state.value}
-						onChange={this.handleChange}
+						onChange={handleChange}
 						variant="fullWidth"
 						indicatorColor="secondary"
 						textColor="secondary"

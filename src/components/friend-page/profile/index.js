@@ -7,7 +7,6 @@ import {Button, Grid, Tooltip, Typography, Paper} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import {DonutSmall, CompareArrows} from "@material-ui/icons";
 
-import defaultProfilePicture from "../../../media/default-profile-picture.jpg"
 import {mapUserStatusColor} from "../../../model/User";
 
 import TableEnigmas from "./TableEnigmas"
@@ -56,7 +55,8 @@ class ProfileFriend extends React.Component {
 						</Grid>
 						<Grid item>
 							<Avatar alt={pseudo}
-							        src={profilePicture ? profilePicture : defaultProfilePicture}
+							        src={profilePicture ? profilePicture :
+								        process.env.PUBLIC_URL + '/img/default-profile-picture.png'}
 							        className={classes.avatar}/>
 						</Grid>
 					</Grid>

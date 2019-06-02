@@ -17,7 +17,7 @@ import {Toolbar, Typography, Paper, IconButton, FormControlLabel, Switch, Button
 import {ThumbUp, Forum, LocalActivity, Subject, Photo, MusicNote} from "@material-ui/icons";
 import {lighten} from '@material-ui/core/styles/colorManipulator';
 
-import SelectPlayMode from "./SelectPlayMode";
+import PlayModeDialogue from "./play-mode";
 
 
 function createData(name, creator, kind, difficulty, date, value, description, status, likes, likedByUser) {
@@ -147,66 +147,11 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 	onRequestSort: PropTypes.func.isRequired,
-	onSelectAllClick: PropTypes.func.isRequired,
 	order: PropTypes.string.isRequired,
 	orderBy: PropTypes.string.isRequired,
 	rowCount: PropTypes.number.isRequired,
 };
 
-const useToolbarStyles = makeStyles(theme => ({
-	root: {
-		paddingLeft: theme.spacing(2),
-		paddingRight: theme.spacing(1),
-	},
-	highlight:
-		theme.palette.type === 'light'
-			? {
-				color: theme.palette.secondary.main,
-				backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-			}
-			: {
-				color: theme.palette.text.primary,
-				backgroundColor: theme.palette.secondary.dark,
-			},
-	spacer: {
-		flex: '1 1 100%',
-	},
-	actions: {
-		color: theme.palette.text.secondary,
-	},
-	title: {
-		flex: '0 0 auto',
-	},
-}));
-
-// const EnhancedTableToolbar = props => {
-// 	const classes = useToolbarStyles();
-// 	const {numSelected} = props;
-//
-// 	return (
-// 		<Toolbar
-// 			className={clsx(classes.root, {
-// 				[classes.highlight]: numSelected > 0,
-// 			})}
-// 		>
-// 			<div className={classes.title}>
-// 				{numSelected > 0 ? (
-// 					<Typography color="inherit" variant="subtitle1">
-// 						{numSelected} selected
-// 					</Typography>
-// 				) : (
-// 					<Typography variant="h6" id="tableTitle">
-// 						Nutrition
-// 					</Typography>
-// 				)}
-// 			</div>
-// 		</Toolbar>
-// 	);
-// };
-
-// EnhancedTableToolbar.propTypes = {
-// 	numSelected: PropTypes.number.isRequired,
-// };
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -246,6 +191,7 @@ function EnhancedTable() {
 	const [selected, setSelected] = React.useState([]);
 	const [dense, setDense] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
+	const [enigmaClicked, setEnigmaClicked] = React.useState();
 	
 	function handleRequestSort(event, property) {
 		const isDesc = orderBy === property && order === 'desc';
@@ -253,35 +199,9 @@ function EnhancedTable() {
 		setOrderBy(property);
 	}
 	
-	function handleSelectAllClick(event) {
-		if (event.target.checked) {
-			const newSelecteds = rows.map(n => n.name);
-			setSelected(newSelecteds);
-			return;
-		}
-		setSelected([]);
-	}
-	
-	function handleClick(event, name) {
-		const selectedIndex = selected.indexOf(name);
-		let newSelected = [];
-		
-		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, name);
-		} else if (selectedIndex === 0) {
-			newSelected = newSelected.concat(selected.slice(1));
-		} else if (selectedIndex === selected.length - 1) {
-			newSelected = newSelected.concat(selected.slice(0, -1));
-		} else if (selectedIndex > 0) {
-			newSelected = newSelected.concat(
-				selected.slice(0, selectedIndex),
-				selected.slice(selectedIndex + 1),
-			);
-		}
-		setSelected(newSelected);
-		
+	function handleClick(event, row) {
+		setEnigmaClicked(row);
 		handleClickDialogueOpen();
-		console.log("handleClickDialogueOpen");
 	}
 	
 	const handleClickDialogueOpen = () => {
@@ -311,7 +231,6 @@ function EnhancedTable() {
 							numSelected={selected.length}
 							order={order}
 							orderBy={orderBy}
-							onSelectAllClick={handleSelectAllClick}
 							onRequestSort={handleRequestSort}
 							rowCount={rows.length}
 						/>
@@ -322,8 +241,7 @@ function EnhancedTable() {
 									return (
 										<TableRow
 											hover
-											onClick={event => handleClick(event, row.name)}
-											role="checkbox"
+											onClick={event => handleClick(event, row)}
 											aria-checked={isItemSelected}
 											tabIndex={-1}
 											key={row.name}
@@ -366,7 +284,8 @@ function EnhancedTable() {
 					label="Reduce"
 				/>
 			</Grid>
-			<SelectPlayMode open={open} onOpen={handleClickDialogueOpen} onClose={handleDialogueClose}/>
+			<PlayModeDialogue enigma={enigmaClicked ? enigmaClicked : "undefined"} open={open}
+			                  onOpen={handleClickDialogueOpen} onClose={handleDialogueClose}/>
 		</div>
 	);
 }

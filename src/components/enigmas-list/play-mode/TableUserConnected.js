@@ -145,7 +145,6 @@ MuiVirtualizedTable.propTypes = {
 
 const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
-// ---
 
 const sample = ['DamSaulGoodMan', 'Saïtama', 'LaMereARaynal', 'LaSoeurARaynal', 'Kalfa'];
 
@@ -158,7 +157,7 @@ const rows = sample.map(pseudo => {
 
 function TableUserConnected() {
 	return (
-		<Paper style={{height: 300, width: 375}}>
+		<Paper style={{height: 300, width: 375, margin: "auto"}}>
 			<VirtualizedTable
 				rowCount={rows.length}
 				rowGetter={({index}) => rows[index]}

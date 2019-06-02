@@ -45,7 +45,7 @@ function PlayModeDialogue(props) {
 			maxWidth={"sm"}
 			{...other}
 		>
-			<DialogTitle id="dialog-title">{enigma.name}</DialogTitle>
+			<DialogTitle style={{alignSelf: "center"}} id="dialog-title">{enigma.name}</DialogTitle>
 			<DialogContent>
 				<Paper>
 					<Tabs

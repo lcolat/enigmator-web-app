@@ -158,7 +158,7 @@ const rows = sample.map(pseudo => {
 
 function TableUserConnected() {
 	return (
-		<Paper style={{height: 300, width: '100%'}}>
+		<Paper style={{height: 300, width: 375}}>
 			<VirtualizedTable
 				rowCount={rows.length}
 				rowGetter={({index}) => rows[index]}
@@ -170,14 +170,14 @@ function TableUserConnected() {
 						align: "left"
 					},
 					{
-						width: 200,
-						label: 'Status Request',
+						width: 100,
+						label: 'Status',
 						dataKey: 'statusRequest',
 						align: "center"
 					},
 					{
-						width: 200,
-						label: 'Send Invitation',
+						width: 75,
+						label: 'Send',
 						dataKey: 'add',
 						align: "right"
 					}

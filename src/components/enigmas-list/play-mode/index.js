@@ -7,11 +7,14 @@ import {AllInclusive, Rowing, SupervisedUserCircle, Whatshot, PlayCircleOutline}
 import Paper from "@material-ui/core/Paper/index";
 
 import TableUserConnected from "./TableUserConnected"
-
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
 	rightIcon: {
 		marginLeft: theme.spacing(1),
+	},
+	message: {
+		margin: theme.spacing(2)
 	}
 }));
 
@@ -19,16 +22,19 @@ function PlayModeDialogue(props) {
 	const classes = useStyles();
 	const {onOpen, enigma, ...other} = props;
 	const [value, setValue] = React.useState(0);
+	const [message, setMessage] = React.useState("Choose the Game Type and if it's Grouped, your Friend too!");
 	
 	function handleClose() {
 		onOpen(false);
 	}
 	
-	
 	function handleChange(event, newValue) {
 		setValue(newValue);
 	}
 	
+	function handleLaunchGame() {
+		setMessage("Your Game will Begin Soon ...")
+	}
 	
 	return (
 		<Dialog
@@ -36,10 +42,10 @@ function PlayModeDialogue(props) {
 			aria-labelledby="alert-dialog-title"
 			aria-describedby="alert-dialog-description"
 			fullWidth={true}
-			maxWidth={"md"}
+			maxWidth={"sm"}
 			{...other}
 		>
-			<DialogTitle id="dialog-title">{"Choose the Play Mode for: " + enigma.name}</DialogTitle>
+			<DialogTitle id="dialog-title">{enigma.name}</DialogTitle>
 			<DialogContent>
 				<Paper>
 					<Tabs
@@ -54,10 +60,13 @@ function PlayModeDialogue(props) {
 						<Tab icon={<Whatshot/>} label={"PvP"}/>
 					</Tabs>
 				</Paper>
+				<Typography className={classes.message} classes={"body1"}>
+					{message}
+				</Typography>
 				<TableUserConnected/>
 			</DialogContent>
 			<DialogActions>
-				<Button variant="contained" onClick={handleClose} color="primary">
+				<Button variant="contained" onClick={handleLaunchGame} color="primary">
 					PLAY
 					<PlayCircleOutline className={classes.rightIcon}/>
 				</Button>

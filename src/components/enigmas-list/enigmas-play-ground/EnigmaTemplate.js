@@ -5,15 +5,21 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
 
 import {FitnessCenter, LocalActivity, EventSeat, Create} from '@material-ui/icons';
 import Divider from "@material-ui/core/Divider";
 import {Paper, Tooltip} from "@material-ui/core";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
-	root: {
+	rootEnigmaInfo: {
 		maxWidth: 250,
+		backgroundColor: theme.palette.background.paper,
+	},
+	rootWordTry: {
+		width: '100%',
+		height: 400,
+		maxWidth: 360,
 		backgroundColor: theme.palette.background.paper,
 	},
 	nested: {
@@ -21,24 +27,25 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-const enigma = {
-	creator: "DamSaulGoodMan",
-	date: "18:02, 18/08/2018",
-	difficulty: "HARD",
-	value: "75"
-};
+// const enigmaTest = {
+// 	creator: "DamSaulGoodMan",
+// 	date: "18:02, 18/08/2018",
+// 	difficulty: "HARD",
+// 	value: "75"
+// };
 
 
-function InfoEnigma() {
+function InfoEnigma(props) {
 	
+	const {enigma} = props;
 	const classes = useStyles();
 	
 	return (
-		<Paper className={classes.root}>
+		<Paper className={classes.rootEnigmaInfo}>
 			<List
 				component="nav"
 				subheader={<ListSubheader component="div">Enigma's Specificity</ListSubheader>}
-				className={classes.root}
+				className={classes.rootEnigmaInfo}
 			>
 				<Divider/>
 				<Tooltip title={"Creator Name"} placement={"right"}>
@@ -81,5 +88,25 @@ function InfoEnigma() {
 	);
 }
 
-export default InfoEnigma;
+export default InfoEnigma({
+	enigma: {
+		creator: "DamSaulGoodMan",
+		date: "18:02, 18/08/2018", difficulty: "HARD",
+		value: "75"
+	}
+});
 
+
+export function ListWordTry() {
+	const classes = useStyles();
+	
+	return (
+		<List className={classes.rootWordTry}>
+			{[0, 1, 2].map(item => (
+				<ListItem key={`item-${item}`}>
+					<ListItemText primary={`Item ${item}`}/>
+				</ListItem>
+			))}
+		</List>
+	);
+}

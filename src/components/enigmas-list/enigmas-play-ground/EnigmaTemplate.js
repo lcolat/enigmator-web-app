@@ -11,6 +11,8 @@ import Divider from "@material-ui/core/Divider";
 import {Paper, Tooltip} from "@material-ui/core";
 import PropTypes from "prop-types";
 
+import Stack from "../../../utils/Stack"
+
 const useStyles = makeStyles(theme => ({
 	rootEnigmaInfo: {
 		maxWidth: 250,
@@ -96,6 +98,11 @@ const useStyles = makeStyles(theme => ({
 // 	}
 // });
 
+const stack = new Stack();
+stack.push("LaMereNoire");
+stack.push("LaMereNoire");
+stack.push("LaMereNoire");
+
 
 export default function ListWordTry() {
 	const classes = useStyles();
@@ -103,11 +110,7 @@ export default function ListWordTry() {
 	return (
 		<div>
 			<List className={classes.rootWordTry}>
-				{[0, 1, 2].map(item => (
-					<ListItem key={`item-${item}`}>
-						<ListItemText primary={`Item ${item}`}/>
-					</ListItem>
-				))}
+				{stack.dupContain().}
 			</List>
 		</div>
 	);

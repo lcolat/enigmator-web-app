@@ -18,6 +18,7 @@ import {ThumbUp, Forum, LocalActivity, Subject, Photo, MusicNote} from "@materia
 import {lighten} from '@material-ui/core/styles/colorManipulator';
 
 import PlayModeDialogue from "./play-mode";
+import {LikeCount} from "../../commun"
 
 
 function createData(name, creator, kind, difficulty, date, value, description, status, likes, likedByUser) {
@@ -248,12 +249,7 @@ function EnhancedTable() {
 											selected={isItemSelected}
 										>
 											<TableCell>
-												<Button variant="contained"
-												        color={row.likedByUser ? "primary" : "secondary"}
-												        className={classes.button}>
-													{row.likes}
-													<ThumbUp className={classes.rightIcon}>send</ThumbUp>
-												</Button>
+												<LikeCount liked={row.likedByUser} likes={row.likes}/>
 											</TableCell>
 											<TableCell component="th" scope="row" padding="none">
 												{row.name}

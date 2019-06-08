@@ -19,6 +19,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function PlayModeDialogue(props) {
+	
+	const [toto, setToto] = React.useState();
 	const classes = useStyles();
 	const {onOpen, enigma, ...other} = props;
 	const [value, setValue] = React.useState(0);

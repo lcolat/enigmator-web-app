@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import {Grid} from "@material-ui/core";
 import {AllInclusive, Rowing, SupervisedUserCircle, Whatshot, PersonAdd} from '@material-ui/icons';
 
-import SearchPick from "../../commun/SearchPick"
+import {SearchPick} from "../../commun"
 import AddFriendButton from "./AddFriendButton"
 
 

@@ -10,7 +10,7 @@ import {DonutSmall, CompareArrows} from "@material-ui/icons";
 import {mapUserStatusColor} from "../../../model/User";
 
 import TableEnigmas from "./TableEnigmas"
-import StatsTable from "../../../commun/StatsTable";
+import {StatsTable} from "../../../commun";
 
 
 const styles = theme => ({

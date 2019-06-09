@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function LikeCount(props) {
+function LikeCount(props) {
 	const classes = useStyles();
 	const {liked, likes} = props;
 	
@@ -25,7 +25,9 @@ export default function LikeCount(props) {
 	);
 }
 
-LikeCount.PropTypes = {
+LikeCount.propTypes = {
 	liked: PropTypes.bool.isRequired,
 	likes: PropTypes.number.isRequired
 };
+
+export default LikeCount;

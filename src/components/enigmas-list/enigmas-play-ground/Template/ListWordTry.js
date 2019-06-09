@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {makeStyles} from "@material-ui/core";
-import {List, ListItem, ListItemText} from '@material-ui/core';
+import {List, ListItem, ListItemText, ListSubheader} from '@material-ui/core';
+import PropTypes from "prop-types";
 
 
 const useStyles = makeStyles(theme => ({
@@ -9,7 +10,7 @@ const useStyles = makeStyles(theme => ({
 		overflow: 'auto',
 		width: '100%',
 		height: 200,
-		maxWidth: 300,
+		maxWidth: 250,
 		backgroundColor: theme.palette.background.paper.fontcolor("yellow")
 	}
 }));
@@ -22,26 +23,33 @@ const useStyles = makeStyles(theme => ({
 // stack.push("LaMereRouge");
 // stack.push("LaMereBalte");
 
-function getWords(props) {
-	const {stackOfWords} = props;
-	
-	return stackOfWords.map((word, index) => {
-		return (<ListItem key={word} style={{overflow: "hidden", wordWrap: "break-word"}}>
-			<ListItemText primary={`${stackOfWords.length - index} - ${word}`}/>
-		</ListItem>)
-	})
-}
 
 function ListWordTry(props) {
+	const {stackWords} = props;
 	const classes = useStyles();
 	
 	return (
 		<div>
-			<List className={classes.root}>
-				{getWords(props)}
+			<List className={classes.root}
+			      subheader={
+				      <ListSubheader disableSticky component="div" color={"primary"}>Lasts words tried</ListSubheader>
+			      }
+			      component={"ul"}>
+				{stackWords.map((word, index) => {
+					return (
+						<ListItem key={word} style={{overflow: "hidden", wordWrap: "break-word"}}>
+							<ListItemText primary={`${stackWords.length - index} - ${word}`}/>
+						</ListItem>
+					)
+				})}
 			</List>
 		</div>
 	);
 }
+
+ListWordTry.propTypes = {
+	stackWords: PropTypes.array.isRequired,
+};
+
 
 export default ListWordTry;

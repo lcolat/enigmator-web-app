@@ -2,6 +2,11 @@ import React from 'react';
 
 import {makeStyles, TextField, withStyles} from "@material-ui/core";
 
+import {InputAdornment, IconButton} from "@material-ui/core";
+
+import {Gavel} from "@material-ui/icons";
+
+
 
 const useStyles = makeStyles(theme => ({
 	marginTextField: {
@@ -35,21 +40,23 @@ function EntryForWord() {
 	const classes = useStyles();
 	
 	return (
-		<CssTextField
-			className={classes.marginTextField}
-			label="Response"
-			variant="outlined"
-			id="entry-response"
-			InputProps={{
-				endAdornment: (
-					<InputAdornment position="end">
-						<IconButton aria-label="Submit" size="medium">
-							<Gavel fontSize="inherit"/>
-						</IconButton>
-					</InputAdornment>
-				),
-			}}
-		/>
+		<div>
+			<CssTextField
+				className={classes.marginTextField}
+				label="Response"
+				variant="outlined"
+				id="entry-response"
+				InputProps={{
+					endAdornment: (
+						<InputAdornment position="end">
+							<IconButton aria-label="Submit" size="medium">
+								<Gavel fontSize="inherit"/>
+							</IconButton>
+						</InputAdornment>
+					),
+				}}
+			/>
+		</div>
 	);
 }
 

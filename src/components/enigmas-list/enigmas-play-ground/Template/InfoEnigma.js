@@ -5,6 +5,7 @@ import {ListSubheader, List, ListItem, ListItemIcon, ListItemText} from '@materi
 import {Divider, Tooltip, Paper} from "@material-ui/core";
 
 import {FitnessCenter, LocalActivity, EventSeat, Create} from '@material-ui/icons';
+import PropTypes from "prop-types";
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,8 +26,8 @@ function InfoEnigma(props) {
 		<Paper className={classes.root}>
 			<List
 				component="nav"
-				subheader={<ListSubheader component="div">Enigma's Specificity</ListSubheader>}
-				className={classes.rootEnigmaInfo}
+				subheader={<ListSubheader component="div" color={"primary"}>Enigma's Specificity</ListSubheader>}
+				className={classes.root}
 			>
 				<Divider/>
 				<Tooltip title={"Creator Name"} placement={"right"}>
@@ -68,6 +69,11 @@ function InfoEnigma(props) {
 		</Paper>
 	);
 }
+
+InfoEnigma.propTypes = {
+	enigma: PropTypes.array.isRequired,
+};
+
 
 export default InfoEnigma;
 

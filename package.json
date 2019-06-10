@@ -5,7 +5,8 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.0.1",
-    "axios": "^0.18.0",
+    "@material-ui/lab": "^4.0.0-alpha.15",
+    "axios": "^0.19.0",
     "classnames": "latest",
     "clsx": "latest",
     "downshift": "^3.2.10",

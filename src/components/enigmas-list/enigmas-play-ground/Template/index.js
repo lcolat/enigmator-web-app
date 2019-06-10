@@ -104,7 +104,9 @@ function TemplateEnigma(props) {
 	);
 }
 
-TemplateEnigma.propTypes = {};
+TemplateEnigma.propTypes = {
+	enigmaView: PropTypes.container.isLikedByUser
+};
 
 
 export default TemplateEnigma

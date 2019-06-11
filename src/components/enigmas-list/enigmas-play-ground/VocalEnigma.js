@@ -21,7 +21,7 @@ const styles = theme => ({
 		//height: 100,
 	},
 	sliderSound: {
-		padding: '22px 0px',
+		padding: '5px 0px',
 		margin: theme.spacing.unit * 0.5,
 		marginRight: 0
 	},
@@ -31,7 +31,7 @@ const styles = theme => ({
 		height: 80,
 	},
 	sliderVolume: {
-		padding: '0px 22px',
+		padding: '0px 10px',
 		width: 0,
 		margin: theme.spacing.unit * 0.5,
 		marginBottom: 0

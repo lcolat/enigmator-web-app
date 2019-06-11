@@ -9,7 +9,7 @@ import InfoEnigma from "./InfoEnigma";
 import ListWordTry from "./ListWordTry";
 import EntryForResponse from "./EntryForResponse";
 import {LikeCount} from "./../../../../commun";
-import {Gavel, OpenInNew} from "@material-ui/icons";
+import {OpenInNew} from "@material-ui/icons";
 
 
 const useStyles = makeStyles(theme => ({
@@ -79,14 +79,16 @@ function TemplateEnigma(props) {
 				</Grid>
 			</Grid>
 			<Grid container
-			      alignItems={"center"}
+			      alignItems={"stretch"}
 			      direction={"column"}
 			      justify={"flex-start"}
 			      className={classes.enigmaBox}>
 				<Typography title={"h3"}>{enigma.name}</Typography>
-				<Box component="div" m={1} color={"primary"}>
-					{enigmaView}
-				</Box>
+				<Grid item>
+					<div style={{display: 'flex', width: "100%"}}>
+						{enigmaView}
+					</div>
+				</Grid>
 				<Grid item container direction={"row"} justify={"center"} alignItems={"center"}>
 					<Grid item xl>
 						<EntryForResponse/>
@@ -105,7 +107,7 @@ function TemplateEnigma(props) {
 }
 
 TemplateEnigma.propTypes = {
-	enigmaView: PropTypes.container.isLikedByUser
+	enigmaView: PropTypes.any.isRequired
 };
 
 

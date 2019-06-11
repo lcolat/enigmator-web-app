@@ -2,11 +2,11 @@ import React from 'react';
 import PropType from "prop-types";
 
 import {withStyles} from '@material-ui/core';
-import {Grid} from '@material-ui/core';
+import {Grid, Fab} from '@material-ui/core';
 
 import {Slider} from "@material-ui/lab";
 
-import {MusicNoteRounded, VolumeDown, VolumeUp} from "@material-ui/icons";
+import {MusicNoteRounded, VolumeDown, VolumeUp, PlayArrowRounded, PauseRounded} from "@material-ui/icons";
 
 
 const styles = theme => ({
@@ -38,7 +38,10 @@ const styles = theme => ({
 	},
 	iconsVolume: {
 		display: 'flex',
-		height: 80
+		height: 92
+	},
+	playButton: {
+		margin: theme.spacing.unit,
 	}
 });
 
@@ -46,18 +49,23 @@ class VocalEnigma extends React.Component {
 	state = {
 		currentVolume: this.props.volume,
 		soundAdvancement: 0,
+		statusSound: "play",
 	};
 	
 	render() {
 		const maxVolume = 17;
 		const {classes, soundDuration} = this.props;
-		const {currentVolume, soundAdvancement} = this.state;
+		const {currentVolume, soundAdvancement, statusSound} = this.state;
 		
 		const handleChangeVolume = (event, currentVolume) => {
 			this.setState({currentVolume});
 		};
 		const handleChangeSoundAdvancement = (event, soundAdvancement) => {
 			this.setState({soundAdvancement});
+		};
+		const handleButtonSound = (event) => {
+			const statusSound = (this.state.statusSound === "play") ? "pause" : "play";
+			this.setState({statusSound})
 		};
 		
 		return (
@@ -103,6 +111,15 @@ class VocalEnigma extends React.Component {
 							</div>
 						</Grid>
 					</div>
+					<Grid item xs>
+						<Fab color={"primary"}
+						     className={classes.playButton}
+						     aria-label="PlaySound"
+						     onClick={handleButtonSound}>
+							{(statusSound === "play") ? <PlayArrowRounded fontSize={"large"}/> :
+								<PauseRounded fontSize={"large"}/>}
+						</Fab>
+					</Grid>
 				</Grid>
 			</div>
 		);

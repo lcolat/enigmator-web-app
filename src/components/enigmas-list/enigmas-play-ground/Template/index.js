@@ -32,8 +32,8 @@ const useStyles = makeStyles(theme => ({
 		marginTop: theme.spacing(1),
 	},
 	enigmaBox: {
-		marginLeft: theme.spacing(1),
-		overflow: "hidden",
+		//marginLeft: theme.spacing(1),
+		//overflow: "hidden",
 	}
 }));
 
@@ -83,11 +83,9 @@ function TemplateEnigma(props) {
 			      direction={"column"}
 			      justify={"flex-start"}
 			      className={classes.enigmaBox}>
-				<Typography title={"h3"}>{enigma.name}</Typography>
+				<Typography variant={"h4"} gutterBottom>{enigma.name}</Typography>
 				<Grid item>
-					<div style={{display: 'flex', width: "100%"}}>
-						{enigmaView}
-					</div>
+					{enigmaView}
 				</Grid>
 				<Grid item container direction={"row"} justify={"center"} alignItems={"center"}>
 					<Grid item xl>

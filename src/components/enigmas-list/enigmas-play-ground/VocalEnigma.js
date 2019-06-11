@@ -12,8 +12,8 @@ import {MusicNoteRounded, VolumeDown, VolumeUp, PlayArrowRounded, PauseRounded} 
 const styles = theme => ({
 	root: {
 		display: 'flex',
-		//width: "80%",
-		//height: 300
+		width: "100%",
+		height: 300
 	},
 	rootSliderSound: {
 		//display: 'flex',
@@ -38,7 +38,7 @@ const styles = theme => ({
 	},
 	iconsVolume: {
 		display: 'flex',
-		height: 92
+		height: 95
 	},
 	playButton: {
 		margin: theme.spacing.unit,

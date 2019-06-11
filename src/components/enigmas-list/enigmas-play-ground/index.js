@@ -6,6 +6,8 @@ import {makeStyles} from '@material-ui/core';
 import TemplateEnigma from "./Template";
 
 import VocalEnigma from "./VocalEnigma";
+import TextEnigma from "./TextEnigma";
+
 
 
 const useStyles = makeStyles(theme => ({}));
@@ -18,8 +20,8 @@ function Enigma(props) {
 	switch (type) {
 		case "vocal":
 			return <TemplateEnigma enigmaView={<VocalEnigma soundDuration={100} volume={8}/>}/>;
-		// case "text":
-		// 	return <TemplateEnigma enigmaView={<TextEnigma/>}/>;
+		case "text":
+			return <TemplateEnigma enigmaView={<TextEnigma/>}/>;
 		// case "photo":
 		// 	return <TemplateEnigma enigmaView={<PhotoEnigma/>}/>;
 	}

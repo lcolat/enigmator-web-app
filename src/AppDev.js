@@ -10,7 +10,7 @@ import {EnigmasList} from './components'
 
 import PrivateRoute from './privateRoute'
 import UserService from './services/userService'
-import Enigma from "./components/enigmas-list/enigmas-play-ground"
+import TemplatePopUp from "./components/enigmas-list/pop-up-enigma/TemplatePopUp"
 
 import theme from './theme'
 import './App.css'
@@ -29,7 +29,9 @@ class AppDev extends Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div className="App">
-					<Enigma type={"photo"}/>
+					<TemplatePopUp isOpen={true} score={48} image={process.env.PUBLIC_URL + '/img/WellDone.png'}/>
+					<TemplatePopUp score={48} image={process.env.PUBLIC_URL + '/img/YouWin.png'}/>
+					<TemplatePopUp image={process.env.PUBLIC_URL + '/img/GameOver.jpg'}/>
 					{/*<Switch>*/}
 					{/*	<Route*/}
 					{/*		path="/login"*/}

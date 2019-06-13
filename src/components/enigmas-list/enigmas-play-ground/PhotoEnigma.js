@@ -22,7 +22,7 @@ function TextEnigma(props) {
 		      direction={"column"}>
 			<Grid item xl>
 				<img
-					alt={"enigma picture"}
+					alt={"enigma-picture"}
 					src={process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'}/>
 			</Grid>
 		</Grid>

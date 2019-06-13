@@ -25,6 +25,7 @@ function InfoEnigma(props) {
 	return (
 		<Paper className={classes.root}>
 			<List
+				dense={true}
 				component="nav"
 				subheader={<ListSubheader component="div" color={"primary"}>Enigma's Specificity</ListSubheader>}
 				className={classes.root}
@@ -71,7 +72,7 @@ function InfoEnigma(props) {
 }
 
 InfoEnigma.propTypes = {
-	enigma: PropTypes.array.isRequired,
+	enigma: PropTypes.object.isRequired,
 };
 
 

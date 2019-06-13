@@ -29,7 +29,7 @@ class AppDev extends Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div className="App">
-					<Enigma type={"text"}/>
+					<Enigma type={"photo"}/>
 					{/*<Switch>*/}
 					{/*	<Route*/}
 					{/*		path="/login"*/}

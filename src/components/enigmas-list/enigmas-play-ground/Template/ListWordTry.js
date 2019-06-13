@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
 	root: {
 		overflow: 'auto',
 		width: '100%',
-		height: 200,
+		height: 150,
 		maxWidth: 250,
 		backgroundColor: theme.palette.background.paper.fontcolor("yellow")
 	}
@@ -30,14 +30,16 @@ function ListWordTry(props) {
 	
 	return (
 		<div>
-			<List className={classes.root}
+			<List dense={true}
+			      className={classes.root}
 			      subheader={
 				      <ListSubheader disableSticky component="div" color={"primary"}>Lasts words tried</ListSubheader>
 			      }
 			      component={"ul"}>
 				{stackWords.map((word, index) => {
 					return (
-						<ListItem key={word} style={{overflow: "hidden", wordWrap: "break-word"}}>
+						<ListItem key={`${stackWords.length - index}-${word}`}
+						          style={{overflow: "hidden", wordWrap: "break-word"}}>
 							<ListItemText primary={`${stackWords.length - index} - ${word}`}/>
 						</ListItem>
 					)

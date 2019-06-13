@@ -7,6 +7,8 @@ import TemplateEnigma from "./Template";
 
 import VocalEnigma from "./VocalEnigma";
 import TextEnigma from "./TextEnigma";
+import PhotoEnigma from "./PhotoEnigma";
+import {enigmasTypes, listEnigmasTypes} from "../../../model/Enigma";
 
 
 
@@ -18,17 +20,17 @@ function Enigma(props) {
 	const classes = useStyles();
 	
 	switch (type) {
-		case "vocal":
+		case enigmasTypes.VOCAL:
 			return <TemplateEnigma enigmaView={<VocalEnigma soundDuration={100} volume={8}/>}/>;
-		case "text":
+		case enigmasTypes.TEXT:
 			return <TemplateEnigma enigmaView={<TextEnigma/>}/>;
-		// case "photo":
-		// 	return <TemplateEnigma enigmaView={<PhotoEnigma/>}/>;
+		case enigmasTypes.PHOTO:
+			return <TemplateEnigma enigmaView={<PhotoEnigma/>}/>;
 	}
 }
 
 Enigma.propTypes = {
-	type: PropType.string.isRequired
+	type: PropType.oneOf(listEnigmasTypes).isRequired
 };
 
 

@@ -14,7 +14,9 @@ import {withStyles} from '@material-ui/core/styles'
 import {NotificationContainer} from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
 
-import EnigmaTypeSelection from "./components/create-enigma";
+import Template from "./components/create-enigma/enigma-builder/Template";
+import EnigmaBuilder from "./components/create-enigma/enigma-builder/VocalSelector";
+import {Type} from "./model/Enigma";
 
 
 const styles = theme => ({
@@ -35,7 +37,7 @@ class App extends Component {
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
 					<div className={classes.app}>
-						<EnigmaTypeSelection/>
+						<EnigmaBuilder type={Type.text}/>
 					</div>
 					<NotificationContainer/>
 				</MuiThemeProvider>

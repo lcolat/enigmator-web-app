@@ -18,14 +18,15 @@ const styles = theme => ({
 	app: {
 		textAlign: 'center'
 	}
-})
-class App extends Component {
+});
+
+class AppDev extends Component {
 	state = {
 		userService: UserService.getInstance()
-	}
+	};
 	render() {
-		const userService = this.state.userService
-		const { classes } = this.props
+		const userService = this.state.userService;
+		const {classes} = this.props;
 		return (
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
@@ -57,4 +58,4 @@ class App extends Component {
 	}
 }
 
-export default withStyles(styles, { withTheme: true })(App)
+export default withStyles(styles, {withTheme: true})(AppDev)

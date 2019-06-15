@@ -18,12 +18,12 @@ const styles = theme => ({
 	app: {
 		textAlign: 'center'
 	}
-});
-
-class AppDev extends Component {
+})
+class App extends Component {
 	state = {
 		userService: UserService.getInstance()
-	};
+	}
+	
 	render() {
 		const userService = this.state.userService;
 		const {classes} = this.props;
@@ -58,4 +58,4 @@ class AppDev extends Component {
 	}
 }
 
-export default withStyles(styles, {withTheme: true})(AppDev)
+export default withStyles(styles, { withTheme: true })(App)

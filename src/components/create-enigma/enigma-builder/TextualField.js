@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
 	textField: {
 		marginLeft: theme.spacing(1),
 		marginRight: theme.spacing(1),
+		width: "95%"
 	}
 }));
 
@@ -20,12 +21,14 @@ function TextualField(props) {
 	return (
 		<TextField
 			id="textual-input-enigma"
-			label="Enigma"
+			label="Text of the Enigma"
 			multiline
 			rows="4"
 			defaultValue=""
 			className={classes.textField}
 			margin="normal"
+			fullWidth
+			
 		/>
 	);
 }

@@ -15,7 +15,7 @@ import {NotificationContainer} from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
 
 import Template from "./components/create-enigma/enigma-builder/Template";
-import EnigmaBuilder from "./components/create-enigma/enigma-builder/VocalSelector";
+import EnigmaBuilder from "./components/create-enigma/enigma-builder";
 import {Type} from "./model/Enigma";
 
 
@@ -37,7 +37,7 @@ class App extends Component {
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
 					<div className={classes.app}>
-						<EnigmaBuilder type={Type.text}/>
+						<EnigmaBuilder type={Type.photo}/>
 					</div>
 					<NotificationContainer/>
 				</MuiThemeProvider>

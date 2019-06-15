@@ -19,11 +19,11 @@ function EnigmaBuilder(props) {
 	
 	switch (type) {
 		case Type.text:
-			return <Template component={<TextualField/>}/>
-		// case Type.photo:
-		// 	return <Template component={<PictureSelector/>}/>
-		// case Type.vocal:
-		// 	return <Template component={<VocalSelector/>}/>
+			return <Template component={<TextualField/>}/>;
+		case Type.photo:
+			return <Template component={<PictureSelector/>}/>;
+		case Type.vocal:
+			return <Template component={<VocalSelector/>}/>
 	}
 }
 

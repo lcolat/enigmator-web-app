@@ -100,11 +100,11 @@ function Template(props) {
 				fullWidth
 				margin="normal"
 			/>
+			{component}
 			<Button variant="contained" color="default" className={classes.button}>
 				Upload
 				<CloudUpload className={classes.rightIcon}/>
 			</Button>
-			{component}
 		</div>
 	);
 }

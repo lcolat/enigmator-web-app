@@ -22,6 +22,9 @@ const styles = theme => ({
 class App extends Component {
 	state = {
 		userService: UserService.getInstance()
+	};
+	
+	componentWillMount() {
 	}
 	render() {
 		const userService = this.state.userService

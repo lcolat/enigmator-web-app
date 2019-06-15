@@ -22,6 +22,6 @@ const style = theme => ({
 		},
 		height: '20vh'
 	}
-})
+});
 
 export default style

@@ -11,9 +11,6 @@ export default createMuiTheme({
 		},
 		secondary: {
 			main: '#ffffff'
-		},
-		thumbUpLiked: {
-			main: "#beff69"
 		}
 	}
 })

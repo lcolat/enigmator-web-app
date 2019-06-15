@@ -17,6 +17,10 @@ import {Toolbar, Typography, Paper, IconButton, FormControlLabel, Switch, Button
 import {ThumbUp, Forum, LocalActivity, Subject, Photo, MusicNote} from "@material-ui/icons";
 import {lighten} from '@material-ui/core/styles/colorManipulator';
 
+import PlayModeDialogue from "./play-mode";
+import {LikeCount} from "../../commun"
+
+
 function createData(name, creator, kind, difficulty, date, value, description, status, likes, likedByUser) {
 	return {name, creator, kind, difficulty, date, value, description, status, likes, likedByUser};
 }
@@ -99,7 +103,7 @@ const headRows = [
 	{id: 'value', align: "left", disablePadding: false, label: "Coins"},
 	{id: 'status', align: "left", disablePadding: false, label: "Status"},
 	{id: 'forum', align: "center", disablePadding: false, label: "Forum"}
-	
+
 ];
 
 function EnhancedTableHead(props) {
@@ -144,66 +148,11 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 	onRequestSort: PropTypes.func.isRequired,
-	onSelectAllClick: PropTypes.func.isRequired,
 	order: PropTypes.string.isRequired,
 	orderBy: PropTypes.string.isRequired,
 	rowCount: PropTypes.number.isRequired,
 };
 
-const useToolbarStyles = makeStyles(theme => ({
-	root: {
-		paddingLeft: theme.spacing(2),
-		paddingRight: theme.spacing(1),
-	},
-	highlight:
-		theme.palette.type === 'light'
-			? {
-				color: theme.palette.secondary.main,
-				backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-			}
-			: {
-				color: theme.palette.text.primary,
-				backgroundColor: theme.palette.secondary.dark,
-			},
-	spacer: {
-		flex: '1 1 100%',
-	},
-	actions: {
-		color: theme.palette.text.secondary,
-	},
-	title: {
-		flex: '0 0 auto',
-	},
-}));
-
-// const EnhancedTableToolbar = props => {
-// 	const classes = useToolbarStyles();
-// 	const {numSelected} = props;
-//
-// 	return (
-// 		<Toolbar
-// 			className={clsx(classes.root, {
-// 				[classes.highlight]: numSelected > 0,
-// 			})}
-// 		>
-// 			<div className={classes.title}>
-// 				{numSelected > 0 ? (
-// 					<Typography color="inherit" variant="subtitle1">
-// 						{numSelected} selected
-// 					</Typography>
-// 				) : (
-// 					<Typography variant="h6" id="tableTitle">
-// 						Nutrition
-// 					</Typography>
-// 				)}
-// 			</div>
-// 		</Toolbar>
-// 	);
-// };
-
-// EnhancedTableToolbar.propTypes = {
-// 	numSelected: PropTypes.number.isRequired,
-// };
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -241,11 +190,9 @@ function EnhancedTable() {
 	const [order, setOrder] = React.useState('asc');
 	const [orderBy, setOrderBy] = React.useState('calories');
 	const [selected, setSelected] = React.useState([]);
-	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
-	
-	const [liked] = React.useState(false);
-	
+	const [open, setOpen] = React.useState(false);
+	const [enigmaClicked, setEnigmaClicked] = React.useState();
 	
 	function handleRequestSort(event, property) {
 		const isDesc = orderBy === property && order === 'desc';
@@ -253,33 +200,17 @@ function EnhancedTable() {
 		setOrderBy(property);
 	}
 	
-	function handleSelectAllClick(event) {
-		if (event.target.checked) {
-			const newSelecteds = rows.map(n => n.name);
-			setSelected(newSelecteds);
-			return;
-		}
-		setSelected([]);
+	function handleClick(event, row) {
+		setEnigmaClicked(row);
+		handleClickDialogueOpen();
 	}
 	
-	function handleClick(event, name) {
-		const selectedIndex = selected.indexOf(name);
-		let newSelected = [];
-		
-		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, name);
-		} else if (selectedIndex === 0) {
-			newSelected = newSelected.concat(selected.slice(1));
-		} else if (selectedIndex === selected.length - 1) {
-			newSelected = newSelected.concat(selected.slice(0, -1));
-		} else if (selectedIndex > 0) {
-			newSelected = newSelected.concat(
-				selected.slice(0, selectedIndex),
-				selected.slice(selectedIndex + 1),
-			);
-		}
-		
-		setSelected(newSelected);
+	const handleClickDialogueOpen = () => {
+		setOpen(true);
+	};
+	
+	function handleDialogueClose() {
+		setOpen(false);
 	}
 	
 	function handleChangeDense(event) {
@@ -291,7 +222,6 @@ function EnhancedTable() {
 	return (
 		<div className={classes.root}>
 			<Paper className={classes.paper}>
-				{/*<EnhancedTableToolbar numSelected={selected.length}/>*/}
 				<div className={classes.tableWrapper}>
 					<Table
 						className={classes.table}
@@ -302,7 +232,6 @@ function EnhancedTable() {
 							numSelected={selected.length}
 							order={order}
 							orderBy={orderBy}
-							onSelectAllClick={handleSelectAllClick}
 							onRequestSort={handleRequestSort}
 							rowCount={rows.length}
 						/>
@@ -313,20 +242,14 @@ function EnhancedTable() {
 									return (
 										<TableRow
 											hover
-											onClick={event => handleClick(event, row.name)}
-											role="checkbox"
+											onClick={event => handleClick(event, row)}
 											aria-checked={isItemSelected}
 											tabIndex={-1}
 											key={row.name}
 											selected={isItemSelected}
 										>
 											<TableCell>
-												<Button variant="contained"
-												        color={row.likedByUser ? "thumbUpLiked" : "secondary"}
-												        className={classes.button}>
-													{row.likes}
-													<ThumbUp className={classes.rightIcon}>send</ThumbUp>
-												</Button>
+												<LikeCount liked={row.likedByUser} likes={row.likes}/>
 											</TableCell>
 											<TableCell component="th" scope="row" padding="none">
 												{row.name}
@@ -357,6 +280,8 @@ function EnhancedTable() {
 					label="Reduce"
 				/>
 			</Grid>
+			<PlayModeDialogue enigma={enigmaClicked ? enigmaClicked : "undefined"} open={open}
+			                  onOpen={handleClickDialogueOpen} onClose={handleDialogueClose}/>
 		</div>
 	);
 }

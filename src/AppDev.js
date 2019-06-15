@@ -14,42 +14,29 @@ import { withStyles } from '@material-ui/core/styles'
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
 
+import Template from './components/create-enigma/enigma-builder/Template'
+import EnigmaBuilder from './components/create-enigma/enigma-builder'
+import { listEnigmasTypes } from './model/Enigma'
+
 const styles = theme => ({
 	app: {
 		textAlign: 'center'
 	}
 })
-class App extends Component {
+
+class AppDev extends Component {
 	state = {
 		userService: UserService.getInstance()
 	}
-	
+
 	render() {
-		const userService = this.state.userService;
-		const {classes} = this.props;
+		const userService = this.state.userService
+		const { classes } = this.props
 		return (
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
 					<div className={classes.app}>
-						<Switch>
-							<Route
-								path="/login"
-								render={props => (
-									<Authentication {...props} userService={userService} />
-								)}
-							/>
-							<Route
-								path="/forgotten-password"
-								component={ForgottentPassword}
-							/>
-							<Route
-								path="/logup"
-								render={props => <LogUp {...props} userService={userService} />}
-							/>
-							<PrivateRoute path="/profile" component={Profile} />
-							<PrivateRoute path="/friends" component={FriendsView} />
-							<PrivateRoute path="/" component={HomePage} />
-						</Switch>
+						<EnigmaBuilder type={listEnigmasTypes.photo} />
 					</div>
 					<NotificationContainer />
 				</MuiThemeProvider>
@@ -58,4 +45,4 @@ class App extends Component {
 	}
 }
 
-export default withStyles(styles, { withTheme: true })(App)
+export default withStyles(styles, { withTheme: true })(AppDev)

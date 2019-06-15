@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({}));
 
 function generateTab(list) {
 	return (list.map(item => (
-		//(item.icon) ? <Tab key={item.text} icon={item.icon} label={item.text}/> :
+		(item.icon) ? <Tab key={item.text} icon={item.icon} label={item.text}/> :
 		<Tab key={item.text} label={item.text}/>
 	)));
 }
@@ -31,7 +31,7 @@ function TabChooser(props) {
 	
 	const handleChange = (event, value) => {
 		setValue(value);
-		eventChange(value)
+		if (eventChange) eventChange(value)
 	};
 	
 	return (

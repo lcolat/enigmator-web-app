@@ -1,14 +1,13 @@
 const style = theme => ({
 	content: {
 		[theme.breakpoints.down('sm')]: {
-			marginTop: '15vh'
+			marginTop: 'calc((100vh - 15vh)/2)',
+			transform: 'translateY(-70%)'
 		},
-		marginTop: '20vh'
+		marginTop: 'calc(40vh)',
+		transform: 'translateY(-70%)'
 	},
-	email: {
-		minWidth: '250px'
-	},
-	password: {
+	textField: {
 		minWidth: '250px'
 	},
 	button: {
@@ -22,6 +21,6 @@ const style = theme => ({
 		},
 		height: '20vh'
 	}
-});
+})
 
 export default style

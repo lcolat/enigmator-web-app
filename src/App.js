@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider } from '@material-ui/core/styles'
-import { Route, Switch } from 'react-router-dom'
-
-import {Authentication, ForgottenPassword, NewAccount} from "./components"
-import {HomePage} from './components'
-import {Profile} from './components'
-import {FriendPage} from './components'
-import {EnigmasList} from './components'
-
-import PrivateRoute from './privateRoute'
-import UserService from './services/userService'
-
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Profile from 'components/profile/index'
+import Authentication from 'components/login/authentication'
+import ForgottentPassword from 'components/login/forgottenPassword'
+import LogUp from 'components/login/logup'
 import theme from './theme'
-import './App.css'
+import PrivateRoute from './privateRoute'
+import HomePage from 'components/home-page'
+import FriendsView from 'components/friend-page'
+import UserService from 'services/userService'
+import { withStyles } from '@material-ui/core/styles'
+import { NotificationContainer } from 'react-notifications'
+import 'react-notifications/lib/notifications.css'
 
-
+const styles = theme => ({
+	app: {
+		textAlign: 'center'
+	}
+})
 class App extends Component {
 	state = {
 		userService: UserService.getInstance()
@@ -23,28 +27,37 @@ class App extends Component {
 	componentWillMount() {
 	}
 	render() {
-		const userService = this.state.userService;
+		const userService = this.state.userService
+		const { classes } = this.props
 		return (
-			<MuiThemeProvider theme={theme}>
-				<div className="App">
-					<Switch>
-						<Route
-							path="/login"
-							render={props => (
-								<Authentication {...props} userService={userService}/>
-							)}
-						/>
-						<Route path="/forgotten-password" component={ForgottenPassword}/>
-						<Route path="/logup" component={NewAccount}/>
-						<PrivateRoute path="/profile" component={Profile}/>
-						<PrivateRoute path="/friends" component={FriendPage}/>
-						<PrivateRoute path="/enigmas" component={EnigmasList}/>
-						<PrivateRoute path="/" component={HomePage}/>
-					</Switch>
-				</div>
-			</MuiThemeProvider>
+			<BrowserRouter>
+				<MuiThemeProvider theme={theme}>
+					<div className={classes.app}>
+						<Switch>
+							<Route
+								path="/login"
+								render={props => (
+									<Authentication {...props} userService={userService} />
+								)}
+							/>
+							<Route
+								path="/forgotten-password"
+								component={ForgottentPassword}
+							/>
+							<Route
+								path="/logup"
+								render={props => <LogUp {...props} userService={userService} />}
+							/>
+							<PrivateRoute path="/profile" component={Profile} />
+							<PrivateRoute path="/friends" component={FriendsView} />
+							<PrivateRoute path="/" component={HomePage} />
+						</Switch>
+					</div>
+					<NotificationContainer />
+				</MuiThemeProvider>
+			</BrowserRouter>
 		)
 	}
 }
 
-export default App
+export default withStyles(styles, { withTheme: true })(App)

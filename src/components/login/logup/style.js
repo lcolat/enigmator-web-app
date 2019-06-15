@@ -1,15 +1,12 @@
 const style = theme => ({
+	textField: {
+		width: '250px'
+	},
 	content: {
-		[theme.breakpoints.down('sm')]: {
-			marginTop: '15vh'
-		},
-		marginTop: '20vh'
-	},
-	email: {
-		minWidth: '250px'
-	},
-	password: {
-		minWidth: '250px'
+		// [theme.breakpoints.down('sm')]: {
+		// 	marginTop: '15vh'
+		// },
+		// marginTop: '20vh'
 	},
 	button: {
 		minWidth: '125px',
@@ -22,6 +19,6 @@ const style = theme => ({
 		},
 		height: '20vh'
 	}
-});
+})
 
 export default style

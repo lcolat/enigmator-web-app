@@ -36,20 +36,15 @@ class App extends Component {
 						/>
 						<Route path="/forgotten-password" component={ForgottenPassword}/>
 						<Route path="/logup" component={NewAccount}/>
-						<PrivateRoute path="/" component={HomePage}/>
 						<PrivateRoute path="/profile" component={Profile}/>
-						<PrivateRoute path={"/friends"} component={FriendPage}/>
-						<PrivateRoute path={"/enigmas"} component={EnigmasList}/>
+						<PrivateRoute path="/friends" component={FriendPage}/>
+						<PrivateRoute path="/enigmas" component={EnigmasList}/>
+						<PrivateRoute path="/" component={HomePage}/>
 					</Switch>
 				</div>
 			</MuiThemeProvider>
 		)
 	}
 }
-
-// {
-// 	"password": "zaaa",
-// 	"email": "bb.zz@gmail.com"
-// }
 
 export default App

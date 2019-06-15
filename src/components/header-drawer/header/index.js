@@ -6,7 +6,6 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ClearIcon from '@material-ui/icons/Clear'
 import ExitIcon from '@material-ui/icons/ExitToApp'
 import IconButton from '@material-ui/core/IconButton'
-import UserService from 'services/userService'
 import clsx from 'clsx'
 import {
 	createNotification,
@@ -15,7 +14,7 @@ import {
 
 class Header extends PureComponent {
 	state = {
-		userService: UserService.getInstance()
+		userService: this.props.userService
 	}
 	handleLogout = async () => {
 		const res = await this.state.userService.logout()

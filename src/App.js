@@ -21,12 +21,12 @@ const styles = theme => ({
 })
 class App extends Component {
 	state = {
-		userService: UserService.getInstance()
+		userService: new UserService()
 	}
-	
+
 	render() {
-		const userService = this.state.userService;
-		const {classes} = this.props;
+		const userService = this.state.userService
+		const { classes } = this.props
 		return (
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
@@ -46,9 +46,21 @@ class App extends Component {
 								path="/logup"
 								render={props => <LogUp {...props} userService={userService} />}
 							/>
-							<PrivateRoute path="/profile" component={Profile} />
-							<PrivateRoute path="/friends" component={FriendsView} />
-							<PrivateRoute path="/" component={HomePage} />
+							<PrivateRoute
+								path="/profile"
+								component={Profile}
+								userService={userService}
+							/>
+							<PrivateRoute
+								path="/friends"
+								component={FriendsView}
+								userService={userService}
+							/>
+							<PrivateRoute
+								path="/"
+								component={HomePage}
+								userService={userService}
+							/>
 						</Switch>
 					</div>
 					<NotificationContainer />

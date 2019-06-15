@@ -1,26 +1,24 @@
 import api from 'services/api'
 export default class UserService {
-	static instance = undefined
 	constructor() {
-		if (UserService.instance !== undefined) {
-			throw new Error('Constructor call more than one time !')
+		if (this.getAccessToken()) {
+			api.defaults.headers.common['Authorization'] = this.getAccessToken()
 		}
 	}
 
-	static getInstance() {
-		if (UserService.instance === undefined) {
-			UserService.instance = new UserService()
-		}
-
-		return UserService.instance
-	}
 	setAccessToken = accessToken => {
 		api.defaults.headers.common['Authorization'] = accessToken
 		localStorage.setItem('accessToken', accessToken)
 		//TODO: use more secure store
 	}
+	setId = id => {
+		localStorage.setItem('id', id)
+	}
 	getAccessToken = () => {
 		return localStorage.getItem('accessToken')
+	}
+	getId = () => {
+		return localStorage.getItem('id')
 	}
 	deleteAccessToken = () => {
 		localStorage.removeItem('accessToken')
@@ -33,7 +31,7 @@ export default class UserService {
 		try {
 			const res = await api.post('/UserEnigmators/login', req)
 			this.setAccessToken(res.data.id)
-			this.id = res.data.userId
+			this.setId(res.data.userId)
 			return true
 		} catch (err) {
 			switch (err.response.status) {
@@ -50,7 +48,7 @@ export default class UserService {
 	get = async (id, criteria) => {
 		let url = '/UserEnigmators'
 		if (id !== undefined) {
-			url = `/UserEnigmators/${this.id}`
+			url = `/UserEnigmators/${id}`
 		} else if (criteria !== undefined) {
 			url += '?'
 			for (let criterion in criteria) {

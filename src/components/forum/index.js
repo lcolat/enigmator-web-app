@@ -2,11 +2,15 @@ import React from 'react';
 import PropType from "prop-types";
 
 import {makeStyles, TableCell, TableRow} from '@material-ui/core';
-import SortableTable from "./../../commun/SortableTable";
+import {SortableTable, TabChooser} from "../../common";
 
 
 const useStyles = makeStyles(theme => ({}));
 
+const tabs = [
+	{text: "Enigmas"},
+	{text: "Other"},
+];
 
 const header = [
 	{id: 'name', align: "center", disablePadding: true, label: 'Name'},
@@ -51,7 +55,10 @@ function ListThreads(props) {
 	}
 	
 	return (
-		<SortableTable columnsHeader={header} rowFormGenerator={formBody} rows={body}/>
+		<div>
+			<TabChooser tabList={tabs}/>
+			<SortableTable columnsHeader={header} rowFormGenerator={formBody} rows={body}/>
+		</div>
 	);
 }
 

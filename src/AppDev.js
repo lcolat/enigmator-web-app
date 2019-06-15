@@ -17,26 +17,30 @@ import 'react-notifications/lib/notifications.css'
 import Template from './components/create-enigma/enigma-builder/Template'
 import EnigmaBuilder from './components/create-enigma/enigma-builder'
 import { listEnigmasTypes } from './model/Enigma'
+import {TabChooser} from "./common"
+import ListThreads from "./components/forum";
+
+
 
 const styles = theme => ({
 	app: {
 		textAlign: 'center'
 	}
-})
+});
 
 class AppDev extends Component {
 	state = {
 		userService: UserService.getInstance()
-	}
+	};
 
 	render() {
-		const userService = this.state.userService
-		const { classes } = this.props
+		const userService = this.state.userService;
+		const {classes} = this.props;
 		return (
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
 					<div className={classes.app}>
-						<EnigmaBuilder type={listEnigmasTypes.photo} />
+						<TabChooser/>
 					</div>
 					<NotificationContainer />
 				</MuiThemeProvider>

@@ -22,13 +22,11 @@ const styles = theme => ({
 class App extends Component {
 	state = {
 		userService: UserService.getInstance()
-	};
-	
-	componentWillMount() {
 	}
+	
 	render() {
-		const userService = this.state.userService
-		const { classes } = this.props
+		const userService = this.state.userService;
+		const {classes} = this.props;
 		return (
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>

@@ -9,3 +9,10 @@ export const listEnigmasTypes = [
 	enigmasTypes.TEXT,
 	enigmasTypes.PHOTO
 ];
+
+export const Difficulties = [
+	"Easy",
+	"Normal",
+	"Hard",
+	"Demon"
+];

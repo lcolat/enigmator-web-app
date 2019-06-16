@@ -18,7 +18,7 @@ import Template from './components/create-enigma/enigma-builder/Template'
 import EnigmaBuilder from './components/create-enigma/enigma-builder'
 import { listEnigmasTypes } from './model/Enigma'
 import {TabChooser} from "./common"
-import HeaderThread from "./components/forum/thread/HeaderThread";
+import Thread from "./components/forum/thread";
 
 
 
@@ -40,7 +40,7 @@ class AppDev extends Component {
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
 					<div className={classes.app}>
-						<HeaderThread/>
+						<Thread/>
 					</div>
 					<NotificationContainer />
 				</MuiThemeProvider>

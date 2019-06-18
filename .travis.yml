@@ -5,7 +5,7 @@ node_js:
 install:
   - npm install
   # - npm test
-  - npm run build
+  - CI="false" npm run build
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY

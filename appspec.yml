@@ -7,6 +7,6 @@ files:
     destination: /home/ubuntu/enigmator/enigmator-web-app
 hooks:
   AfterInstall:
-    - location: scripts/change_permissions.sh
+    - location: scripts/afterInstall.sh
       timeout: 300
       runas: root 

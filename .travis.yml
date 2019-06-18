@@ -1,0 +1,42 @@
+language: node_js
+node_js:
+  - 'lts/*'
+
+install:
+  - npm install
+  - npm test
+  - npm run build
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: enigmator-web-app
+    skip_cleanup: true
+    on:
+      all_branches: true
+    bucket: enigmator-storage
+    region: eu-west-3
+
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: enigmator-storage
+    key: latest-client.zip
+    bundle_type: zip
+    application: enigmator
+    deployment_group: DeployEnigmator
+    region: eu-west-3
+    on:
+      all_branches: true
+
+script:
+  - zip -r latest-client build
+  - mkdir -p enigmator-web-app
+  - mv latest-client.zip enigmator-api/latest-client.zip
+
+notifications:
+  email:
+    recipients:
+      - loic.colat@gmail.com
+    on_success: never
+    on_failure: always

@@ -23,6 +23,9 @@ export default class UserService {
 	deleteAccessToken = () => {
 		localStorage.removeItem('accessToken')
 	}
+	deleteId = () => {
+		localStorage.removeItem('id')
+	}
 	authenticate = async (email, password) => {
 		const req = {
 			password: password,
@@ -84,6 +87,7 @@ export default class UserService {
 				`/UserEnigmators/logout?access_token=${this.getAccessToken()}`
 			)
 			this.deleteAccessToken()
+			this.deleteId()
 			return true
 		} catch (err) {
 			return err

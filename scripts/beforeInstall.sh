@@ -1,1 +1,1 @@
-rm -rf /home/ubuntu/enigmator/enigmator-web-app/
+sudo rm -rf /home/ubuntu/enigmator/enigmator-web-app/

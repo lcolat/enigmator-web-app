@@ -32,7 +32,7 @@ deploy:
 script:
   - zip -r latest-client build
   - mkdir -p enigmator-web-app
-  - mv latest-client.zip enigmator-api/latest-client.zip
+  - mv latest-client.zip enigmator-web-app/latest-client.zip
 
 notifications:
   email:

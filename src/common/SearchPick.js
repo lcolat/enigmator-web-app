@@ -74,8 +74,8 @@ function getSuggestions(value, suggestions) {
 
 const styles = theme => ({
 	root: {
-		marginTop: theme.spacing.unit * 3.5,
-		marginLeft: theme.spacing.unit * 2,
+		// marginTop: theme.spacing.unit * 3.5,
+		// marginLeft: theme.spacing.unit * 2,
 		flexGrow: 1,
 		height: 10
 	},

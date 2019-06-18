@@ -1,8 +1,8 @@
 import React from 'react';
 import PropType from "prop-types";
 
-import {makeStyles} from '@material-ui/core';
-import {Button, Divider} from "@material-ui/core";
+import {makeStyles, Paper} from '@material-ui/core';
+import {Button, Divider, TextField, Grid} from "@material-ui/core";
 
 import {AddComment, Input} from "@material-ui/icons";
 
@@ -10,17 +10,6 @@ import HeaderThread from "./HeaderThread";
 import Post from "./Post";
 
 
-const useStyles = makeStyles(theme => ({
-	rootHeader: {
-		margin: theme.spacing(1),
-	},
-	button: {
-		margin: theme.spacing(1),
-	},
-	rightIcon: {
-		marginLeft: theme.spacing(1),
-	},
-}));
 
 const subject = {
 	name: "Toto", creator: "DamSaulGoodMan", date: "18/08/1997, 00:00", avatar: "",
@@ -44,7 +33,7 @@ const postsData = [{
 		like: {number: 10, byUser: true},
 		body: "Hello i'm a second comment"
 	}]
-}, {
+}/*, {
 	title: "Yolo",
 	date: "19/08/1997, 10:01",
 	creator: {name: "DamSaulGoodMan", avatar: false},
@@ -78,11 +67,50 @@ const postsData = [{
 		like: {number: 10, byUser: true},
 		body: "Hello i'm a second comment"
 	}]
-}];
+}*/];
+
+const useStyles = makeStyles(theme => ({
+	rootHeader: {
+		margin: theme.spacing(1),
+	},
+	button: {
+		margin: theme.spacing(1),
+	},
+	rightIcon: {
+		marginLeft: theme.spacing(1),
+	},
+	textField: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+		width: 200,
+	},
+	newPostRoot: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+	},
+	textFieldNewPostBody: {
+		marginBottom: theme.spacing(1),
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+	}
+}));
+
 
 function Thread(props) {
 	const {} = props;
 	const classes = useStyles();
+	const [addNewPostView, setAddNewPostView] = React.useState(false);
+	const [labelNewPost, setLabelNewPost] = React.useState("ADD POST");
+	
+	function handleShowNewPostView() {
+		if (addNewPostView) {
+			setAddNewPostView(false);
+			setLabelNewPost("ADD POST");
+		} else {
+			setAddNewPostView(true);
+			setLabelNewPost("SEND");
+		}
+	}
 	
 	return (
 		<div>
@@ -96,8 +124,32 @@ function Thread(props) {
 					<Post postData={post}/>
 				</div>
 			))}
-			<Button variant="contained" color="primary" className={classes.button}>
-				Add Post
+			{addNewPostView &&
+			<Paper className={classes.newPostRoot}>
+				<Grid container direction={"column"} alignItems={"stretch"} justify={"flex-start"}>
+					<TextField
+						id="title-post"
+						label="Name"
+						className={classes.textField}
+						margin="normal"
+					/>
+					<TextField
+						id="body-post"
+						label="Post Body"
+						className={classes.textFieldNewPostBody}
+						multiline
+						rows="4"
+						margin="normal"
+						variant="outlined"
+						InputLabelProps={{
+							shrink: true,
+						}}
+					/>
+				</Grid>
+			</Paper>
+			}
+			<Button variant="contained" color="primary" className={classes.button} onClick={handleShowNewPostView}>
+				{labelNewPost}
 				<AddComment className={classes.rightIcon}/>
 			</Button>
 		</div>

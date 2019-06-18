@@ -9,6 +9,11 @@ import 'react-notifications/lib/notifications.css'
 import LeaderBoard from './components/leader-board'
 import ProfileFriend from './components/friend-page/profile'
 
+import Template from './components/create-enigma/enigma-builder/Template'
+import EnigmaBuilder from './components/create-enigma/enigma-builder'
+import { listEnigmasTypes } from './model/Enigma'
+import Settings from "./components/settings-page";
+
 
 const styles = theme => ({
 	app: {
@@ -18,16 +23,17 @@ const styles = theme => ({
 
 class AppDev extends Component {
 	state = {
-		userService: new UserService()
+		userService: UserService.getInstance()
 	};
 
 	render() {
+		const userService = this.state.userService;
 		const {classes} = this.props;
 		return (
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
 					<div className={classes.app}>
-						<ProfileFriend pseudo={'DamSaulGoodMan'} status={'dot not disturb'}/>
+						<Settings/>
 					</div>
 					<NotificationContainer />
 				</MuiThemeProvider>

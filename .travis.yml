@@ -5,6 +5,7 @@ node_js:
 install:
   - npm install
   # - npm test
+  - CI="false" npm run build
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
@@ -29,7 +30,7 @@ deploy:
       all_branches: true
 
 script:
-  - zip -r latest-client *
+  - zip -r latest-client build/ appspec.yml
   - mkdir -p enigmator-web-app
   - mv latest-client.zip enigmator-web-app/latest-client.zip
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import {
@@ -8,37 +7,14 @@ import {
 	Avatar,
 	Typography,
 	Grid,
-	ButtonBase
+	ButtonBase,
+	Button
 } from '@material-ui/core'
-
-import defaultProfilePicture from '../../media/default-profile-picture.jpg'
-
-const styles = theme => ({
-	container: {
-		display: 'flex',
-		flexWrap: 'wrap'
-	},
-	textField: {
-		marginLeft: theme.spacing.unit,
-		marginRight: theme.spacing.unit,
-		minWidth: '152px',
-		maxWidth: '200px'
-	},
-	margin: {
-		margin: 'normal'
-	},
-	dense: {
-		marginTop: 16
-	},
-	menu: {
-		width: 200
-	},
-	avatar: {
-		margin: 10,
-		width: 120,
-		height: 120
-	}
-})
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
+import userDataStyle from './userDataStyle'
 
 const statusList = [
 	{ value: 'Connected', label: 'Connected' },
@@ -51,7 +27,6 @@ class UserData extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			userService: this.props.userService,
 			username: '',
 			firstName: '',
 			lastName: '',
@@ -65,10 +40,15 @@ class UserData extends React.Component {
 		}
 	}
 	formatDate(date) {
-		return date.slice(0, 10)
+		return new Date(date).toLocaleDateString('fr-FR', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
 	}
 	async componentDidMount() {
-		const res = await this.state.userService.get(this.state.userService.getId())
+		const res = await this.props.userService.get(this.props.userService.id)
 		if (res) {
 			this.setState({
 				username: res.username,
@@ -79,6 +59,26 @@ class UserData extends React.Component {
 				creationDate: this.formatDate(res.creationDate)
 			})
 		} else {
+			createNotification({
+				level: Level.ERROR,
+				message: "Impossible de récupérer les informations de l'utilisateur"
+			})
+		}
+	}
+	validatePassword = () => {
+		if (this.state.newPassword !== this.state.newPasswordConfirmation) {
+			return false
+		}
+		return true
+	}
+
+	updateProfile = async () => {
+		if (this.validatePassword()) {
+		} else {
+			createNotification({
+				level: Level.ERROR,
+				message: 'Les deux mots de passe ne correspondent pas'
+			})
 		}
 	}
 	handleChange = prop => event => {
@@ -88,23 +88,26 @@ class UserData extends React.Component {
 	render() {
 		const { classes } = this.props
 		return (
-			<form className={classes.container} noValidate autoComplete="off">
-				<Grid container direction={'column'}>
+			<>
+				<Grid container direction={'column'} justify={'center'}>
 					<Grid item>
-						<Grid container direction={'row'} style={{ alignItems: 'center' }}>
+						<Grid container direction={'row'} justify={'center'}>
 							<Grid item>
 								<ButtonBase className={classes.image}>
 									<Avatar
 										alt="Profile picture"
-										src={defaultProfilePicture}
+										src={
+											process.env.PUBLIC_URL +
+											'/img/default-profile-picture.jpg'
+										}
 										className={classes.avatar}
 									/>
 								</ButtonBase>
 							</Grid>
 							<Grid item>
-								<Grid container direction={'column'}>
+								<Grid container direction={'column'} justify={'center'}>
 									<Typography variant="subtitle1" gutterBottom>
-										{`Inscript depuis le ${this.state.creationDate}`}
+										{`Inscrit depuis le ${this.state.creationDate}`}
 									</Typography>
 									<TextField
 										id="text-field-status"
@@ -130,52 +133,48 @@ class UserData extends React.Component {
 							</Grid>
 						</Grid>
 					</Grid>
-					<Grid item>
-						<Grid container direction={'column'}>
-							<TextField
-								id="text-field-pseudo"
-								label="Pseudo"
-								className={classNames(classes.margin, classes.textField)}
-								value={this.state.username}
-								onChange={this.handleChange('pseudo')}
-								margin="normal"
-								variant="outlined"
-							/>
-							<Grid container direction={'row'}>
-								<TextField
-									id="text-field-firstName"
-									label="Prénom"
-									className={classNames(classes.margin, classes.textField)}
-									value={this.state.firstName}
-									onChange={this.handleChange('firstName')}
-									margin="normal"
-									variant="outlined"
-								/>
-								<TextField
-									id="text-field-last-name"
-									label="Nom"
-									className={classNames(classes.margin, classes.textField)}
-									value={this.state.lastName}
-									onChange={this.handleChange('lastName')}
-									margin="normal"
-									variant="outlined"
-								/>
-							</Grid>
-						</Grid>
-					</Grid>
-				</Grid>
-				<Grid container direction={'column'}>
-					<Grid container direction={'row'} justify={'space-between'}>
+					<Grid container direction={'column'} style={{ alignItems: 'center' }}>
 						<TextField
-							id="text-field-state"
-							label="Pays"
+							id="text-field-pseudo"
+							label="Pseudo"
 							className={classNames(classes.margin, classes.textField)}
-							value={this.state.country}
-							onChange={this.handleChange('country')}
+							value={this.state.username}
+							onChange={this.handleChange('pseudo')}
 							margin="normal"
 							variant="outlined"
 						/>
+						<Grid container direction={'row'} justify={'center'}>
+							<TextField
+								id="text-field-firstName"
+								label="Prénom"
+								className={classNames(classes.margin, classes.textField)}
+								value={this.state.firstName}
+								onChange={this.handleChange('firstName')}
+								margin="normal"
+								variant="outlined"
+							/>
+							<TextField
+								id="text-field-last-name"
+								label="Nom"
+								className={classNames(classes.margin, classes.textField)}
+								value={this.state.lastName}
+								onChange={this.handleChange('lastName')}
+								margin="normal"
+								variant="outlined"
+							/>
+						</Grid>
 					</Grid>
+				</Grid>
+				<Grid container direction={'column'} style={{ alignItems: 'center' }}>
+					<TextField
+						id="text-field-state"
+						label="Pays"
+						className={classNames(classes.margin, classes.textField)}
+						value={this.state.country}
+						onChange={this.handleChange('country')}
+						margin="normal"
+						variant="outlined"
+					/>
 					<TextField
 						id="text-field-email"
 						label="Email"
@@ -186,8 +185,8 @@ class UserData extends React.Component {
 						variant="outlined"
 					/>
 				</Grid>
-				<Grid container direction={'column'}>
-					<Grid container direction={'row'}>
+				<Grid container direction={'row'} justify={'center'}>
+					<Grid item>
 						<TextField
 							id="text-field-new-password"
 							label="Nouveau mot de passe"
@@ -197,6 +196,9 @@ class UserData extends React.Component {
 							onChange={this.handleChange('newPassword')}
 							margin="normal"
 							variant="outlined"
+							InputLabelProps={{
+								shrink: true
+							}}
 						/>
 						<TextField
 							id="text-field-new-password-confirmation"
@@ -207,12 +209,34 @@ class UserData extends React.Component {
 							onChange={this.handleChange('newPasswordConfirmation')}
 							margin="normal"
 							variant="outlined"
+							InputLabelProps={{
+								shrink: true
+							}}
 						/>
 					</Grid>
 				</Grid>
-			</form>
+				{/* <Grid container direction={'column'} justify={'center'}>
+					{this.state.changes ? (
+						<Button
+							variant="contained"
+							color="primary"
+							className={classes.button}
+							onClick={this.updateProfile}>
+							Enregistrer les modifications
+						</Button>
+					) : (
+						<Button
+							variant="contained"
+							color="primary"
+							disabled
+							className={classes.button}>
+							Enregistrer les modifications
+						</Button>
+					)}
+				</Grid> */}
+			</>
 		)
 	}
 }
 
-export default withStyles(styles)(UserData)
+export default withStyles(userDataStyle)(UserData)

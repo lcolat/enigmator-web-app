@@ -14,9 +14,9 @@ class Profile extends React.Component {
 				<Paper>
 					<UserData {...this.props} />
 				</Paper>
-				<Paper>
+				{/* <Paper>
 					<StatsTable />
-				</Paper>
+				</Paper> */}
 				{/*<div>*/}
 				{/*<hr />*/}
 				{/*</div>*/}

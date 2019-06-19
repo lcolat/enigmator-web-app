@@ -1,8 +1,15 @@
 import api from 'services/api'
+import { async } from 'q'
 export default class UserService {
+	id = undefined
+	accessToken = undefined
 	constructor() {
 		if (this.getAccessToken()) {
-			api.defaults.headers.common['Authorization'] = this.getAccessToken()
+			this.accessToken = this.getAccessToken()
+			api.defaults.headers.common['Authorization'] = this.accessToken
+		}
+		if (this.getIdFromStorage()) {
+			this.id = this.getIdFromStorage()
 		}
 	}
 
@@ -11,19 +18,27 @@ export default class UserService {
 		localStorage.setItem('accessToken', accessToken)
 		//TODO: use more secure store
 	}
-	setId = id => {
+	setIdInStorage = id => {
 		localStorage.setItem('id', id)
 	}
 	getAccessToken = () => {
 		return localStorage.getItem('accessToken')
 	}
-	getId = () => {
+	getIdFromStorage = () => {
 		return localStorage.getItem('id')
+	}
+	setUserData = (id, accessToken) => {
+		this.setIdInStorage(id)
+		this.setAccessToken(accessToken)
+	}
+	deleteUserData = () => {
+		this.deleteAccessToken()
+		this.deleteIdInStorage()
 	}
 	deleteAccessToken = () => {
 		localStorage.removeItem('accessToken')
 	}
-	deleteId = () => {
+	deleteIdInStorage = () => {
 		localStorage.removeItem('id')
 	}
 	authenticate = async (email, password) => {
@@ -33,8 +48,7 @@ export default class UserService {
 		}
 		try {
 			const res = await api.post('/UserEnigmators/login', req)
-			this.setAccessToken(res.data.id)
-			this.setId(res.data.userId)
+			this.setUserData(res.data.userId, res.data.id)
 			return true
 		} catch (err) {
 			switch (err.response.status) {
@@ -73,6 +87,7 @@ export default class UserService {
 			}
 		}
 	}
+	update = async (id, data) => {}
 
 	isLogin = () => {
 		if (this.getAccessToken()) {
@@ -86,8 +101,7 @@ export default class UserService {
 			await api.post(
 				`/UserEnigmators/logout?access_token=${this.getAccessToken()}`
 			)
-			this.deleteAccessToken()
-			this.deleteId()
+			this.deleteUserData()
 			return true
 		} catch (err) {
 			return err

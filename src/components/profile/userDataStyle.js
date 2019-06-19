@@ -6,8 +6,7 @@ const style = theme => ({
 	textField: {
 		marginLeft: theme.spacing(),
 		marginRight: theme.spacing(),
-		minWidth: '152px',
-		maxWidth: '200px'
+		minWidth: '152px'
 	},
 	margin: {
 		margin: 'normal'

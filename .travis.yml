@@ -13,7 +13,7 @@ deploy:
     local_dir: enigmator-web-app
     skip_cleanup: true
     on:
-      branch: develop
+      branch: /*develop*/
     bucket: enigmator-storage
     region: eu-west-3
 
@@ -27,7 +27,7 @@ deploy:
     deployment_group: DeployEnigmator
     region: eu-west-3
     on:
-      branch: develop
+      branch: /*develop*/
 
 script:
   - zip -r latest-client build/ scripts/ appspec.yml Dockerfile .dockerignore

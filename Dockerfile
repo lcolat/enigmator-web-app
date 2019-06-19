@@ -1,16 +1,9 @@
 # base image
-FROM node:lts
-
-# set working directory
+FROM node:latest
 RUN mkdir /usr/src/app
+RUN mkdir /usr/src/app/build
 WORKDIR /usr/src/app
-
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /usr/src/app/package.json
-RUN npm install
-RUN npm audit fix
+COPY build/ /usr/src/app/build
+RUN npm install -g serve
 # start app
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "8080"]

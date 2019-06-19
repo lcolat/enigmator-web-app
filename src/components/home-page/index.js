@@ -6,13 +6,13 @@ import TabUnresolvedEnigmas from './TabUnresolvedEnigmas'
 import EnigmasList from './EnigmasList'
 import DailyMessage from './DailyMessage'
 
-const styles = theme => ({})
+const styles = theme => ({});
 
 class HomePage extends React.Component {
 	render() {
-		document.body.style.backgroundColor = 'white'
+		document.body.style.backgroundColor = 'white';
 		return (
-			<>
+			<div>
 				<Grid item>
 					<Grid container direction={'row'} spacing={2}>
 						<Grid item xs={12} sm={5}>
@@ -38,7 +38,7 @@ class HomePage extends React.Component {
 				<Grid item xs={12}>
 					<EnigmasList />
 				</Grid>
-			</>
+			</div>
 		)
 	}
 }

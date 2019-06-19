@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import {withStyles} from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import {Grid} from "@material-ui/core";
+
+import {Tab, Tabs, Grid} from "@material-ui/core";
 import {AllInclusive, Rowing, SupervisedUserCircle, Whatshot, PersonAdd} from '@material-ui/icons';
 
-import {SearchPick} from "../../commun"
+import {SearchPick} from "../../common"
 import AddFriendButton from "./AddFriendButton"
 
 

@@ -1,2 +1,2 @@
 cd /home/ubuntu/enigmator/
-sudo docker-compose restart client
+sudo docker-compose start client

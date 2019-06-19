@@ -30,7 +30,7 @@ deploy:
       all_branches: true
 
 script:
-  - zip -r latest-client build/ appspec.yml
+  - zip -r latest-client build/ scripts/ appspec.yml
   - mkdir -p enigmator-web-app
   - mv latest-client.zip enigmator-web-app/latest-client.zip
 

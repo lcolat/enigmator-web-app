@@ -53,7 +53,7 @@ const friendsListByType = new Map([
 ]);
 
 const suggestions = allFriendsList.map(function (friend) {
-	return {label: friend.pseudo};
+	return ({label: friend.pseudo});
 });
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 import UserData from "./UserData"
-import {StatsTable} from "../../commun";
+import {StatsTable} from "../../common";
 import TableListEnigmasTried from "./TableListEnigmasTried";
 import TableListOwnEnigmas from "./TableListOwnEnigmas";
 import {Paper} from "@material-ui/core";

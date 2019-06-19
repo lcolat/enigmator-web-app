@@ -18,7 +18,7 @@ import {ThumbUp, Forum, LocalActivity, Subject, Photo, MusicNote} from "@materia
 import {lighten} from '@material-ui/core/styles/colorManipulator';
 
 import PlayModeDialogue from "./play-mode";
-import {LikeCount} from "../../commun"
+import {LikeCount} from "../../common"
 
 
 function createData(name, creator, kind, difficulty, date, value, description, status, likes, likedByUser) {

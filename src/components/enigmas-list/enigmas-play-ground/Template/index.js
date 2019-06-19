@@ -8,7 +8,7 @@ import {Grid, Box} from "@material-ui/core";
 import InfoEnigma from "./InfoEnigma";
 import ListWordTry from "./ListWordTry";
 import EntryForResponse from "./EntryForResponse";
-import {LikeCount} from "./../../../../commun";
+import {LikeCount} from "../../../../common";
 import {OpenInNew} from "@material-ui/icons";
 
 

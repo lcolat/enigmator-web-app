@@ -8,8 +8,7 @@ const styles = theme => ({
 		flexGrow: 1
 	},
 	paper: {
-		padding: 2 //theme.spacing.unit * 2,
-		//margin: 'auto',
+		padding: 2
 	},
 	paperStats: {
 		paddingTop: 4

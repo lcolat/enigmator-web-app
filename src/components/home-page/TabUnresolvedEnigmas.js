@@ -22,7 +22,7 @@ const actionsStyles = theme => ({
 	root: {
 		flexShrink: 0,
 		color: theme.palette.text.secondary,
-		marginLeft: theme.spacing.unit * 2.5
+		marginLeft: theme.spacing(2.5)
 	}
 })
 
@@ -111,7 +111,6 @@ function createData(nameEnigma, dateLastTry) {
 const styles = theme => ({
 	root: {
 		width: '100%'
-		// marginTop: theme.spacing.unit * 3,
 	},
 	table: {
 		minWidth: 500

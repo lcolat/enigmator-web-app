@@ -1,29 +1,45 @@
 import api from 'services/api'
+import { async } from 'q'
 export default class UserService {
-	static instance = undefined
+	id = undefined
+	accessToken = undefined
 	constructor() {
-		if (UserService.instance !== undefined) {
-			throw new Error('Constructor call more than one time !')
+		if (this.getAccessToken()) {
+			this.accessToken = this.getAccessToken()
+			api.defaults.headers.common['Authorization'] = this.accessToken
+		}
+		if (this.getIdFromStorage()) {
+			this.id = this.getIdFromStorage()
 		}
 	}
 
-	static getInstance() {
-		if (UserService.instance === undefined) {
-			UserService.instance = new UserService()
-		}
-
-		return UserService.instance
-	}
 	setAccessToken = accessToken => {
 		api.defaults.headers.common['Authorization'] = accessToken
 		localStorage.setItem('accessToken', accessToken)
 		//TODO: use more secure store
 	}
+	setIdInStorage = id => {
+		localStorage.setItem('id', id)
+	}
 	getAccessToken = () => {
 		return localStorage.getItem('accessToken')
 	}
+	getIdFromStorage = () => {
+		return localStorage.getItem('id')
+	}
+	setUserData = (id, accessToken) => {
+		this.setIdInStorage(id)
+		this.setAccessToken(accessToken)
+	}
+	deleteUserData = () => {
+		this.deleteAccessToken()
+		this.deleteIdInStorage()
+	}
 	deleteAccessToken = () => {
 		localStorage.removeItem('accessToken')
+	}
+	deleteIdInStorage = () => {
+		localStorage.removeItem('id')
 	}
 	authenticate = async (email, password) => {
 		const req = {
@@ -32,8 +48,7 @@ export default class UserService {
 		}
 		try {
 			const res = await api.post('/UserEnigmators/login', req)
-			this.setAccessToken(res.data.id)
-			this.id = res.data.userId
+			this.setUserData(res.data.userId, res.data.id)
 			return true
 		} catch (err) {
 			switch (err.response.status) {
@@ -50,7 +65,7 @@ export default class UserService {
 	get = async (id, criteria) => {
 		let url = '/UserEnigmators'
 		if (id !== undefined) {
-			url = `/UserEnigmators/${this.id}`
+			url = `/UserEnigmators/${id}`
 		} else if (criteria !== undefined) {
 			url += '?'
 			for (let criterion in criteria) {
@@ -72,6 +87,7 @@ export default class UserService {
 			}
 		}
 	}
+	update = async (id, data) => {}
 
 	isLogin = () => {
 		if (this.getAccessToken()) {
@@ -85,7 +101,7 @@ export default class UserService {
 			await api.post(
 				`/UserEnigmators/logout?access_token=${this.getAccessToken()}`
 			)
-			this.deleteAccessToken()
+			this.deleteUserData()
 			return true
 		} catch (err) {
 			return err

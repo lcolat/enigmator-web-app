@@ -2,7 +2,7 @@ import React from 'react';
 import PropType from "prop-types";
 
 import {makeStyles} from '@material-ui/core';
-import {FormControlLabel, RadioGroup, Radio, FormLabel, FormControl, FormGroup} from '@material-ui/core';
+import {FormControlLabel, RadioGroup, Radio, FormLabel, FormControl, Grid} from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,7 +37,9 @@ function SettingChoice(props) {
 	return (
 		<div className={classes.root}>
 			<FormControl component="fieldset" className={classes.formControl}>
-				<FormLabel>{groupName}</FormLabel>
+				<Grid container>
+					<FormLabel>{groupName}</FormLabel>
+				</Grid>
 				<RadioGroup
 					aria-label="groupName"
 					name={groupName}

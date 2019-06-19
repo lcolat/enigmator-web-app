@@ -1,7 +1,7 @@
 #!/bin/bash
 PATH="/home/ubuntu/.local/bin:$PATH"
 cd /home/ubuntu/enigmator/enigmator-web-app/
-aws s3 cp s3://enigmator-storage/enigmator-web-app/.env /home/ubuntu/enigmator/enigmator-web-app/.env
+cp /home/ubuntu/enigmator/environment-files/enigmator-web-app/.env /home/ubuntu/enigmator/enigmator-web-app/.env
 # sudo npm install
 # sudo npm run build
 # cd /home/ubuntu/enigmator/

@@ -1,31 +1,32 @@
-import React from "react";
+import React from 'react'
 
-import UserData from "./UserData"
-import {StatsTable} from "../../common";
-import TableListEnigmasTried from "./TableListEnigmasTried";
-import TableListOwnEnigmas from "./TableListOwnEnigmas";
-import {Paper} from "@material-ui/core";
-
+import UserData from './UserData'
+import { StatsTable } from '../../commun'
+import TableListEnigmasTried from './TableListEnigmasTried'
+import TableListOwnEnigmas from './TableListOwnEnigmas'
+import { Paper } from '@material-ui/core'
 
 class Profile extends React.Component {
-	
 	render() {
+		const userService = this.props.userService
 		return (
-			<dic>
+			<>
 				<Paper>
-					<UserData/>
-					<StatsTable/>
+					<UserData {...this.props} />
 				</Paper>
-				<div>
-					<hr/>
-				</div>
 				<Paper>
-					<TableListOwnEnigmas/>
-					<TableListEnigmasTried/>
+					<StatsTable />
 				</Paper>
-			</dic>
-		);
+				{/*<div>*/}
+				{/*<hr />*/}
+				{/*</div>*/}
+				{/*<Paper>*/}
+				{/*<TableListOwnEnigmas />*/}
+				{/*<TableListEnigmasTried />*/}
+				{/*</Paper>*/}
+			</>
+		)
 	}
 }
 
-export default Profile;
+export default Profile

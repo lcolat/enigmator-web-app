@@ -7,30 +7,30 @@ import { Button, Grid, Tooltip, Typography, Paper } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
 import { DonutSmall, CompareArrows } from '@material-ui/icons'
 
-import {mapUserStatusColor} from "../../../model/User";
+import { mapUserStatusColor } from '../../../model/User'
 
-import TableEnigmas from "./TableEnigmas"
-import {StatsTable} from "../../../common";
+import TableEnigmas from './TableEnigmas'
+import { StatsTable } from '../../../common'
 
 const styles = theme => ({
 	avatar: {
-		margin: theme.spacing.unit,
+		margin: theme.spacing(),
 		width: 120,
 		height: 120
 	},
 	statusIcon: {
-		margin: theme.spacing.unit,
+		margin: theme.spacing(),
 		width: 30,
 		height: 30
 	},
 	button: {
-		margin: theme.spacing.unit
+		margin: theme.spacing()
 	},
 	rightIcon: {
-		marginLeft: theme.spacing.unit
+		marginLeft: theme.spacing()
 	},
 	buttonRightIcon: {
-		marginLeft: theme.spacing.unit
+		marginLeft: theme.spacing()
 	}
 })
 
@@ -60,10 +60,16 @@ class ProfileFriend extends React.Component {
 							</Typography>
 						</Grid>
 						<Grid item>
-							<Avatar alt={pseudo}
-							        src={profilePicture ? profilePicture :
-								        process.env.PUBLIC_URL + '/img/default-profile-picture.png'}
-							        className={classes.avatar}/>
+							<Avatar
+								alt={pseudo}
+								src={
+									profilePicture
+										? profilePicture
+										: process.env.PUBLIC_URL +
+										  '/img/default-profile-picture.png'
+								}
+								className={classes.avatar}
+							/>
 						</Grid>
 					</Grid>
 					<Button

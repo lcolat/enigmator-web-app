@@ -26,8 +26,7 @@ const body = [[
 		name: "enigma0", creator: "DamSauGoodMan", creation: "18/08/2018, 18h42", lastUpdate: "18/08/2018, 18h42",
 		like: {number: "10", byUser: true}
 	},
-],
-	[
+], [
 		{
 			name: "other0", creator: "DamSauGoodMan", creation: "18/08/2018, 18h42", lastUpdate: "18/08/2018, 18h42",
 			like: {number: "10", byUser: false}
@@ -36,7 +35,8 @@ const body = [[
 			name: "other1", creator: "DamSauGoodMan", creation: "18/08/2018, 18h42", lastUpdate: "18/08/2018, 18h42",
 			like: {number: "10", byUser: true}
 		}
-	]];
+]
+];
 
 const useStyles = makeStyles(theme => ({
 	rootMenu: {

@@ -1,5 +1,4 @@
 import api from 'services/api'
-import { async } from 'q'
 export default class UserService {
 	id = undefined
 	accessToken = undefined
@@ -28,6 +27,8 @@ export default class UserService {
 		return localStorage.getItem('id')
 	}
 	setUserData = (id, accessToken) => {
+		this.id = id
+		this.accessToken = accessToken
 		this.setIdInStorage(id)
 		this.setAccessToken(accessToken)
 	}
@@ -90,7 +91,7 @@ export default class UserService {
 	update = async (id, data) => {}
 
 	isLogin = () => {
-		if (this.getAccessToken()) {
+		if (this.getAccessToken() && this.getAccessToken() !== undefined) {
 			return true
 		}
 		return false

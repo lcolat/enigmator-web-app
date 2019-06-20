@@ -91,7 +91,7 @@ export default class UserService {
 	update = async (id, data) => {}
 
 	isLogin = () => {
-		if (this.getAccessToken()) {
+		if (this.getAccessToken() && this.getAccessToken() !== undefined) {
 			return true
 		}
 		return false

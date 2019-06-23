@@ -1,18 +1,15 @@
 export const enigmasTypes = {
-	VOCAL: "vocal",
-	TEXT: "text",
-	PHOTO: "photo"
-};
+	AUDIO: 'audio',
+	TEXT: 'text',
+	IMAGE: 'image',
+	VIDEO: 'video'
+}
 
 export const listEnigmasTypes = [
-	enigmasTypes.VOCAL,
+	enigmasTypes.AUDIO,
 	enigmasTypes.TEXT,
-	enigmasTypes.PHOTO
-];
+	enigmasTypes.IMAGE,
+	enigmasTypes.VIDEO
+]
 
-export const Difficulties = [
-	"Easy",
-	"Normal",
-	"Hard",
-	"Demon"
-];
+export const Difficulties = ['Easy', 'Normal', 'Hard', 'Demon']

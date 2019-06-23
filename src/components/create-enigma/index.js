@@ -1,68 +1,88 @@
-import React from 'react';
-import PropType from "prop-types";
-
-import {Grid, makeStyles, Paper, Fab, Typography} from '@material-ui/core';
-
-import {Add} from "@material-ui/icons";
-
-
-const useStyles = makeStyles(theme => ({
+import React, { Component } from 'react'
+import { Grid, withStyles, Button } from '@material-ui/core'
+import { enigmasTypes } from 'model/Enigma'
+import EnigmaBuilder from './enigma-builder'
+const style = theme => ({
 	button: {
 		margin: theme.spacing(1),
-	},
-	paper: {
-		margin: theme.spacing(1),
-		width: "80%",
+		color: theme.palette.primary.main,
+		width: '250px'
 	},
 	titleDiv: {
-		width: "100%"
+		width: '100%'
+	},
+	enigmaType: {
+		marginTop: `calc(50vh - ${theme.spacing(7)}px)`,
+		transform: 'translateY(-50%)'
 	}
-}));
-
-
-function EnigmaTypeSelection(props) {
-	const {} = props;
-	const classes = useStyles();
-	
-	function CreateEnigmaPaper(props) {
-		const {title} = props;
-		
-		return (
-			<Paper className={classes.paper}>
-				<Grid container
-				      direction={"row"}
-				      className={classes.titleDiv}
-				      alignItems={"center"}
-				      justify={"space-between"}>
-					<Fab color="primary" aria-label="Add" className={classes.button}>
-						<Add/>
-					</Fab>
-					<Grid item xs>
-						<Grid container item alignItems={"center"} justify={"center"}>
-							<Typography variant={"h4"}>New {title} Enigma</Typography>
-						</Grid>
-					</Grid>
-				</Grid>
-			</Paper>
-		);
+})
+class EnigmaTypeSelection extends Component {
+	state = {
+		type: undefined
 	}
-	
-	CreateEnigmaPaper.propTypes = {
-		title: PropType.string.isRequired
-	};
-	
-	return (
-		<div>
-			<Grid container alignItems={"center"} justify={"space-between"} direction={"column"}>
-				<CreateEnigmaPaper title={"Visual"}/>
-				<CreateEnigmaPaper title={"Textual"}/>
-				<CreateEnigmaPaper title={"Audio"}/>
+
+	handleClick = type => {
+		this.setState({ type: type })
+	}
+	setEnigmaType = enigmaType => {
+		this.setState({ type: enigmaType })
+	}
+
+	render() {
+		const { classes } = this.props
+		document.body.style.backgroundColor = 'white'
+		return this.state.type !== undefined ? (
+			<EnigmaBuilder
+				{...this.props}
+				type={this.state.type}
+				setEnigmaType={this.setEnigmaType}
+			/>
+		) : (
+			<Grid
+				container
+				alignItems={'center'}
+				justify={'space-between'}
+				direction={'column'}
+				style={{ justifyContent: 'center' }}
+				className={classes.enigmaType}>
+				<Button
+					className={classes.button}
+					variant="contained"
+					color="secondary"
+					onClick={() => {
+						this.setState({ type: enigmasTypes.IMAGE })
+					}}>
+					Nouvelle énigme Visuelle
+				</Button>
+				<Button
+					className={classes.button}
+					variant="contained"
+					color="secondary"
+					onClick={() => {
+						this.setState({ type: enigmasTypes.TEXT })
+					}}>
+					Nouvelle énigme Textuelle
+				</Button>
+				<Button
+					className={classes.button}
+					variant="contained"
+					color="secondary"
+					onClick={() => {
+						this.setState({ type: enigmasTypes.AUDIO })
+					}}>
+					Nouvelle énigme Audio
+				</Button>
+				<Button
+					className={classes.button}
+					variant="contained"
+					color="secondary"
+					onClick={() => {
+						this.setState({ type: enigmasTypes.VIDEO })
+					}}>
+					Nouvelle énigme Vidéo
+				</Button>
 			</Grid>
-		</div>
-	);
+		)
+	}
 }
-
-EnigmaTypeSelection.propTypes = {};
-
-
-export default EnigmaTypeSelection;
+export default withStyles(style)(EnigmaTypeSelection)

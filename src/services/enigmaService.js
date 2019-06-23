@@ -8,7 +8,7 @@ export default class EnigmaService {
 		}
 	}
 
-	create = async (question, answer, file) => {
+	create = async (name, question, answer, file, mediaType) => {
 		if (
 			question === '' ||
 			question === undefined ||
@@ -17,14 +17,25 @@ export default class EnigmaService {
 		) {
 			return "Impossible de créer l'énigme"
 		}
-		let formdata = new FormData()
-		formdata.append('question', question)
-		formdata.append('answer', answer)
-		if (file !== undefined) {
-			formdata.append('file', file)
+		const req = {
+			name: name,
+			question: question,
+			answer: answer
 		}
+
 		try {
-			const res = await api.post('/Enigmes/CreateEnigme', formdata)
+			const res = await api.post('/Enigmes/CreateEnigme', req)
+			if (file !== undefined && mediaType !== undefined) {
+				var formdata = new FormData()
+				formdata.append('file', file)
+				formdata.append('mediaType', mediaType)
+				try {
+					await api.post(`/Enigmes/${res.data.id}/AddMediaToEnigme`, formdata)
+					return true
+				} catch (err) {
+					return err
+				}
+			}
 			return true
 		} catch (err) {
 			switch (err.response.status) {

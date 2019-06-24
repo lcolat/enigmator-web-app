@@ -13,3 +13,5 @@ export const listEnigmasTypes = [
 ]
 
 export const Difficulties = ['Easy', 'Normal', 'Hard', 'Demon']
+
+export const playMode = ['Solo', 'Multi', 'PvP']

@@ -1,2 +1,2 @@
 cd /home/ubuntu/enigmator/
-sudo docker-compose start client
+sudo docker-compose up --force-recreate

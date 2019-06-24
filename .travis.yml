@@ -27,8 +27,8 @@ deploy:
     bucket: enigmator-storage
     key: latest-client.zip
     bundle_type: zip
-    application: enigmator
-    deployment_group: DeployEnigmator
+    application: enigmator-web-app
+    deployment_group: DeployEnigmatorWebApp
     region: eu-west-3
     on:
       all_branches: true

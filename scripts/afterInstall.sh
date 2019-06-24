@@ -8,6 +8,4 @@ chown -Rf ubuntu:ubuntu /home/ubuntu/enigmator/enigmator-web-app/
 # npm run build
 sudo docker build -t enigmator-web-app .
 cd /home/ubuntu/enigmator/
-docker-compose stop client
-docker-compose rm -f -v client
-docker-compose create --force-recreate client
+docker-compose stop

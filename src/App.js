@@ -10,6 +10,7 @@ import PrivateRoute from './privateRoute'
 import HomePage from 'components/home-page'
 import FriendsView from 'components/friend-page'
 import CreateEnigma from 'components/create-enigma'
+import EnigmaList from 'components/enigmas-list'
 import UserService from 'services/userService'
 import { withStyles } from '@material-ui/core/styles'
 import { NotificationContainer } from 'react-notifications'
@@ -55,6 +56,11 @@ class App extends Component {
 							<PrivateRoute
 								path="/friends"
 								component={FriendsView}
+								userService={userService}
+							/>
+							<PrivateRoute
+								path="/enigmas"
+								component={EnigmaList}
 								userService={userService}
 							/>
 							<PrivateRoute

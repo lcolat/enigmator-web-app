@@ -1,4 +1,6 @@
 import api from 'services/api'
+import { SERVER_URL } from '../config'
+
 export default class EnigmaService {
 	accessToken = undefined
 	constructor() {
@@ -46,6 +48,40 @@ export default class EnigmaService {
 				default:
 					return err
 			}
+		}
+	}
+	getEnigmas = async () => {
+		try {
+			const res = await api.get('/Enigmes')
+			let enigmas = res.data
+			let newEnigmas = new Array(res.data.length)
+			await Promise.all(
+				enigmas.map(async (enigma, index) => {
+					const res = await api.get(
+						`Media?filter[where][enigmeID]=${enigma.id}`
+					)
+					if (res.data.length === 0) {
+						newEnigmas[index] = { ...enigmas[index], ...{ type: 'text' } }
+					} else {
+						newEnigmas[index] = {
+							...enigmas[index],
+							...{ type: res.data[0].type }
+						}
+					}
+				})
+			)
+			return newEnigmas
+		} catch (err) {
+			return err
+		}
+	}
+	getEnigmaFileUrl = async id => {
+		try {
+			const res = await api.get(`/Media?filter[where][enigmeID]=${id}`)
+			let filename = res.data[0].filename
+			return `${SERVER_URL}/Containers/enigme/download/${filename}`
+		} catch (err) {
+			return err
 		}
 	}
 }

@@ -9,4 +9,4 @@ export { default as Profile } from './profile'
 export { default as FriendPage } from './friend-page'
 
 export { default as EnigmasList } from './enigmas-list'
-export { default as CreateEnigma } from './enigmas-list'
+export { default as CreateEnigma } from './create-enigma'

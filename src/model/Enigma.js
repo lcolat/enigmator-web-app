@@ -5,6 +5,12 @@ export const enigmasTypes = {
 	VIDEO: 'video'
 }
 
+export const enigmasStatus = {
+	SUCCES: 'succes',
+	TRIED: 'tried',
+	NOTTRIED: 'notTried'
+}
+
 export const listEnigmasTypes = [
 	enigmasTypes.AUDIO,
 	enigmasTypes.TEXT,

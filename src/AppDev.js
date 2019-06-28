@@ -7,6 +7,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
 import LeaderBoard from './components/leader-board'
+import ProfileFriend from './components/friend-page/profile'
+
 
 const styles = theme => ({
 	app: {
@@ -25,7 +27,7 @@ class AppDev extends Component {
 			<BrowserRouter>
 				<MuiThemeProvider theme={theme}>
 					<div className={classes.app}>
-						<LeaderBoard/>
+						<ProfileFriend pseudo={'DamSaulGoodMan'} status={'dot not disturb'}/>
 					</div>
 					<NotificationContainer />
 				</MuiThemeProvider>

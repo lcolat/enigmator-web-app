@@ -11,7 +11,7 @@ import {
 	TableFooter,
 	TablePagination,
 	TableRow,
-	TableHead
+	TableHead, Typography
 } from '@material-ui/core'
 import { IconButton, Paper } from '@material-ui/core'
 
@@ -122,8 +122,8 @@ function createData(nameEnigma, creationDate) {
 
 const styles = theme => ({
 	root: {
-		width: '100%',
-		marginTop: theme.spacing()
+		marginTop: theme.spacing(2),
+		padding: theme.spacing()
 	},
 	table: {
 		minWidth: 500
@@ -133,28 +133,29 @@ const styles = theme => ({
 	}
 })
 
-const theme = createMuiTheme({
-	overrides: {
-		MuiTableRow: {
-			root: {
-				//for the body
-				height: '100%'
-			},
-			head: {
-				//for the head
-				height: '100%'
-			},
-			footer: {
-				'& > td > div': {
-					height: '50%',
-					minHeight: '50%'
-				},
-				// backgroundColor: "grey",
-				height: '50%'
-			}
-		}
-	}
-})
+// const theme = theme => ({
+// 	overrides: {
+// 		MuiTableRow: {
+// 			root: {
+// 				//for the body
+// 				height: '100%',
+// 				marginTop:
+// 			},
+// 			head: {
+// 				//for the head
+// 				height: '100%'
+// 			},
+// 			footer: {
+// 				'& > td > div': {
+// 					height: '50%',
+// 					minHeight: '50%'
+// 				},
+// 				// backgroundColor: "grey",
+// 				height: '50%'
+// 			}
+// 		}
+// 	}
+// })
 
 class TableEnigmas extends React.Component {
 	// formatDate = "HH:mm DD-MM-YY";
@@ -192,22 +193,14 @@ class TableEnigmas extends React.Component {
 	render() {
 		const { classes } = this.props
 		const { rows, rowsPerPage, page } = this.state
-		const emptyRows =
-			rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
 		return (
-			<MuiThemeProvider theme={theme}>
 				<Paper className={classes.root}>
+					<Typography variant={'h5'}>
+						List of Enigmas
+					</Typography>
 					<div className={classes.tableWrapper}>
 						<Table className={classes.table}>
-							<TableHead>
-								<TableCell align="left" style={{ height: 26 }}>
-									Enigmas Unresolved
-								</TableCell>
-								<TableCell align="left" style={{ height: 26 }}>
-									Date of Creation
-								</TableCell>
-							</TableHead>
 							<TableBody>
 								{rows
 									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -216,7 +209,7 @@ class TableEnigmas extends React.Component {
 											<TableCell component="th" scope="row">
 												{row.name}
 											</TableCell>
-											<TableCell scope={'row'} align={'left'}>
+											<TableCell scope={'row'} align={'right'}>
 												{row.date}
 											</TableCell>
 										</TableRow>
@@ -243,7 +236,6 @@ class TableEnigmas extends React.Component {
 						</Table>
 					</div>
 				</Paper>
-			</MuiThemeProvider>
 		)
 	}
 }

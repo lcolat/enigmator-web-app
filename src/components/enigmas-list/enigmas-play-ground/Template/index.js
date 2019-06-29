@@ -69,16 +69,20 @@ function TemplateEnigma(props) {
 		fetchMedia(content)
 	}, [content])
 
+	const handleGoodAnswer = async message => {
+		enigmaService.deleteLastWords(enigma.id)
+		createNotification({
+			level: Level.SUCCESS,
+			message: message
+		})
+	}
+
 	const handleResponse = async () => {
 		setstackWords(stackWords.concat([answer]))
 		enigmaService.setLastWords(enigma.id, stackWords)
 		const res = await enigmaService.answer(enigma.id, answer)
 		if (res.data.message === 'bonne réponse ! ') {
-			enigmaService.deleteLastWords(enigma.id)
-			createNotification({
-				level: Level.SUCCESS,
-				message: res.data.message
-			})
+			handleGoodAnswer(res.data.message)
 		} else if (res.data.message === 'mauvaise réponse ! ') {
 			createNotification({
 				level: Level.INFO,
@@ -93,6 +97,11 @@ function TemplateEnigma(props) {
 	}
 	const handleChange = event => {
 		setAnswer(event.target.value)
+	}
+	const handleKeyPress = event => {
+		if (event.key === 'Enter') {
+			handleResponse()
+		}
 	}
 	return (
 		<Paper className={classes.root}>
@@ -154,6 +163,7 @@ function TemplateEnigma(props) {
 								className={classes.textField}
 								value={answer}
 								onChange={handleChange}
+								onKeyPress={handleKeyPress}
 								margin="normal"
 							/>
 						</Grid>

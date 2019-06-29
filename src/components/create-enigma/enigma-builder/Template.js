@@ -42,7 +42,16 @@ class Template extends Component {
 	}
 
 	handleChange = event => {
-		const { name, value } = event.target
+		const name = event.target.name
+		let value = event.target.value
+		if (name === 'scoreReward') {
+			if (value > 100) {
+				value = 100
+			}
+			if (value < 1) {
+				value = 1
+			}
+		}
 		this.setState({ [name]: value })
 	}
 	setFile = file => {

@@ -1,14 +1,13 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { Grid } from '@material-ui/core'
-// import UserService from '../services/userService'
 import HeaderDrawer from '../components/header-drawer'
 import useStyles from './style'
-// const userService = UserService.getInstance()
 const PrivateRoute = ({
 	component: Component,
 	userService,
 	redirect: pathname,
+	history,
 	...rest
 }) => {
 	const classes = useStyles()
@@ -27,7 +26,11 @@ const PrivateRoute = ({
 								direction={'column'}
 								justify={'space-around'}
 								spacing={2}>
-								<Component {...rest} {...props} userService={userService} />
+								<Component.type
+									{...rest}
+									{...props}
+									userService={userService}
+								/>
 							</Grid>
 						</main>
 					</>

@@ -10,6 +10,7 @@ import PrivateRoute from './privateRoute'
 import HomePage from 'components/home-page'
 import FriendsView from 'components/friend-page'
 import CreateEnigma from 'components/create-enigma'
+import Enigma from 'components/enigmas-list/enigmas-play-ground'
 import EnigmaList from 'components/enigmas-list'
 import UserService from 'services/userService'
 import { withStyles } from '@material-ui/core/styles'
@@ -50,27 +51,32 @@ class App extends Component {
 							/>
 							<PrivateRoute
 								path="/profile"
-								component={Profile}
+								component={<Profile />}
 								userService={userService}
 							/>
 							<PrivateRoute
 								path="/friends"
-								component={FriendsView}
+								component={<FriendsView />}
+								userService={userService}
+							/>
+							<PrivateRoute
+								path="/enigma"
+								component={<Enigma />}
 								userService={userService}
 							/>
 							<PrivateRoute
 								path="/enigmas"
-								component={EnigmaList}
+								component={<EnigmaList />}
 								userService={userService}
 							/>
 							<PrivateRoute
 								path="/create-enigmas"
-								component={CreateEnigma}
+								component={<CreateEnigma />}
 								userService={userService}
 							/>
 							<PrivateRoute
 								path="/"
-								component={HomePage}
+								component={<HomePage />}
 								userService={userService}
 							/>
 						</Switch>

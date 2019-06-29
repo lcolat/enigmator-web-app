@@ -18,4 +18,14 @@ export const listEnigmasTypes = [
 	enigmasTypes.VIDEO
 ]
 
-export const Difficulties = ['Easy', 'Normal', 'Hard', 'Demon']
+export const Difficulties = scoreReward => {
+	if (scoreReward >= 0 && scoreReward < 25) {
+		return 'Facile'
+	} else if (scoreReward > 24 && scoreReward < 50) {
+		return 'Normal'
+	} else if (scoreReward > 49 && scoreReward < 75) {
+		return 'Difficile'
+	} else {
+		return 'Vraiment vraiment Dur'
+	}
+}

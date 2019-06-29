@@ -14,7 +14,7 @@ function VideoEnigma(props) {
 	return (
 		<Grid container alignItems={'stretch'} direction={'column'}>
 			<Grid item xl>
-				<video controls>
+				<video controls width="640" height="360">
 					<source src={content} />
 				</video>
 			</Grid>

@@ -17,7 +17,6 @@ const headRows = [
 	{ id: 'difficulty', align: 'left', disablePadding: false, label: 'Niveau' },
 	{ id: 'date', align: 'left', disablePadding: false, label: 'Date' },
 	{ id: 'value', align: 'left', disablePadding: false, label: 'Points' },
-	{ id: 'status', align: 'left', disablePadding: false, label: 'Status' },
 	{ id: 'forum', align: 'center', disablePadding: false, label: 'Forum' }
 ]
 

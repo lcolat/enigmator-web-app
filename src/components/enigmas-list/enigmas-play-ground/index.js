@@ -9,12 +9,12 @@ import VocalEnigma from './VocalEnigma'
 import TextEnigma from './TextEnigma'
 import ImageEnigma from './ImageEnigma'
 import VideoEnigma from './VideoEnigma'
-import { enigmasTypes, listEnigmasTypes } from '../../../model/Enigma'
+import { enigmasTypes, listEnigmasTypes } from 'model/Enigma'
 
 const useStyles = makeStyles(theme => ({}))
 
-function Enigma(props) {
-	const { type, enigma } = props
+function Enigma(rest, props) {
+	const { type, enigma } = rest.location.state
 	const classes = useStyles()
 
 	switch (type) {
@@ -32,7 +32,7 @@ function Enigma(props) {
 		case enigmasTypes.VIDEO:
 			return <TemplateEnigma enigmaView={<VideoEnigma />} enigma={enigma} />
 		default:
-			break
+			return <div>No Enigma</div>
 	}
 }
 

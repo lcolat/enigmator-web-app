@@ -28,7 +28,7 @@ deploy:
     key: latest-client.zip
     bundle_type: zip
     application: enigmator
-    deployment_group: DeployEnigmator
+    deployment_group: DeployEnigmatorWebApp
     region: eu-west-3
     on:
       all_branches: true

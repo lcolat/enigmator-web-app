@@ -1,88 +1,100 @@
-import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 
-import {ListSubheader, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
-import {Divider, Tooltip, Paper} from "@material-ui/core";
+import {
+	ListSubheader,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText
+} from '@material-ui/core'
+import { Divider, Tooltip, Paper } from '@material-ui/core'
 
-import {FitnessCenter, LocalActivity, EventSeat, Create} from '@material-ui/icons';
-import PropTypes from "prop-types";
-
+import {
+	FitnessCenter,
+	LocalActivity,
+	EventSeat,
+	Create
+} from '@material-ui/icons'
+import { Difficulties } from 'model/Enigma'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(theme => ({
 	root: {
 		maxWidth: 250,
-		backgroundColor: theme.palette.background.paper,
+		backgroundColor: theme.palette.background.paper
 	},
 	nested: {
-		paddingLeft: theme.spacing(4),
+		paddingLeft: theme.spacing(4)
 	}
-}));
+}))
 
 function InfoEnigma(props) {
-	const {enigma} = props;
-	const classes = useStyles();
-	
+	const { enigma } = props
+	const classes = useStyles()
+	const formatDate = date => {
+		return new Date(date).toLocaleDateString('fr-FR', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
+	}
+
 	return (
 		<Paper className={classes.root}>
 			<List
 				dense={true}
 				component="nav"
-				subheader={<ListSubheader component="div" color={"primary"}>Enigma's Specificity</ListSubheader>}
-				className={classes.root}
-			>
-				<Divider/>
-				<Tooltip title={"Creator Name"} placement={"right"}>
-					<ListItem alignItems={"center"}>
+				subheader={
+					<ListSubheader component="div" color={'primary'}>
+						Enigma's Specificity
+					</ListSubheader>
+				}
+				className={classes.root}>
+				<Divider />
+				<Tooltip title={'Créateur'} placement={'right'}>
+					<ListItem alignItems={'center'}>
 						<ListItemIcon>
-							<EventSeat/>
+							<EventSeat />
 						</ListItemIcon>
-						<ListItemText primary={enigma.creator}/>
+						<ListItemText primary={enigma.Enigme_User.username} />
 					</ListItem>
 				</Tooltip>
-				<Divider/>
-				<Tooltip title={"Creation Date"} placement={"right"}>
-					<ListItem alignItems={"center"}>
+				<Divider />
+				<Tooltip title={'Date de création'} placement={'right'}>
+					<ListItem alignItems={'center'}>
 						<ListItemIcon>
-							<Create/>
+							<Create />
 						</ListItemIcon>
-						<ListItemText primary={enigma.date}/>
+						<ListItemText primary={formatDate(enigma.creationDate)} />
 					</ListItem>
 				</Tooltip>
-				<Divider/>
-				<Tooltip title={"Level of Difficulty"} placement={"right"}>
-					<ListItem alignItems={"center"}>
+				<Divider />
+				<Tooltip title={'Difficulté'} placement={'right'}>
+					<ListItem alignItems={'center'}>
 						<ListItemIcon>
-							<FitnessCenter/>
+							<FitnessCenter />
 						</ListItemIcon>
-						<ListItemText primary={enigma.difficulty}/>
+						<ListItemText primary={Difficulties(enigma.scoreReward)} />
 					</ListItem>
 				</Tooltip>
-				<Divider/>
-				<Tooltip title={"Reward Points"} placement={"right"}>
-					<ListItem alignItems={"center"}>
+				<Divider />
+				<Tooltip title={'Score'} placement={'right'}>
+					<ListItem alignItems={'center'}>
 						<ListItemIcon>
-							<LocalActivity/>
+							<LocalActivity />
 						</ListItemIcon>
-						<ListItemText primary={enigma.value}/>
+						<ListItemText primary={enigma.scoreReward} />
 					</ListItem>
 				</Tooltip>
 			</List>
 		</Paper>
-	);
+	)
 }
 
 InfoEnigma.propTypes = {
-	enigma: PropTypes.object.isRequired,
-};
+	enigma: PropTypes.object.isRequired
+}
 
-
-export default InfoEnigma;
-
-/**Example of props
- InfoEnigma({
-	enigma: {
-		creator: "DamSaulGoodMan",
-		date: "18:02, 18/08/2018", difficulty: "HARD",
-		value: "75"
-	}
-});**/
+export default InfoEnigma

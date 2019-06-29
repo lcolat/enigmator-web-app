@@ -10,7 +10,13 @@ import {
 	TableCell,
 	TableRow
 } from '@material-ui/core'
-import { Forum, Subject, Photo, MusicNote } from '@material-ui/icons'
+import {
+	Forum,
+	Subject,
+	Photo,
+	MusicNote,
+	VideoLabel
+} from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
 import EnigmasTableHead from './enigmas-table-head'
@@ -21,6 +27,7 @@ import {
 	LEVEL_NOTIF as Level
 } from 'services/notifications'
 import EnigmaService from 'services/enigmaService'
+import { Difficulties } from 'model/Enigma'
 
 class EnigmasList extends Component {
 	constructor(props) {
@@ -88,6 +95,14 @@ class EnigmasList extends Component {
 		this.setState({ enigmaClicked: row })
 		this.handleClickDialogueOpen()
 	}
+	formatDate(date) {
+		return new Date(date).toLocaleDateString('fr-FR', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
+	}
 
 	isSelected = name => this.state.selected.indexOf(name) !== -1
 
@@ -99,6 +114,8 @@ class EnigmasList extends Component {
 				return <MusicNote fontSize={'small'} />
 			case 'image':
 				return <Photo fontSize={'small'} />
+			case 'video':
+				return <VideoLabel fontSize={'small'} />
 			default:
 				break
 		}
@@ -127,48 +144,56 @@ class EnigmasList extends Component {
 									this.state.enigmas,
 									this.getSorting(this.state.order, this.state.orderBy)
 								).map(enigma => {
-									const isItemSelected = this.isSelected(enigma.name)
-									return (
-										<TableRow
-											hover
-											onClick={event => this.handleClick(event, enigma)}
-											aria-checked={isItemSelected}
-											tabIndex={-1}
-											key={enigma.id}
-											selected={isItemSelected}>
-											<TableCell>
-												<LikeCount
-													liked={'enigma.likedByUser'}
-													likes={'enigma.likes'}
-												/>
-											</TableCell>
-											<TableCell component="th" scope="row" padding="none">
-												{enigma.name}
-											</TableCell>
-											<TableCell align="left">{'enigma.creator'}</TableCell>
-											<TableCell align="left">
-												{this.kind(enigma.type)}
-											</TableCell>
-											<TableCell align="left">{'enigma.difficulty'}</TableCell>
-											<TableCell align="left">{'enigma.date'}</TableCell>
-											<TableCell align="left">{enigma.scoreReward}</TableCell>
-											<TableCell align="left">{'enigma.status'}</TableCell>
-											<TableCell align="center">
-												<Button
-													variant="contained"
-													color={'primary'}
-													className={classes.button}>
-													<Forum fontSize={'large'} />
-												</Button>
-											</TableCell>
-										</TableRow>
-									)
+									if (enigma.status === true) {
+										const isItemSelected = this.isSelected(enigma.name)
+										return (
+											<TableRow
+												hover
+												onClick={event => this.handleClick(event, enigma)}
+												aria-checked={isItemSelected}
+												tabIndex={-1}
+												key={enigma.id}
+												selected={isItemSelected}>
+												<TableCell>
+													<LikeCount
+														liked={'enigma.likedByUser'}
+														likes={enigma.likes}
+													/>
+												</TableCell>
+												<TableCell component="th" scope="row" padding="none">
+													{enigma.name}
+												</TableCell>
+												<TableCell align="left">
+													{enigma.Enigme_User.username}
+												</TableCell>
+												<TableCell align="left">
+													{this.kind(enigma.type)}
+												</TableCell>
+												<TableCell align="left">
+													{Difficulties(enigma.scoreReward)}
+												</TableCell>
+												<TableCell align="left">
+													{this.formatDate(enigma.creationDate)}
+												</TableCell>
+												<TableCell align="left">{enigma.scoreReward}</TableCell>
+												<TableCell align="center">
+													<Button
+														variant="contained"
+														color={'primary'}
+														className={classes.button}>
+														<Forum fontSize={'large'} />
+													</Button>
+												</TableCell>
+											</TableRow>
+										)
+									}
 								})}
 							</TableBody>
 						</Table>
 					</div>
 				</Paper>
 				<PlayModeDialogue
+					{...this.props}
 					enigma={
 						this.state.enigmaClicked ? this.state.enigmaClicked : 'undefined'
 					}

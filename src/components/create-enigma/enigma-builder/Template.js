@@ -36,7 +36,9 @@ class Template extends Component {
 		question: '',
 		answer: '',
 		file: undefined,
-		mediaType: undefined
+		mediaType: undefined,
+		creationDate: '',
+		UserID: this.props.userService.id
 	}
 
 	handleChange = event => {
@@ -55,6 +57,7 @@ class Template extends Component {
 			this.state.name,
 			this.state.question,
 			this.state.answer,
+			this.state.scoreReward,
 			this.state.file,
 			this.state.mediaType
 		)
@@ -93,7 +96,7 @@ class Template extends Component {
 				<TextField
 					id="enigma-scoreReward"
 					label="Score"
-					name="score"
+					name="scoreReward"
 					className={classes.textField}
 					value={this.state.scoreReward}
 					onChange={this.handleChange}

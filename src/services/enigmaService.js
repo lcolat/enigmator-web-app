@@ -10,7 +10,7 @@ export default class EnigmaService {
 		}
 	}
 
-	create = async (name, question, answer, file, mediaType) => {
+	create = async (name, question, answer, scoreReward, file, mediaType) => {
 		if (
 			question === '' ||
 			question === undefined ||
@@ -22,7 +22,8 @@ export default class EnigmaService {
 		const req = {
 			name: name,
 			question: question,
-			answer: answer
+			answer: answer,
+			scoreReward: parseInt(scoreReward)
 		}
 
 		try {
@@ -52,7 +53,7 @@ export default class EnigmaService {
 	}
 	getEnigmas = async () => {
 		try {
-			const res = await api.get('/Enigmes')
+			const res = await api.get('/Enigmes?filter[include]=Enigme_User')
 			let enigmas = res.data
 			let newEnigmas = new Array(res.data.length)
 			await Promise.all(
@@ -83,5 +84,39 @@ export default class EnigmaService {
 		} catch (err) {
 			return err
 		}
+	}
+	answer = async (id, answer) => {
+		if (answer === undefined || answer === '') {
+			return 'Il manque la réponse'
+		}
+		const req = { answer: answer }
+		try {
+			const res = await api.post(`/Enigmes/${id}/AnswerEnigme`, req)
+			return res
+		} catch (err) {
+			return err
+		}
+	}
+	setLastWords = (enigmaID, words) => {
+		const data = {
+			id: enigmaID,
+			words: words
+		}
+		sessionStorage.setItem(
+			`enigmator.enigma.${enigmaID}.words`,
+			JSON.stringify(data)
+		)
+	}
+	getLastWords = enigmaID => {
+		const data = JSON.parse(
+			sessionStorage.getItem(`enigmator.enigma.${enigmaID}.words`)
+		)
+		if (data === null || data === '') {
+			return []
+		}
+		return data.words
+	}
+	deleteLastWords = enigmaID => {
+		sessionStorage.removeItem(`enigmator.enigma.${enigmaID}.words`)
 	}
 }

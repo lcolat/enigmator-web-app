@@ -14,7 +14,7 @@ function ImageEnigma(props) {
 	return (
 		<Grid container alignItems={'stretch'} direction={'column'}>
 			<Grid item xl>
-				<img alt={'enigma'} src={content} />
+				<img alt={'enigma'} src={content} height="360" />
 			</Grid>
 		</Grid>
 	)

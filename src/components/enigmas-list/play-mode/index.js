@@ -48,8 +48,10 @@ function PlayModeDialogue(props) {
 	}
 
 	function handleLaunchGame() {
-		setIsLaunch(true)
-		// setMessage("Your Game will Begin Soon ...")
+		props.history.push({
+			pathname: '/enigma',
+			state: { type: enigma.type, enigma: enigma }
+		})
 	}
 
 	return (
@@ -88,12 +90,17 @@ function PlayModeDialogue(props) {
 					<Enigma enigma={enigma} type={enigma.type} />
 				)}
 			</DialogContent>
-			<DialogActions>
-				<Button variant="contained" onClick={handleLaunchGame} color="primary">
-					PLAY
-					<PlayCircleOutline className={classes.rightIcon} />
-				</Button>
-			</DialogActions>
+			{!isLaunch && (
+				<DialogActions>
+					<Button
+						variant="contained"
+						onClick={handleLaunchGame}
+						color="primary">
+						PLAY
+						<PlayCircleOutline className={classes.rightIcon} />
+					</Button>
+				</DialogActions>
+			)}
 		</Dialog>
 	)
 }

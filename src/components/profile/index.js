@@ -5,28 +5,29 @@ import { StatsTable } from '../../common'
 import TableListEnigmasTried from './TableListEnigmasTried'
 import TableListOwnEnigmas from './TableListOwnEnigmas'
 import { Paper } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import style from './style'
+import EnigmaService from 'services/enigmaService'
 
 class Profile extends React.Component {
+	state = { enigmaService: new EnigmaService() }
 	render() {
-		const userService = this.props.userService
+		const { classes } = this.props
 		return (
 			<>
-				<Paper>
+				<Paper className={classes.userData}>
 					<UserData {...this.props} />
 				</Paper>
-				{/* <Paper>
+				<Paper className={classes.ownEnigmas}>
 					<StatsTable />
-				</Paper> */}
-				{/*<div>*/}
-				{/*<hr />*/}
-				{/*</div>*/}
-				{/*<Paper>*/}
-				{/*<TableListOwnEnigmas />*/}
-				{/*<TableListEnigmasTried />*/}
-				{/*</Paper>*/}
+				</Paper>
+				<TableListOwnEnigmas
+					enigmaService={this.state.enigmaService}
+					{...this.props}
+				/>
+				<TableListEnigmasTried />
 			</>
 		)
 	}
 }
-
-export default Profile
+export default withStyles(style, { withTheme: true })(Profile)

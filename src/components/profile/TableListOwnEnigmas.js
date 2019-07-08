@@ -115,39 +115,43 @@ function createData(nameEnigma, creationDate) {
 }
 
 const styles = theme => ({
+	root: {
+		marginLeft: theme.spacing(3),
+		marginRight: theme.spacing(3),
+		marginBottom: theme.spacing(3)
+	},
 	table: {
 		minWidth: 500
-	},
-	tableWrapper: {
-		overflowX: 'auto'
 	}
+	// tableWrapper: {
+	// 	overflowX: 'auto'
+	// }
 })
 
 class TableListOwnEnigmas extends React.Component {
-	// formatDate = "HH:mm DD-MM-YY";
 	state = {
-		rows: [
-			createData('SuperEnigma', '23:36 10/05/19'),
-			createData('GuessHerName', '10:01 10/04/19'),
-			createData('Who have 4-2-3 paws?', '02:59 02/05/19'),
-			createData('What did the third Dwarf take?', '23:10 10/05/19'),
-			createData('hihihi', '01:59 07/05/18'),
-			createData('Yolooo', '20:46 10/01/19'),
-			createData('Palindromatique', '23:59 31/12/18'),
-			createData('<><<><<>>>>', '09:00 11/11/17'),
-			createData('Cachochachat', '03:33 03/03/19'),
-			createData('Lollipop', '07:11 26/08/19'),
-			createData('<^>v><<<^^v', '04:26 10/05/19'),
-			createData('MIAM', '20:36 10/08/17'),
-			createData(
-				'Thanos has erase the half of this sentence...',
-				'00:01 01/02/17'
-			)
-		].sort((a, b) => (a.date < b.date ? -1 : 1)),
+		rows: [],
 		page: 0,
 		rowsPerPage: 5
 	}
-
+	async componentDidMount() {
+		const res = await this.props.enigmaService.getUserEnigmas(
+			this.props.userService.id
+		)
+		if (res) {
+			this.setState({
+				rows: res.sort((a, b) => (a.date < b.date ? -1 : 1))
+			})
+		}
+	}
+	formatDate(date) {
+		return new Date(date).toLocaleDateString('fr-FR', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
+	}
 	handleChangePage = (event, page) => {
 		this.setState({ page })
 	}
@@ -168,10 +172,10 @@ class TableListOwnEnigmas extends React.Component {
 					<Table className={classes.table}>
 						<TableHead>
 							<TableCell align="left" style={{ height: 26 }}>
-								Enigmas Unresolved
+								Enigmes créées
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
-								Date of Creation
+								Date de création
 							</TableCell>
 							<TableCell align={'right'}> </TableCell>
 						</TableHead>
@@ -184,7 +188,7 @@ class TableListOwnEnigmas extends React.Component {
 											{row.name}
 										</TableCell>
 										<TableCell scope={'row'} align={'left'}>
-											{row.date}
+											{this.formatDate(row.creationDate)}
 										</TableCell>
 										<TableCell align={'right'}>
 											<IconButton>

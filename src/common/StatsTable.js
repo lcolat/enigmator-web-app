@@ -46,7 +46,7 @@ function StatsTable(props) {
 	const { classes, currentUserStats, isCompared } = props
 
 	return (
-		<div>
+		<>
 			<Table className={classes.table}>
 				<TableHead>
 					<TableRow>
@@ -73,27 +73,33 @@ function StatsTable(props) {
 							</TableCell>
 							<TableCell align="center">
 								<Typography>{row.rank}</Typography>
-								{isCompared &&
-								<Typography color={'secondary'}>{currentUserStats[index].rank}</Typography>
-								}
+								{isCompared && (
+									<Typography color={'secondary'}>
+										{currentUserStats[index].rank}
+									</Typography>
+								)}
 							</TableCell>
 							<TableCell align="center">
 								<Typography>{row.score}</Typography>
-								{isCompared &&
-								<Typography color={'secondary'}>{currentUserStats[index].score}</Typography>
-								}
+								{isCompared && (
+									<Typography color={'secondary'}>
+										{currentUserStats[index].score}
+									</Typography>
+								)}
 							</TableCell>
 							<TableCell align="center">
 								<Typography>{row.win}</Typography>
-								{isCompared &&
-								<Typography color={'secondary'}>{currentUserStats[index].win}</Typography>
-								}
+								{isCompared && (
+									<Typography color={'secondary'}>
+										{currentUserStats[index].win}
+									</Typography>
+								)}
 							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
 			</Table>
-		</div>
+		</>
 	)
 }
 

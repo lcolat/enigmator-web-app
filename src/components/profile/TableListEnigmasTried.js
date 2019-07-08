@@ -113,6 +113,11 @@ function createData(nameEnigma, dateLastTry, resolved) {
 }
 
 const styles = theme => ({
+	root: {
+		marginLeft: theme.spacing(3),
+		marginRight: theme.spacing(3),
+		marginBottom: theme.spacing(3)
+	},
 	table: {
 		minWidth: 500
 	},

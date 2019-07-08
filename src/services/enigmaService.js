@@ -85,6 +85,14 @@ export default class EnigmaService {
 			return err
 		}
 	}
+	getUserEnigmas = async userId => {
+		try {
+			const res = await api.get(`/Enigmes?filter[where][UserID]=${userId}`)
+			return res.data
+		} catch (err) {
+			return err
+		}
+	}
 	answer = async (id, answer) => {
 		if (answer === undefined || answer === '') {
 			return 'Il manque la réponse'

@@ -8,7 +8,12 @@ import {
 	Typography,
 	Grid,
 	ButtonBase,
-	Button
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle
 } from '@material-ui/core'
 import {
 	createNotification,
@@ -27,6 +32,7 @@ class UserData extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			open: false,
 			username: '',
 			firstName: '',
 			lastName: '',
@@ -34,10 +40,14 @@ class UserData extends React.Component {
 			country: '',
 			status: '',
 			email: '',
+			password: '',
 			newPassword: '',
 			newPasswordConfirmation: '',
 			changes: false
 		}
+	}
+	handleClose = () => {
+		this.setState({ open: false })
 	}
 	formatDate(date) {
 		return new Date(date).toLocaleDateString('fr-FR', {
@@ -66,14 +76,44 @@ class UserData extends React.Component {
 		}
 	}
 	validatePassword = () => {
-		if (this.state.newPassword !== this.state.newPasswordConfirmation) {
+		console.log(this.state.password)
+		if (
+			this.state.newPassword !== this.state.newPasswordConfirmation &&
+			this.state.password !== ''
+		) {
 			return false
 		}
 		return true
 	}
-
+	prepareData = () => {
+		return {
+			username: this.state.username,
+			firstName: this.state.firstName,
+			lastName: this.state.lastName,
+			country: this.state.country,
+			email: this.state.email
+			// password: this.state.newPassword
+		}
+	}
 	updateProfile = async () => {
+		this.setState({ open: false })
 		if (this.validatePassword()) {
+			const res = await this.props.userService.update(
+				this.props.userService.id,
+				this.prepareData()
+			)
+			if (res === true) {
+				this.setState({ changes: false })
+				createNotification({
+					level: Level.SUCCESS,
+					message: 'Les données ont bien été mises à jour'
+				})
+			} else {
+				createNotification({
+					level: Level.ERROR,
+					message: res
+				})
+			}
 		} else {
 			createNotification({
 				level: Level.ERROR,
@@ -139,7 +179,7 @@ class UserData extends React.Component {
 							label="Pseudo"
 							className={classNames(classes.margin, classes.textField)}
 							value={this.state.username}
-							onChange={this.handleChange('pseudo')}
+							onChange={this.handleChange('username')}
 							margin="normal"
 							variant="outlined"
 						/>
@@ -192,7 +232,7 @@ class UserData extends React.Component {
 							label="Nouveau mot de passe"
 							type="password"
 							className={classNames(classes.margin, classes.textField)}
-							value={this.state.newPassword}
+							value={this.state.password}
 							onChange={this.handleChange('newPassword')}
 							margin="normal"
 							variant="outlined"
@@ -215,13 +255,13 @@ class UserData extends React.Component {
 						/>
 					</Grid>
 				</Grid>
-				{/* <Grid container direction={'column'} justify={'center'}>
+				<Grid container direction={'column'} justify={'center'}>
 					{this.state.changes ? (
 						<Button
 							variant="contained"
 							color="primary"
 							className={classes.button}
-							onClick={this.updateProfile}>
+							onClick={() => this.setState({ open: true })}>
 							Enregistrer les modifications
 						</Button>
 					) : (
@@ -233,7 +273,36 @@ class UserData extends React.Component {
 							Enregistrer les modifications
 						</Button>
 					)}
-				</Grid> */}
+				</Grid>
+				<Dialog
+					open={this.state.open}
+					onClose={this.handleClose}
+					aria-labelledby="form-dialog-title">
+					<DialogTitle id="form-dialog-title">Valider</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Pour valider vos modifications veuillez confirmer votre mot de
+							passe
+						</DialogContentText>
+						<TextField
+							autoFocus
+							id="password"
+							label="Mot de passe"
+							type="password"
+							value={this.state.password}
+							onChange={this.handleChange('password')}
+							fullWidth
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={this.handleClose} color="primary">
+							Annuler
+						</Button>
+						<Button onClick={this.updateProfile} color="primary">
+							Confirmer
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</>
 		)
 	}

@@ -88,7 +88,14 @@ export default class UserService {
 			}
 		}
 	}
-	update = async (id, data) => {}
+	update = async (id, data) => {
+		try {
+			await api.patch(`/UserEnigmators/${id}`, data)
+			return true
+		} catch (err) {
+			throw new Error(err)
+		}
+	}
 
 	isLogin = () => {
 		if (this.getAccessToken() && this.getAccessToken() !== undefined) {

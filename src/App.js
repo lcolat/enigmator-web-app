@@ -13,6 +13,7 @@ import CreateEnigma from 'components/create-enigma'
 import Enigma from 'components/enigmas-list/enigmas-play-ground'
 import EnigmaList from 'components/enigmas-list'
 import UserService from 'services/userService'
+import Settings from 'components/settings-page'
 import { withStyles } from '@material-ui/core/styles'
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
@@ -72,6 +73,11 @@ class App extends Component {
 							<PrivateRoute
 								path="/create-enigmas"
 								component={<CreateEnigma />}
+								userService={userService}
+							/>
+							<PrivateRoute
+								path="/settings"
+								component={<Settings />}
 								userService={userService}
 							/>
 							<PrivateRoute

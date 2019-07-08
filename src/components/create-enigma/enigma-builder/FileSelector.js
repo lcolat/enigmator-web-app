@@ -9,7 +9,7 @@ const style = theme => ({
 		color: theme.palette.primary.main
 	}
 })
-class AudioSelector extends Component {
+class FileSelector extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -52,4 +52,4 @@ class AudioSelector extends Component {
 	}
 }
 
-export default withStyles(style)(AudioSelector)
+export default withStyles(style)(FileSelector)

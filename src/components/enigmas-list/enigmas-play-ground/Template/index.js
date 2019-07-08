@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 
-import {Button, makeStyles, Paper, Typography} from "@material-ui/core";
-import {Grid, Box} from "@material-ui/core";
+import {
+	Button,
+	makeStyles,
+	Paper,
+	Typography,
+	TextField
+} from '@material-ui/core'
+import { Grid, Box } from '@material-ui/core'
 
-import InfoEnigma from "./InfoEnigma";
-import ListWordTry from "./ListWordTry";
-import EntryForResponse from "./EntryForResponse";
-import {LikeCount} from "../../../../common";
-import {OpenInNew} from "@material-ui/icons";
-
+import InfoEnigma from './InfoEnigma'
+import ListWordTry from './ListWordTry'
+import { LikeCount } from '../../../../common'
+import { OpenInNew, Done } from '@material-ui/icons'
+import EnigmaService from 'services/enigmaService'
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		width: "100%"
+		margin: theme.spacing(3)
 	},
 	button: {
 		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1)
+		marginRight: theme.spacing(1),
+		color: '#ae75e9'
 	},
 	rightIcon: {
-		marginLeft: theme.spacing(1),
+		marginLeft: theme.spacing(1)
 	},
 	leftGrid: {
 		//marginLeft: theme.spacing(1),
@@ -30,100 +40,164 @@ const useStyles = makeStyles(theme => ({
 	descriptionPaper: {
 		maxWidth: 250,
 		height: 200,
-		overflow: "hidden",
-		wordWrap: "break-word",
+		overflow: 'hidden',
+		wordWrap: 'break-word',
 		marginBottom: theme.spacing(1),
-		marginTop: theme.spacing(1),
+		marginTop: theme.spacing(1)
 	},
 	enigmaBottom: {
-		marginTop: theme.spacing(4),
-		//overflow: "hidden",
+		// marginTop: theme.spacing(4)
 	}
-}));
-
-const enigma = {
-	name: "Besahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-	creator: "DamSaulGoodMan",
-	date: "18:02, 18/08/2018",
-	difficulty: "HARD",
-	value: "75",
-	description: "Guess the real number of 'h' in Besahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-	likeNumber: 100,
-	isLikedByUser: false
-};
-const stack = ["LaMereNoire",
-	"LaMereNoire",
-	"LaMereNoire"];
-stack.push("LaMereMorte");
-stack.push("LaMereRouge");
-stack.push("LaMereBalte");
+}))
 
 function TemplateEnigma(props) {
-	const {enigmaView, hasChat} = props;
-	const classes = useStyles();
-	
+	const { enigmaView: EnigmaView, hasChat, enigma } = props
+	const classes = useStyles()
+	const enigmaService = new EnigmaService()
+	const [content, setContent] = useState(undefined)
+	const [answer, setAnswer] = useState('')
+	const [stackWords, setstackWords] = useState(
+		enigmaService.getLastWords(enigma.id)
+	)
+
+	const fetchMedia = async () => {
+		const res = await enigmaService.getEnigmaFileUrl(enigma.id)
+		setContent(res)
+	}
+
+	useEffect(() => {
+		fetchMedia(content)
+	}, [content])
+
+	const handleGoodAnswer = async message => {
+		enigmaService.deleteLastWords(enigma.id)
+		createNotification({
+			level: Level.SUCCESS,
+			message: message
+		})
+	}
+
+	const handleResponse = async () => {
+		setstackWords(stackWords.concat([answer]))
+		enigmaService.setLastWords(enigma.id, stackWords)
+		const res = await enigmaService.answer(enigma.id, answer)
+		if (res.data.message === 'bonne réponse ! ') {
+			handleGoodAnswer(res.data.message)
+		} else if (res.data.message === 'mauvaise réponse ! ') {
+			createNotification({
+				level: Level.INFO,
+				message: res.data.message
+			})
+		} else {
+			createNotification({
+				level: Level.ERROR,
+				message: res.message || res.data.message
+			})
+		}
+	}
+	const handleChange = event => {
+		setAnswer(event.target.value)
+	}
+	const handleKeyPress = event => {
+		if (event.key === 'Enter') {
+			handleResponse()
+		}
+	}
 	return (
-		<div className={classes.root}>
-			<Grid item container direction={"row"} alignItems={"flex-start"} justify={"flex-start"}>
-				<div style={{width: "20%"}}>
-					<Grid container
-					      item
-					      direction={"column"}
-					      justify={"space-between"}
-					      alignItems={"stretch"}
-					      className={classes.leftGrid}>
-						<Grid item xs>
-							<InfoEnigma enigma={enigma}/>
-						</Grid>
-						<Grid item xs>
-							<Paper className={classes.descriptionPaper}>
-								<Typography title={"h5"} color={"primary"}>Description</Typography>
-								{enigma.description}
-							</Paper>
-						</Grid>
-						<Grid item xs>
-							<ListWordTry stackWords={stack}/>
-						</Grid>
+		<Paper className={classes.root}>
+			<Grid
+				container
+				item
+				direction={'row'}
+				alignItems={'flex-start'}
+				justify={'flex-start'}>
+				<Grid
+					container
+					item
+					xs={2}
+					direction={'column'}
+					justify={'space-between'}
+					alignItems={'stretch'}
+					className={classes.leftGrid}>
+					<Grid item xs>
+						<InfoEnigma enigma={enigma} />
 					</Grid>
-				</div>
-				<div style={{width: "80%"}}>
-					<Grid container
-					      item
-					      alignItems={"stretch"}
-					      direction={"column"}
-					      justify={"space-between"}
-					      className={classes.enigmaBox}>
-						<Typography variant={"h4"} gutterBottom>{enigma.name}</Typography>
+					<Grid item xs>
+						<ListWordTry stackWords={stackWords} />
+					</Grid>
+				</Grid>
+
+				<Grid
+					container
+					item
+					xs={10}
+					alignItems={'stretch'}
+					direction={'column'}
+					justify={'space-between'}
+					className={classes.enigmaBox}>
+					<Grid item>
+						<Typography variant={'h4'} gutterBottom>
+							{enigma.name}
+						</Typography>
+					</Grid>
+					{EnigmaView !== undefined && (
 						<Grid item>
-							{enigmaView}
+							{content !== undefined && <EnigmaView.type content={content} />}
 						</Grid>
-						<Grid item
-						      container
-						      direction={"row"}
-						      justify={"center"}
-						      alignItems={"stretch"}
-						      className={classes.enigmaBottom}>
-							<Grid item>
-								<EntryForResponse/>
-							</Grid>
-							<Grid item container justify={"flex-end"} alignItems={"stretch"}>
-								<LikeCount liked={enigma.isLikedByUser} likes={enigma.likeNumber}/>
-								<Button variant="contained" color="primary" className={classes.button}>
-									Forum
-									<OpenInNew className={classes.rightIcon}>Forum</OpenInNew>
-								</Button>
-							</Grid>
+					)}
+					<Grid item>
+						<Typography variant={'h4'} gutterBottom>
+							{enigma.question}
+						</Typography>
+					</Grid>
+					<Grid
+						item
+						container
+						direction={'row'}
+						justify={'center'}
+						alignItems={'stretch'}
+						className={classes.enigmaBottom}>
+						<Grid item>
+							<TextField
+								id="enigma-scoreReward"
+								label="Réponse"
+								name="answer"
+								className={classes.textField}
+								value={answer}
+								onChange={handleChange}
+								onKeyPress={handleKeyPress}
+								margin="normal"
+							/>
+						</Grid>
+						<Grid item container justify={'flex-end'} alignItems={'stretch'}>
+							<LikeCount liked={enigma.isLikedByUser} likes={enigma.likes} />
+							<Button
+								variant="contained"
+								color="secondary"
+								className={classes.button}>
+								Forum
+								<OpenInNew className={classes.rightIcon}>Forum</OpenInNew>
+							</Button>
+						</Grid>
+						<Grid item>
+							<Button
+								variant="contained"
+								color="secondary"
+								className={classes.button}
+								onClick={handleResponse}>
+								Valider
+								<Done className={classes.rightIcon}>Valider</Done>
+							</Button>
 						</Grid>
 					</Grid>
-				</div>
+				</Grid>
 			</Grid>
-		</div>
-	);
+		</Paper>
+	)
 }
 
 TemplateEnigma.propTypes = {
 	enigmaView: PropTypes.any.isRequired
-};
-
+}
 
 export default TemplateEnigma

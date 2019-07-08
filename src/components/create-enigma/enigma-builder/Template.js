@@ -36,11 +36,22 @@ class Template extends Component {
 		question: '',
 		answer: '',
 		file: undefined,
-		mediaType: undefined
+		mediaType: undefined,
+		creationDate: '',
+		UserID: this.props.userService.id
 	}
 
 	handleChange = event => {
-		const { name, value } = event.target
+		const name = event.target.name
+		let value = event.target.value
+		if (name === 'scoreReward') {
+			if (value > 100) {
+				value = 100
+			}
+			if (value < 1) {
+				value = 1
+			}
+		}
 		this.setState({ [name]: value })
 	}
 	setFile = file => {
@@ -55,6 +66,7 @@ class Template extends Component {
 			this.state.name,
 			this.state.question,
 			this.state.answer,
+			this.state.scoreReward,
 			this.state.file,
 			this.state.mediaType
 		)
@@ -93,7 +105,7 @@ class Template extends Component {
 				<TextField
 					id="enigma-scoreReward"
 					label="Score"
-					name="score"
+					name="scoreReward"
 					className={classes.textField}
 					value={this.state.scoreReward}
 					onChange={this.handleChange}

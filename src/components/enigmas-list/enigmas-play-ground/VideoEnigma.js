@@ -8,18 +8,18 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-function AudioEnigma(props) {
+function VideoEnigma(props) {
 	const { content } = props
 	const classes = useStyles()
 	return (
 		<Grid container alignItems={'stretch'} direction={'column'}>
 			<Grid item xl>
-				<audio controls>
+				<video controls width="640" height="360">
 					<source src={content} />
-				</audio>
+				</video>
 			</Grid>
 		</Grid>
 	)
 }
 
-export default AudioEnigma
+export default VideoEnigma

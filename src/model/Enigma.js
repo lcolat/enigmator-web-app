@@ -6,7 +6,7 @@ export const enigmasTypes = {
 }
 
 export const enigmasStatus = {
-	SUCCES: 'succes',
+	SUCCESS: 'success',
 	TRIED: 'tried',
 	NOTTRIED: 'notTried'
 }

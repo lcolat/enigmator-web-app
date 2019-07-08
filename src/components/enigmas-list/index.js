@@ -144,7 +144,7 @@ class EnigmasList extends Component {
 									this.state.enigmas,
 									this.getSorting(this.state.order, this.state.orderBy)
 								).map(enigma => {
-									if (enigma.status === true) {
+									if (enigma.status !== true) {
 										const isItemSelected = this.isSelected(enigma.name)
 										return (
 											<TableRow

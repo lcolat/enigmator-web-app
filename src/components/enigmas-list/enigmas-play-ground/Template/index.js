@@ -140,9 +140,11 @@ function TemplateEnigma(props) {
 							{enigma.name}
 						</Typography>
 					</Grid>
-					<Grid item>
-						{content !== undefined && <EnigmaView.type content={content} />}
-					</Grid>
+					{EnigmaView !== undefined && (
+						<Grid item>
+							{content !== undefined && <EnigmaView.type content={content} />}
+						</Grid>
+					)}
 					<Grid item>
 						<Typography variant={'h4'} gutterBottom>
 							{enigma.question}

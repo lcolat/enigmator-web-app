@@ -84,20 +84,20 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'RGPD',
-				icon: <Info fontSize={'large'} />,
-				handleClick: () => {
-					this.props.history.push({
-						pathname: '/rgpd'
-					})
-				}
-			},
-			{
 				text: 'Settings',
 				icon: <Tune fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
 						pathname: '/settings'
+					})
+				}
+			},
+			{
+				text: 'RGPD',
+				icon: <Info fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/rgpd'
 					})
 				}
 			}

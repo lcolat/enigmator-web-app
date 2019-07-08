@@ -30,7 +30,6 @@ class EnigmaTypeSelection extends Component {
 
 	render() {
 		const { classes } = this.props
-		document.body.style.backgroundColor = 'white'
 		return this.state.type !== undefined ? (
 			<EnigmaBuilder
 				{...this.props}

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
 	Home,
 	AccountBox,
@@ -18,24 +18,15 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import clsx from 'clsx'
 
-class Drawer extends PureComponent {
-	render() {
-		const menuItems = [
+class Drawer extends Component {
+	state = {
+		menuItems: [
 			{
 				text: 'Home',
 				icon: <Home fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
 						pathname: '/'
-					})
-				}
-			},
-			{
-				text: 'Validation',
-				icon: <EventAvailable color="primary" fontSize={'large'} />,
-				handleClick: () => {
-					this.props.history.push({
-						pathname: '/validation'
 					})
 				}
 			},
@@ -112,6 +103,28 @@ class Drawer extends PureComponent {
 				}
 			}
 		]
+	}
+	async componentDidMount() {
+		const isValidator = await this.props.userService.isValidator
+		const haveUnvalidatedEnigma = await this.props.enigmaService.haveWaitingValidation()
+		if (isValidator === true && haveUnvalidatedEnigma === true) {
+			let newMenuItems = this.state.menuItems
+			newMenuItems.splice(1, 0, {
+				text: 'Validation',
+				icon: <EventAvailable color="primary" fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/validation'
+					})
+				}
+			})
+			this.setState({
+				menuItems: newMenuItems
+			})
+		}
+	}
+	render() {
+		const { menuItems } = this.state
 		const { classes, handleDrawer, open } = this.props
 		return (
 			<MaterialDrawer

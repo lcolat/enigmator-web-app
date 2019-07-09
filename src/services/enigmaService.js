@@ -102,6 +102,26 @@ export default class EnigmaService {
 			return err
 		}
 	}
+	haveWaitingValidation = async () => {
+		try {
+			const res = await api.get('/Enigmes?filter[where][status]=false')
+			if (res.data.length > 0) {
+				return true
+			}
+			return false
+		} catch (err) {
+			return err
+		}
+	}
+	getEnigmaFileUrl = async id => {
+		try {
+			const res = await api.get(`/Media?filter[where][enigmeID]=${id}`)
+			let filename = res.data[0].filename
+			return `${SERVER_URL}/Containers/enigme/download/${filename}`
+		} catch (err) {
+			return err
+		}
+	}
 	answer = async (id, answer) => {
 		if (answer === undefined || answer === '') {
 			return 'Il manque la réponse'

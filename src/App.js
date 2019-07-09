@@ -13,7 +13,9 @@ import CreateEnigma from 'components/create-enigma'
 import Enigma from 'components/enigmas-list/enigmas-play-ground'
 import EnigmaList from 'components/enigmas-list'
 import UserService from 'services/userService'
+import EnigmaService from 'services/enigmaService'
 import Settings from 'components/settings-page'
+import EnigmasValidation from 'components/enigmas-validation'
 import { withStyles } from '@material-ui/core/styles'
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
@@ -25,11 +27,12 @@ const styles = theme => ({
 })
 class App extends Component {
 	state = {
-		userService: new UserService()
+		userService: new UserService(),
+		enigmaService: new EnigmaService()
 	}
 
 	render() {
-		const userService = this.state.userService
+		const { userService, enigmaService } = this.state
 		const { classes } = this.props
 		return (
 			<BrowserRouter>
@@ -54,36 +57,49 @@ class App extends Component {
 								path="/profile"
 								component={<Profile />}
 								userService={userService}
+								enigmaService={enigmaService}
 							/>
 							<PrivateRoute
 								path="/friends"
 								component={<FriendsView />}
 								userService={userService}
+								enigmaService={enigmaService}
 							/>
 							<PrivateRoute
 								path="/enigma"
 								component={<Enigma />}
 								userService={userService}
+								enigmaService={enigmaService}
 							/>
 							<PrivateRoute
 								path="/enigmas"
 								component={<EnigmaList />}
 								userService={userService}
+								enigmaService={enigmaService}
 							/>
 							<PrivateRoute
 								path="/create-enigmas"
 								component={<CreateEnigma />}
 								userService={userService}
+								enigmaService={enigmaService}
 							/>
 							<PrivateRoute
 								path="/settings"
 								component={<Settings />}
 								userService={userService}
+								enigmaService={enigmaService}
+							/>
+							<PrivateRoute
+								path="/validation"
+								component={<EnigmasValidation />}
+								userService={userService}
+								enigmaService={enigmaService}
 							/>
 							<PrivateRoute
 								path="/"
 								component={<HomePage />}
 								userService={userService}
+								enigmaService={enigmaService}
 							/>
 						</Switch>
 					</div>

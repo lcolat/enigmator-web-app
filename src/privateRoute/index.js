@@ -6,6 +6,7 @@ import useStyles from './style'
 const PrivateRoute = ({
 	component: Component,
 	userService,
+	enigmaService,
 	redirect: pathname,
 	history,
 	...rest
@@ -17,7 +18,11 @@ const PrivateRoute = ({
 			render={props =>
 				userService.isLogin() ? (
 					<>
-						<HeaderDrawer {...props} userService={userService} />
+						<HeaderDrawer
+							{...props}
+							userService={userService}
+							enigmaService={enigmaService}
+						/>
 						<main>
 							<div className={classes.toolbar} />
 							<Grid

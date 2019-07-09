@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
 	Home,
 	AccountBox,
@@ -8,7 +8,8 @@ import {
 	Stars,
 	Forum,
 	Info,
-	Tune
+	Tune,
+	EventAvailable
 } from '@material-ui/icons'
 import MaterialDrawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -17,9 +18,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import clsx from 'clsx'
 
-class Drawer extends PureComponent {
-	render() {
-		const menuItems = [
+class Drawer extends Component {
+	state = {
+		menuItems: [
 			{
 				text: 'Home',
 				icon: <Home fontSize={'large'} />,
@@ -39,7 +40,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Friends',
+				text: 'Amis',
 				icon: <Contacts fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -48,7 +49,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Enigmas',
+				text: 'Enigmes',
 				icon: <ImageSearch fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -57,7 +58,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Create',
+				text: 'Créer',
 				icon: <AddBox fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -66,7 +67,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Rank',
+				text: 'Rang',
 				icon: <Stars fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -84,7 +85,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Settings',
+				text: 'Réglages',
 				icon: <Tune fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -102,6 +103,28 @@ class Drawer extends PureComponent {
 				}
 			}
 		]
+	}
+	async componentDidMount() {
+		const isValidator = await this.props.userService.isValidator
+		const haveUnvalidatedEnigma = await this.props.enigmaService.haveWaitingValidation()
+		if (isValidator === true && haveUnvalidatedEnigma === true) {
+			let newMenuItems = this.state.menuItems
+			newMenuItems.splice(1, 0, {
+				text: 'Validation',
+				icon: <EventAvailable color="primary" fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/validation'
+					})
+				}
+			})
+			this.setState({
+				menuItems: newMenuItems
+			})
+		}
+	}
+	render() {
+		const { menuItems } = this.state
 		const { classes, handleDrawer, open } = this.props
 		return (
 			<MaterialDrawer

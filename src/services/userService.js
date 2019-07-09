@@ -2,6 +2,7 @@ import api from 'services/api'
 export default class UserService {
 	id = undefined
 	accessToken = undefined
+	isValidator = true
 	constructor() {
 		if (this.getAccessToken()) {
 			this.accessToken = this.getAccessToken()

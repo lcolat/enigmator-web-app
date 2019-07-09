@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, withStyles } from '@material-ui/core'
+import { Grid, withStyles, LinearProgress } from '@material-ui/core'
 
 import UserStatsResume from './UserStatsResume'
 import TabUnresolvedEnigmas from './TabUnresolvedEnigmas'
@@ -12,6 +12,7 @@ class HomePage extends React.Component {
 	render() {
 		return (
 			<div>
+				<LinearProgress color="primary" />
 				<Grid item>
 					<Grid container direction={'row'} spacing={2}>
 						<Grid item xs={12} sm={5}>

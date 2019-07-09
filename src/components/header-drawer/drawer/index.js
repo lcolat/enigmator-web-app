@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import {
-	Home,
-	AccountBox,
-	Contacts,
-	ImageSearch,
-	AddBox,
-	Stars,
-	Forum,
-	Info,
-	Tune,
-	EventAvailable
-} from '@material-ui/icons'
+import Home from '@material-ui/icons/Home'
+import AccountBox from '@material-ui/icons/AccountBox'
+import Contacts from '@material-ui/icons/Contacts'
+import ImageSearch from '@material-ui/icons/ImageSearch'
+import AddBox from '@material-ui/icons/AddBox'
+import Stars from '@material-ui/icons/Stars'
+import Forum from '@material-ui/icons/Forum'
+import Info from '@material-ui/icons/Info'
+import Tune from '@material-ui/icons/Tune'
+import EventAvailable from '@material-ui/icons/EventAvailable'
 import MaterialDrawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'

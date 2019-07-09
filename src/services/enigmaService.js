@@ -93,6 +93,15 @@ export default class EnigmaService {
 			return err
 		}
 	}
+	validateEnigma = async (enigmaId, scoreReward) => {
+		const req = { scoreReward: scoreReward }
+		try {
+			await api.patch(`/Enigmes/${enigmaId}/ValidateEnigme`, req)
+			return true
+		} catch (err) {
+			return err
+		}
+	}
 	answer = async (id, answer) => {
 		if (answer === undefined || answer === '') {
 			return 'Il manque la réponse'

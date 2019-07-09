@@ -23,7 +23,8 @@ class EnigmasValidation extends Component {
 			orderBy: 'calories',
 			selected: [],
 			open: false,
-			enigmaClicked: undefined
+			enigmaClicked: undefined,
+			enigmaIndex: 0
 		}
 	}
 	async componentDidMount() {
@@ -74,8 +75,11 @@ class EnigmasValidation extends Component {
 	handleDialogueClose = () => {
 		this.setState({ open: false })
 	}
-	handleClick = (event, row) => {
-		this.setState({ enigmaClicked: row })
+	setOpen = value => {
+		this.setState({ open: value })
+	}
+	handleClick = (event, row, enigmaIndex) => {
+		this.setState({ enigmaClicked: row, enigmaIndex: enigmaIndex })
 		this.handleClickDialogueOpen()
 	}
 	formatDate(date) {
@@ -103,6 +107,11 @@ class EnigmasValidation extends Component {
 				break
 		}
 	}
+	removeEnigma = () => {
+		let newEnigmas = this.state.enigmas
+		newEnigmas.splice(this.state.enigmaIndex, 1)
+		this.setState({ enigmas: newEnigmas })
+	}
 
 	render() {
 		const classes = this.props.classes
@@ -126,15 +135,17 @@ class EnigmasValidation extends Component {
 								{this.tableSort(
 									this.state.enigmas,
 									this.getSorting(this.state.order, this.state.orderBy)
-								).map(enigma => {
+								).map((enigma, index) => {
 									if (enigma.status === false) {
 										const isItemSelected = this.isSelected(enigma.name)
 										return (
 											<TableRow
 												hover
-												onClick={event => this.handleClick(event, enigma)}
+												onClick={event =>
+													this.handleClick(event, enigma, index)
+												}
 												aria-checked={isItemSelected}
-												tabIndex={-1}
+												tabIndex={index}
 												key={enigma.id}
 												selected={isItemSelected}>
 												<TableCell
@@ -169,9 +180,12 @@ class EnigmasValidation extends Component {
 					<EnigmaDialog
 						{...this.props}
 						enigma={this.state.enigmaClicked}
+						enigmaService={this.state.enigmaService}
 						open={this.state.open}
 						onOpen={this.state.handleClickDialogueOpen}
 						onClose={this.state.handleDialogueClose}
+						setOpen={this.setOpen}
+						removeEnigma={this.removeEnigma}
 					/>
 				)}
 			</div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { makeStyles, Typography } from '@material-ui/core/index'
 import {
@@ -8,15 +8,13 @@ import {
 	Dialog,
 	TextField
 } from '@material-ui/core/index'
-import { Tab, Tabs, Button } from '@material-ui/core/index'
+import { Button } from '@material-ui/core/index'
+import { Check, Close } from '@material-ui/icons/index'
+import EnigmaContent from './enigma-content'
 import {
-	AllInclusive,
-	Rowing,
-	SupervisedUserCircle,
-	Whatshot,
-	PlayCircleOutline
-} from '@material-ui/icons/index'
-import Paper from '@material-ui/core/Paper/index'
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
 
 const useStyles = makeStyles(theme => ({
 	rightIcon: {
@@ -29,11 +27,27 @@ const useStyles = makeStyles(theme => ({
 
 function EnigmaDialog(props) {
 	const classes = useStyles()
-	const { onOpen, enigma, ...other } = props
+	const {
+		onOpen,
+		onClose,
+		setOpen,
+		enigma,
+		enigmaService,
+		removeEnigma,
+		...other
+	} = props
 	const [score, setScore] = React.useState(enigma.scoreReward)
-	function handleClose() {
-		onOpen(false)
+
+	const [content, setContent] = useState(undefined)
+
+	const fetchMedia = async () => {
+		const res = await enigmaService.getEnigmaFileUrl(enigma.id)
+		setContent(res)
 	}
+
+	useEffect(() => {
+		enigma.type !== 'text' && fetchMedia(content)
+	}, [content])
 
 	function handleChange(event, newValue) {
 		if (newValue > 100) {
@@ -45,24 +59,40 @@ function EnigmaDialog(props) {
 		setScore(newValue)
 	}
 
-	function handleLaunchGame() {
-		props.history.push({
-			pathname: '/enigma',
-			state: { type: enigma.type, enigma: enigma }
-		})
+	const handleValidate = async () => {
+		const res = await enigmaService.validateEnigma(enigma.id, score)
+		if (res === true) {
+			removeEnigma()
+			createNotification({
+				level: Level.SUCCESS,
+				message: "L'énigme à bien été validée"
+			})
+		} else {
+			createNotification({
+				level: Level.ERROR,
+				message: res
+			})
+		}
+		setOpen(false)
+	}
+	function handleClose() {
+		setOpen(false)
 	}
 	return (
 		<Dialog
-			onClose={handleClose}
+			onClose={onClose}
 			aria-labelledby="alert-dialog-title"
 			aria-describedby="alert-dialog-description"
 			fullWidth={true}
-			maxWidth={'sm'}
+			maxWidth={'md'}
 			{...other}>
 			<DialogTitle style={{ alignSelf: 'center' }} id="dialog-title">
 				{enigma.name}
 			</DialogTitle>
-			<DialogContent>
+			<DialogContent style={{ alignSelf: 'center' }}>
+				{content !== undefined && (
+					<EnigmaContent type={enigma.type} content={content} />
+				)}
 				<Typography>Question: {enigma.question}</Typography>
 				<Typography>Réponse: {enigma.answer}</Typography>
 				<TextField
@@ -73,12 +103,19 @@ function EnigmaDialog(props) {
 					type={'number'}
 					onChange={handleChange}
 					margin="normal"
+					InputLabelProps={{
+						shrink: true
+					}}
 				/>
 			</DialogContent>
-			<DialogActions>
-				<Button variant="contained" onClick={handleLaunchGame} color="primary">
+			<DialogActions style={{ alignSelf: 'center' }}>
+				<Button variant="contained" onClick={handleClose} color="primary">
+					Annuler
+					<Close className={classes.rightIcon} />
+				</Button>
+				<Button variant="contained" onClick={handleValidate} color="primary">
 					Valider
-					<PlayCircleOutline className={classes.rightIcon} />
+					<Check className={classes.rightIcon} />
 				</Button>
 			</DialogActions>
 		</Dialog>

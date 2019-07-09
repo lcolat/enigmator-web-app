@@ -8,7 +8,8 @@ import {
 	Stars,
 	Forum,
 	Info,
-	Tune
+	Tune,
+	EventAvailable
 } from '@material-ui/icons'
 import MaterialDrawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -30,6 +31,15 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
+				text: 'Validation',
+				icon: <EventAvailable color="primary" fontSize={'large'} />,
+				handleClick: () => {
+					this.props.history.push({
+						pathname: '/validation'
+					})
+				}
+			},
+			{
 				text: 'Profile',
 				icon: <AccountBox fontSize={'large'} />,
 				handleClick: () => {
@@ -39,7 +49,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Friends',
+				text: 'Amis',
 				icon: <Contacts fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -48,7 +58,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Enigmas',
+				text: 'Enigmes',
 				icon: <ImageSearch fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -57,7 +67,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Create',
+				text: 'Créer',
 				icon: <AddBox fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -66,7 +76,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Rank',
+				text: 'Rang',
 				icon: <Stars fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({
@@ -84,7 +94,7 @@ class Drawer extends PureComponent {
 				}
 			},
 			{
-				text: 'Settings',
+				text: 'Réglages',
 				icon: <Tune fontSize={'large'} />,
 				handleClick: () => {
 					this.props.history.push({

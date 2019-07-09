@@ -14,6 +14,7 @@ import Enigma from 'components/enigmas-list/enigmas-play-ground'
 import EnigmaList from 'components/enigmas-list'
 import UserService from 'services/userService'
 import Settings from 'components/settings-page'
+import EnigmasValidation from 'components/enigmas-validation'
 import { withStyles } from '@material-ui/core/styles'
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
@@ -78,6 +79,11 @@ class App extends Component {
 							<PrivateRoute
 								path="/settings"
 								component={<Settings />}
+								userService={userService}
+							/>
+							<PrivateRoute
+								path="/validation"
+								component={<EnigmasValidation />}
 								userService={userService}
 							/>
 							<PrivateRoute

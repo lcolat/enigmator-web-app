@@ -1,27 +1,10 @@
 import React, { Component } from 'react'
-import {
-	Paper,
-	FormControlLabel,
-	Switch,
-	Button,
-	Grid,
-	Table,
-	TableBody,
-	TableCell,
-	TableRow
-} from '@material-ui/core'
-import {
-	Forum,
-	Subject,
-	Photo,
-	MusicNote,
-	VideoLabel
-} from '@material-ui/icons'
+import { Paper, Table, TableBody, TableCell, TableRow } from '@material-ui/core'
+import { Subject, Photo, MusicNote, VideoLabel } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
 import EnigmasTableHead from './enigmas-table-head'
-import PlayModeDialogue from './play-mode'
-import { LikeCount } from '../../common'
+import EnigmaDialog from './enigma-dialog'
 import {
 	createNotification,
 	LEVEL_NOTIF as Level
@@ -29,7 +12,7 @@ import {
 import EnigmaService from 'services/enigmaService'
 import { Difficulties } from 'model/Enigma'
 
-class EnigmasList extends Component {
+class EnigmasValidation extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -144,7 +127,7 @@ class EnigmasList extends Component {
 									this.state.enigmas,
 									this.getSorting(this.state.order, this.state.orderBy)
 								).map(enigma => {
-									if (enigma.status === true) {
+									if (enigma.status === false) {
 										const isItemSelected = this.isSelected(enigma.name)
 										return (
 											<TableRow
@@ -154,13 +137,11 @@ class EnigmasList extends Component {
 												tabIndex={-1}
 												key={enigma.id}
 												selected={isItemSelected}>
-												<TableCell>
-													<LikeCount
-														liked={'enigma.likedByUser'}
-														likes={enigma.likes}
-													/>
-												</TableCell>
-												<TableCell component="th" scope="row" padding="none">
+												<TableCell
+													align="left"
+													component="th"
+													scope="row"
+													padding="none">
 													{enigma.name}
 												</TableCell>
 												<TableCell align="left">
@@ -176,14 +157,6 @@ class EnigmasList extends Component {
 													{this.formatDate(enigma.creationDate)}
 												</TableCell>
 												<TableCell align="left">{enigma.scoreReward}</TableCell>
-												<TableCell align="center">
-													<Button
-														variant="contained"
-														color={'primary'}
-														className={classes.button}>
-														<Forum fontSize={'large'} />
-													</Button>
-												</TableCell>
 											</TableRow>
 										)
 									}
@@ -192,18 +165,18 @@ class EnigmasList extends Component {
 						</Table>
 					</div>
 				</Paper>
-				<PlayModeDialogue
-					{...this.props}
-					enigma={
-						this.state.enigmaClicked ? this.state.enigmaClicked : 'undefined'
-					}
-					open={this.state.open}
-					onOpen={this.state.handleClickDialogueOpen}
-					onClose={this.state.handleDialogueClose}
-				/>
+				{this.state.enigmaClicked !== undefined && (
+					<EnigmaDialog
+						{...this.props}
+						enigma={this.state.enigmaClicked}
+						open={this.state.open}
+						onOpen={this.state.handleClickDialogueOpen}
+						onClose={this.state.handleDialogueClose}
+					/>
+				)}
 			</div>
 		)
 	}
 }
 
-export default withStyles(style, { withTheme: true })(EnigmasList)
+export default withStyles(style, { withTheme: true })(EnigmasValidation)

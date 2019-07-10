@@ -5,13 +5,12 @@ import {
 	TableHead,
 	TableRow,
 	TableCell,
-	TablePagination,
 	TableSortLabel,
 	Table,
 	TableBody
 } from '@material-ui/core'
 import { Tooltip, Paper } from '@material-ui/core'
-import { DonutSmall } from '@material-ui/icons'
+import DonutSmall from '@material-ui/icons/DonutSmall'
 
 import { mapUserStatusColor } from '../../model/User'
 

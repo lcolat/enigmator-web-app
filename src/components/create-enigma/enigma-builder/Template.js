@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-
-import { withStyles, Grid } from '@material-ui/core'
-import { TextField, Button } from '@material-ui/core'
-
-import { Save } from '@material-ui/icons'
-
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import withStyles from '@material-ui/core/styles/withStyles'
+import Save from '@material-ui/icons/Save'
 import EnigmaService from 'services/enigmaService'
 import {
 	createNotification,

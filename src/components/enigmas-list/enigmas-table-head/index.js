@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-	TableCell,
-	TableHead,
-	TableRow,
-	TableSortLabel
-} from '@material-ui/core'
-
-import { ThumbUp, LocalActivity } from '@material-ui/icons'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import TableSortLabel from '@material-ui/core/TableSortLabel'
+import ThumbUp from '@material-ui/icons/ThumbUp'
+import LocalActivity from '@material-ui/icons/LocalActivity'
 
 const headRows = [
 	{ id: 'likes', align: 'center', disablePadding: false, label: 'Likes' },

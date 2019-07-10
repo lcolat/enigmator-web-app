@@ -1,44 +1,42 @@
-import React from 'react';
-
-import {makeStyles, TextField, withStyles} from "@material-ui/core";
-
-import {InputAdornment, IconButton} from "@material-ui/core";
-
-import {Gavel} from "@material-ui/icons";
-
-
+import React from 'react'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import TextField from '@material-ui/core/TextField'
+import withStyles from '@material-ui/core/styles/withStyles'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import IconButton from '@material-ui/core/IconButton'
+import Gavel from '@material-ui/icons/Gavel'
 
 const useStyles = makeStyles(theme => ({
 	marginTextField: {
 		margin: theme.spacing(1)
 	}
-}));
+}))
 
 const CssTextField = withStyles({
 	root: {
 		'& label.Mui-focused': {
-			color: 'green',
+			color: 'green'
 		},
 		'& .MuiInput-underline:after': {
-			borderBottomColor: 'green',
+			borderBottomColor: 'green'
 		},
 		'& .MuiOutlinedInput-root': {
 			'& fieldset': {
-				borderColor: 'red',
+				borderColor: 'red'
 			},
 			'&:hover fieldset': {
-				borderColor: 'yellow',
+				borderColor: 'yellow'
 			},
 			'&.Mui-focused fieldset': {
-				borderColor: 'green',
-			},
-		},
-	},
-})(TextField);
+				borderColor: 'green'
+			}
+		}
+	}
+})(TextField)
 
 function EntryForWord() {
-	const classes = useStyles();
-	
+	const classes = useStyles()
+
 	return (
 		<div>
 			<CssTextField
@@ -50,14 +48,14 @@ function EntryForWord() {
 					endAdornment: (
 						<InputAdornment position="end">
 							<IconButton aria-label="Submit" size="medium">
-								<Gavel fontSize="inherit"/>
+								<Gavel fontSize="inherit" />
 							</IconButton>
 						</InputAdornment>
-					),
+					)
 				}}
 			/>
 		</div>
-	);
+	)
 }
 
-export default EntryForWord;
+export default EntryForWord

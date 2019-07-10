@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react'
-
 import PropTypes from 'prop-types'
-
-import {
-	Button,
-	makeStyles,
-	Paper,
-	Typography,
-	TextField
-} from '@material-ui/core'
-import { Grid, Box } from '@material-ui/core'
-
+import Button from '@material-ui/core/Button'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import Grid from '@material-ui/core/Grid'
 import InfoEnigma from './InfoEnigma'
 import ListWordTry from './ListWordTry'
 import { LikeCount } from '../../../../common'
-import { OpenInNew, Done } from '@material-ui/icons'
+import OpenInNew from '@material-ui/icons/OpenInNew'
+import Done from '@material-ui/icons/Done'
 import EnigmaService from 'services/enigmaService'
 import {
 	createNotification,

@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { withStyles } from '@material-ui/core/styles'
-
-import { Button, Grid, Tooltip, Typography, Paper } from '@material-ui/core'
-
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import Tooltip from '@material-ui/core/Tooltip'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
 import Avatar from '@material-ui/core/Avatar'
-import { DonutSmall, CompareArrows } from '@material-ui/icons'
-
+import DonutSmall from '@material-ui/icons/DonutSmall'
+import CompareArrows from '@material-ui/icons/CompareArrows'
 import { mapUserStatusColor, listUserStatus } from '../../../model/User'
-
 import TableEnigmas from './TableEnigmas'
 import { StatsTable } from '../../../common'
 import { playMode } from '../../../model/Enigma'
@@ -33,7 +33,7 @@ const styles = theme => ({
 	},
 	buttonRightIcon: {
 		marginLeft: theme.spacing()
-	},
+	}
 })
 
 function getMTotalScore(rows) {
@@ -58,17 +58,15 @@ const rows = [
 	createData(playMode[0], 450, 87, 24)
 ]
 
-rows.push(createData('Global', 127,
-	getMTotalScore(rows), getTotalWin(rows)))
+rows.push(createData('Global', 127, getMTotalScore(rows), getTotalWin(rows)))
 
 class ProfileFriend extends React.Component {
-	
 	state = { compare: false }
-	
+
 	handleCompare = () => {
 		this.setState({ compare: !this.state.compare })
 	}
-	
+
 	render() {
 		const { classes, pseudo, profilePicture, status } = this.props
 
@@ -81,7 +79,11 @@ class ProfileFriend extends React.Component {
 						justify={'space-between'}
 						alignItems={'center'}>
 						<Grid item xs>
-							<Grid container direction={'row'} alignItems={'center'} justify={'center'}>
+							<Grid
+								container
+								direction={'row'}
+								alignItems={'center'}
+								justify={'center'}>
 								<Grid item>
 									<Tooltip title={status}>
 										<DonutSmall
@@ -91,9 +93,7 @@ class ProfileFriend extends React.Component {
 									</Tooltip>
 								</Grid>
 								<Grid item>
-									<Typography variant="h4">
-										{pseudo}
-									</Typography>
+									<Typography variant="h4">{pseudo}</Typography>
 								</Grid>
 							</Grid>
 						</Grid>
@@ -104,7 +104,7 @@ class ProfileFriend extends React.Component {
 									profilePicture
 										? profilePicture
 										: process.env.PUBLIC_URL +
-										'/img/default-profile-picture.jpg'
+										  '/img/default-profile-picture.jpg'
 								}
 								className={classes.avatar}
 							/>
@@ -118,13 +118,13 @@ class ProfileFriend extends React.Component {
 								className={classes.button}
 								onClick={this.handleCompare}>
 								Compare
-								<CompareArrows className={classes.buttonRightIcon}/>
+								<CompareArrows className={classes.buttonRightIcon} />
 							</Button>
 						</Grid>
 					</Grid>
 				</Paper>
-				<StatsTable currentUserStats={rows} isCompared={this.state.compare}/>
-				<TableEnigmas/>
+				<StatsTable currentUserStats={rows} isCompared={this.state.compare} />
+				<TableEnigmas />
 			</div>
 		)
 	}

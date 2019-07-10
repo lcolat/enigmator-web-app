@@ -1,20 +1,13 @@
 import React from 'react'
 import PropType from 'prop-types'
-
-import { makeStyles } from '@material-ui/core'
-
 import TemplateEnigma from './Template'
-
 import VocalEnigma from './VocalEnigma'
 import ImageEnigma from './ImageEnigma'
 import VideoEnigma from './VideoEnigma'
 import { enigmasTypes, listEnigmasTypes } from 'model/Enigma'
 
-const useStyles = makeStyles(theme => ({}))
-
 function Enigma(rest, props) {
 	const { type, enigma } = rest.location.state
-	const classes = useStyles()
 
 	switch (type) {
 		case enigmasTypes.AUDIO:

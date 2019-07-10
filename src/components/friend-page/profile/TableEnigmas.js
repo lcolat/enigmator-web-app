@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { withStyles } from '@material-ui/core/styles'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-
+import withStyles from '@material-ui/core/styles/withStyles'
 import {
 	Table,
 	TableBody,
@@ -11,16 +8,13 @@ import {
 	TableFooter,
 	TablePagination,
 	TableRow,
-	TableHead, Typography
+	Typography
 } from '@material-ui/core'
 import { IconButton, Paper } from '@material-ui/core'
-
-import {
-	FirstPage,
-	KeyboardArrowLeft,
-	KeyboardArrowRight,
-	LastPage
-} from '@material-ui/icons'
+import FirstPage from '@material-ui/icons/FirstPage'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import LastPage from '@material-ui/icons/LastPage'
 
 const actionsStyles = theme => ({
 	root: {
@@ -195,47 +189,45 @@ class TableEnigmas extends React.Component {
 		const { rows, rowsPerPage, page } = this.state
 
 		return (
-				<Paper className={classes.root}>
-					<Typography variant={'h5'}>
-						List of Enigmas
-					</Typography>
-					<div className={classes.tableWrapper}>
-						<Table className={classes.table}>
-							<TableBody>
-								{rows
-									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-									.map(row => (
-										<TableRow key={row.id} hover>
-											<TableCell component="th" scope="row">
-												{row.name}
-											</TableCell>
-											<TableCell scope={'row'} align={'right'}>
-												{row.date}
-											</TableCell>
-										</TableRow>
-									))}
-							</TableBody>
-							<TableFooter className={classes.footer}>
-								<TableRow className={classes.footer}>
-									<TablePagination
-										rowsPerPageOptions={[]}
-										colSpan={3}
-										count={rows.length}
-										rowsPerPage={rowsPerPage}
-										page={page}
-										SelectProps={{
-											native: true
-										}}
-										onChangePage={this.handleChangePage}
-										onChangeRowsPerPage={this.handleChangeRowsPerPage}
-										ActionsComponent={TablePaginationActionsWrapped}
-										style={{ padding: 0, margin: 0 }}
-									/>
-								</TableRow>
-							</TableFooter>
-						</Table>
-					</div>
-				</Paper>
+			<Paper className={classes.root}>
+				<Typography variant={'h5'}>List of Enigmas</Typography>
+				<div className={classes.tableWrapper}>
+					<Table className={classes.table}>
+						<TableBody>
+							{rows
+								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								.map(row => (
+									<TableRow key={row.id} hover>
+										<TableCell component="th" scope="row">
+											{row.name}
+										</TableCell>
+										<TableCell scope={'row'} align={'right'}>
+											{row.date}
+										</TableCell>
+									</TableRow>
+								))}
+						</TableBody>
+						<TableFooter className={classes.footer}>
+							<TableRow className={classes.footer}>
+								<TablePagination
+									rowsPerPageOptions={[]}
+									colSpan={3}
+									count={rows.length}
+									rowsPerPage={rowsPerPage}
+									page={page}
+									SelectProps={{
+										native: true
+									}}
+									onChangePage={this.handleChangePage}
+									onChangeRowsPerPage={this.handleChangeRowsPerPage}
+									ActionsComponent={TablePaginationActionsWrapped}
+									style={{ padding: 0, margin: 0 }}
+								/>
+							</TableRow>
+						</TableFooter>
+					</Table>
+				</div>
+			</Paper>
 		)
 	}
 }

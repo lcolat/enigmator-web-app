@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Paper, Typography } from '@material-ui/core'
-import { Report } from '@material-ui/icons'
+import Report from '@material-ui/icons/Report'
 
 function DailyMessage(props) {
 	const { message } = props

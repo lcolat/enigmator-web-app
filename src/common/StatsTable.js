@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles/index'
+import withStyles from '@material-ui/core/styles/withStyles'
 import Table from '@material-ui/core/Table/index'
 import TableBody from '@material-ui/core/TableBody/index'
 import TableCell from '@material-ui/core/TableCell/index'
 import TableHead from '@material-ui/core/TableHead/index'
 import TableRow from '@material-ui/core/TableRow/index'
-import { Typography } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 import { playMode } from '../model/Enigma'
 
 const styles = theme => ({

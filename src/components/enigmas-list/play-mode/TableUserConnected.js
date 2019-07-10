@@ -1,124 +1,137 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import {withStyles} from '@material-ui/core/styles';
-
-import TableCell from '@material-ui/core/TableCell';
-import Paper from '@material-ui/core/Paper';
-import {AutoSizer, Column, Table} from 'react-virtualized';
-
-import {Check, Close, Send, WatchLater} from "@material-ui/icons";
-import ListUserStatus from "../../../model/User"
-import Button from "@material-ui/core/Button";
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import clsx from 'clsx'
+import withStyles from '@material-ui/core/styles/withStyles'
+import TableCell from '@material-ui/core/TableCell'
+import Paper from '@material-ui/core/Paper'
+import { AutoSizer, Column, Table } from 'react-virtualized'
+import Check from '@material-ui/icons/Check'
+import Close from '@material-ui/icons/Close'
+import Send from '@material-ui/icons/Send'
+import WatchLater from '@material-ui/icons/WatchLater'
+import ListUserStatus from '../../../model/User'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
 	flexContainer: {
 		display: 'flex',
-		alignContent: "center",
-		boxSizing: 'border-box',
+		alignContent: 'center',
+		boxSizing: 'border-box'
 	},
 	tableRow: {
-		cursor: 'pointer',
+		cursor: 'pointer'
 	},
 	tableRowHover: {
 		'&:hover': {
-			backgroundColor: theme.palette.grey[200],
-		},
+			backgroundColor: theme.palette.grey[200]
+		}
 	},
 	tableCell: {
-		flex: 1,
+		flex: 1
 	},
 	noClick: {
-		cursor: 'initial',
-	},
-});
+		cursor: 'initial'
+	}
+})
 
 class MuiVirtualizedTable extends React.PureComponent {
 	static defaultProps = {
 		headerHeight: 48,
-		rowHeight: 48,
-	};
-	
+		rowHeight: 48
+	}
+
 	static switchInvitStatus(status) {
-		
 		switch (status) {
-			case "waitingResponse":
-				return <WatchLater/>;
-			case "accepted":
-				return <Check/>;
-			case "refused":
-				return <Close/>;
-			default :
-				return "NONE";
+			case 'waitingResponse':
+				return <WatchLater />
+			case 'accepted':
+				return <Check />
+			case 'refused':
+				return <Close />
+			default:
+				return 'NONE'
 		}
-	};
-	
+	}
+
 	static formatCellData(index, data) {
 		switch (index) {
 			case 1:
-				return MuiVirtualizedTable.switchInvitStatus(data);
-			
+				return MuiVirtualizedTable.switchInvitStatus(data)
+
 			case 2:
-				return <Button><Send color={"primary"}/></Button>;
-			
+				return (
+					<Button>
+						<Send color={'primary'} />
+					</Button>
+				)
+
 			case 0:
 			default:
-				return data;
+				return data
 		}
-	};
-	
-	getRowClassName = ({index}) => {
-		const {classes} = this.props;
-		
-		return clsx(classes.tableRow, classes.flexContainer, classes.tableRowHover);
-	};
-	
-	cellRenderer = ({cellData, columnIndex}) => {
-		const {columns, classes, rowHeight} = this.props;
+	}
+
+	getRowClassName = ({ index }) => {
+		const { classes } = this.props
+
+		return clsx(classes.tableRow, classes.flexContainer, classes.tableRowHover)
+	}
+
+	cellRenderer = ({ cellData, columnIndex }) => {
+		const { columns, classes, rowHeight } = this.props
 		return (
 			<TableCell
 				component="div"
-				classes={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
-				style={{height: rowHeight}}
+				classes={clsx(
+					classes.tableCell,
+					classes.flexContainer,
+					classes.noClick
+				)}
+				style={{ height: rowHeight }}
 				variant="body"
-				align={columns[columnIndex].align}
-			>
+				align={columns[columnIndex].align}>
 				{MuiVirtualizedTable.formatCellData(columnIndex, cellData)}
 			</TableCell>
-		);
-	};
-	
-	headerRenderer = ({label, columnIndex}) => {
-		const {headerHeight, columns, classes} = this.props;
-		
+		)
+	}
+
+	headerRenderer = ({ label, columnIndex }) => {
+		const { headerHeight, columns, classes } = this.props
+
 		return (
 			<TableCell
 				component="div"
-				className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
+				className={clsx(
+					classes.tableCell,
+					classes.flexContainer,
+					classes.noClick
+				)}
 				variant="head"
-				style={{height: headerHeight}}
-				align={columns[columnIndex].align}
-			>
+				style={{ height: headerHeight }}
+				align={columns[columnIndex].align}>
 				<span>{label}</span>
 			</TableCell>
-		);
-	};
-	
+		)
+	}
+
 	render() {
-		const {classes, columns, ...tableProps} = this.props;
+		const { classes, columns, ...tableProps } = this.props
 		return (
 			<AutoSizer>
-				{({height, width}) => (
-					<Table height={height} width={width} {...tableProps} rowClassName={this.getRowClassName}>
-						{columns.map(({dataKey, ...other}, index) => {
+				{({ height, width }) => (
+					<Table
+						height={height}
+						width={width}
+						{...tableProps}
+						rowClassName={this.getRowClassName}>
+						{columns.map(({ dataKey, ...other }, index) => {
 							return (
 								<Column
 									key={dataKey}
 									headerRenderer={headerProps =>
 										this.headerRenderer({
 											...headerProps,
-											columnIndex: index,
+											columnIndex: index
 										})
 									}
 									className={classes.flexContainer}
@@ -126,12 +139,12 @@ class MuiVirtualizedTable extends React.PureComponent {
 									dataKey={dataKey}
 									{...other}
 								/>
-							);
+							)
 						})}
 					</Table>
 				)}
 			</AutoSizer>
-		);
+		)
 	}
 }
 
@@ -140,50 +153,55 @@ MuiVirtualizedTable.propTypes = {
 	columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 	headerHeight: PropTypes.number,
 	onRowClick: PropTypes.func,
-	rowHeight: PropTypes.number,
-};
+	rowHeight: PropTypes.number
+}
 
-const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
+const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable)
 
-
-const sample = ['DamSaulGoodMan', 'Saïtama', 'LaMereARaynal', 'LaSoeurARaynal', 'Kalfa'];
+const sample = [
+	'DamSaulGoodMan',
+	'Saïtama',
+	'LaMereARaynal',
+	'LaSoeurARaynal',
+	'Kalfa'
+]
 
 //const rows = [sample.map(row => createData(row))];
 const rows = sample.map(pseudo => {
-	return {pseudo};
-});
+	return { pseudo }
+})
 
 /*rows.push(createData(i, ...randomSelection));*/
 
 function TableUserConnected() {
 	return (
-		<Paper style={{height: 300, width: 375, margin: "auto"}}>
+		<Paper style={{ height: 300, width: 375, margin: 'auto' }}>
 			<VirtualizedTable
 				rowCount={rows.length}
-				rowGetter={({index}) => rows[index]}
+				rowGetter={({ index }) => rows[index]}
 				columns={[
 					{
 						width: 200,
 						label: 'Pseudo',
 						dataKey: 'pseudo',
-						align: "left"
+						align: 'left'
 					},
 					{
 						width: 100,
 						label: 'Status',
 						dataKey: 'statusRequest',
-						align: "center"
+						align: 'center'
 					},
 					{
 						width: 75,
 						label: 'Send',
 						dataKey: 'add',
-						align: "right"
+						align: 'right'
 					}
 				]}
 			/>
 		</Paper>
-	);
+	)
 }
 
-export default TableUserConnected;
+export default TableUserConnected

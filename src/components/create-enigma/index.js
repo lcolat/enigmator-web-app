@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Grid, withStyles, Button } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import withStyles from '@material-ui/core/styles/withStyles'
 import { enigmasTypes } from 'model/Enigma'
 import EnigmaBuilder from './enigma-builder'
 const style = theme => ({

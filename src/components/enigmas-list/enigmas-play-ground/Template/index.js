@@ -12,6 +12,7 @@ import { LikeCount } from '../../../../common'
 import OpenInNew from '@material-ui/icons/OpenInNew'
 import Done from '@material-ui/icons/Done'
 import EnigmaService from 'services/enigmaService'
+import PopUpYouWin from 'components/enigmas-list/pop-up-enigma'
 import {
 	createNotification,
 	LEVEL_NOTIF as Level
@@ -47,15 +48,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function TemplateEnigma(props) {
-	const { enigmaView: EnigmaView, hasChat, enigma } = props
+	const { enigmaView: EnigmaView, hasChat, enigma, userService } = props
 	const classes = useStyles()
 	const enigmaService = new EnigmaService()
 	const [content, setContent] = useState(undefined)
+	const [open, setOpen] = useState(false)
 	const [answer, setAnswer] = useState('')
+	const [score, setScore] = useState(0)
 	const [stackWords, setstackWords] = useState(
 		enigmaService.getLastWords(enigma.id)
 	)
-
 	const fetchMedia = async () => {
 		const res = await enigmaService.getEnigmaFileUrl(enigma.id)
 		setContent(res)
@@ -66,29 +68,34 @@ function TemplateEnigma(props) {
 	}, [content])
 
 	const handleGoodAnswer = async message => {
-		enigmaService.deleteLastWords(enigma.id)
 		createNotification({
 			level: Level.SUCCESS,
 			message: message
 		})
+		enigmaService.deleteLastWords(enigma.id)
+		setOpen(true)
 	}
 
 	const handleResponse = async () => {
-		setstackWords(stackWords.concat([answer]))
-		enigmaService.setLastWords(enigma.id, stackWords)
-		const res = await enigmaService.answer(enigma.id, answer)
-		if (res.data.message === 'bonne réponse ! ') {
-			handleGoodAnswer(res.data.message)
-		} else if (res.data.message === 'mauvaise réponse ! ') {
-			createNotification({
-				level: Level.INFO,
-				message: res.data.message
-			})
-		} else {
-			createNotification({
-				level: Level.ERROR,
-				message: res.message || res.data.message
-			})
+		if (answer !== '') {
+			setstackWords(stackWords.concat([answer]))
+			enigmaService.setLastWords(enigma.id, stackWords)
+			const res = await enigmaService.answer(enigma.id, answer)
+			if (res.data.message === 'bonne réponse ! ') {
+				const res2 = await userService.get(userService.id)
+				setScore(res2.score)
+				handleGoodAnswer(res.data.message)
+			} else if (res.data.message === 'mauvaise réponse ! ') {
+				createNotification({
+					level: Level.INFO,
+					message: res.data.message
+				})
+			} else {
+				createNotification({
+					level: Level.ERROR,
+					message: res.message || res.data.message
+				})
+			}
 		}
 	}
 	const handleChange = event => {
@@ -188,6 +195,9 @@ function TemplateEnigma(props) {
 					</Grid>
 				</Grid>
 			</Grid>
+			{open && (
+				<PopUpYouWin history={props.history} isOpen={open} score={score} />
+			)}
 		</Paper>
 	)
 }

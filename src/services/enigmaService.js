@@ -59,7 +59,32 @@ export default class EnigmaService {
 			await Promise.all(
 				enigmas.map(async (enigma, index) => {
 					const res = await api.get(
-						`Media?filter[where][enigmeID]=${enigma.id}`
+						`/Media?filter[where][enigmeID]=${enigma.id}`
+					)
+					if (res.data.length === 0) {
+						newEnigmas[index] = { ...enigmas[index], ...{ type: 'text' } }
+					} else {
+						newEnigmas[index] = {
+							...enigmas[index],
+							...{ type: res.data[0].type }
+						}
+					}
+				})
+			)
+			return newEnigmas
+		} catch (err) {
+			return err
+		}
+	}
+	getNotDoneEnigmas = async userId => {
+		try {
+			const res = await api.get(`/UserEnigmators/${userId}/GetEnigmeNotDone`)
+			let enigmas = res.data
+			let newEnigmas = new Array(res.data.length)
+			await Promise.all(
+				enigmas.map(async (enigma, index) => {
+					const res = await api.get(
+						`/Media?filter[where][enigmeID]=${enigma.id}`
 					)
 					if (res.data.length === 0) {
 						newEnigmas[index] = { ...enigmas[index], ...{ type: 'text' } }

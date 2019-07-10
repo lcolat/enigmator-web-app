@@ -55,7 +55,7 @@ function TemplatePopUp(props) {
 								alignItems={'stretch'}
 								justify={'center'}
 								direction={'row'}>
-								<Typography variant={'h5'}>NEW SCORE:</Typography>
+								<Typography variant={'h5'}>Nouveau score:</Typography>
 								<Typography variant={'h5'} style={{ marginLeft: 10 }}>
 									{score}
 								</Typography>
@@ -65,11 +65,23 @@ function TemplatePopUp(props) {
 					</DialogContent>
 				)}
 				<DialogActions>
-					<Button onClick={handleClose} color="primary">
-						Go Home
+					<Button
+						onClick={() => {
+							props.history.push({
+								pathname: '/home'
+							})
+						}}
+						color="primary">
+						Retour à l'Accueil
 					</Button>
-					<Button onClick={handleClose} color="primary">
-						Go to Enigmas List
+					<Button
+						onClick={() => {
+							props.history.push({
+								pathname: '/enigmas'
+							})
+						}}
+						color="primary">
+						Retourner à la liste des Énigmes
 					</Button>
 				</DialogActions>
 			</Dialog>

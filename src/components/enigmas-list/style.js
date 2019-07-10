@@ -14,6 +14,15 @@ const style = theme => ({
 	},
 	rightIcon: {
 		marginLeft: theme.spacing(1)
+	},
+	createEnigmaPaper: {
+		marginTop: `calc(50vh - ${theme.spacing(7)}px)`,
+		transform: 'translateY(-50%)',
+		width: 'max-content',
+		margin: 'auto'
+	},
+	createEnigma: {
+		padding: theme.spacing(3)
 	}
 })
 

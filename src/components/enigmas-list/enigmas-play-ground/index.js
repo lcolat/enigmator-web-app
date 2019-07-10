@@ -7,17 +7,44 @@ import VideoEnigma from './VideoEnigma'
 import { enigmasTypes, listEnigmasTypes } from 'model/Enigma'
 
 function Enigma(rest, props) {
+	const userService = rest.userService
 	const { type, enigma } = rest.location.state
-
 	switch (type) {
 		case enigmasTypes.AUDIO:
-			return <TemplateEnigma enigmaView={<VocalEnigma />} enigma={enigma} />
+			return (
+				<TemplateEnigma
+					history={rest.history}
+					enigmaView={<VocalEnigma />}
+					enigma={enigma}
+					userService={userService}
+				/>
+			)
 		case enigmasTypes.TEXT:
-			return <TemplateEnigma enigma={enigma} />
+			return (
+				<TemplateEnigma
+					history={rest.history}
+					enigma={enigma}
+					userService={userService}
+				/>
+			)
 		case enigmasTypes.IMAGE:
-			return <TemplateEnigma enigmaView={<ImageEnigma />} enigma={enigma} />
+			return (
+				<TemplateEnigma
+					history={rest.history}
+					enigmaView={<ImageEnigma />}
+					enigma={enigma}
+					userService={userService}
+				/>
+			)
 		case enigmasTypes.VIDEO:
-			return <TemplateEnigma enigmaView={<VideoEnigma />} enigma={enigma} />
+			return (
+				<TemplateEnigma
+					history={rest.history}
+					enigmaView={<VideoEnigma />}
+					enigma={enigma}
+					userService={userService}
+				/>
+			)
 		default:
 			return <div>No Enigma</div>
 	}

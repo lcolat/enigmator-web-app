@@ -21,6 +21,7 @@ import {
 } from 'services/notifications'
 import EnigmaService from 'services/enigmaService'
 import { Difficulties } from 'model/Enigma'
+import { Typography } from '@material-ui/core'
 
 class EnigmasList extends Component {
 	constructor(props) {
@@ -37,7 +38,9 @@ class EnigmasList extends Component {
 		}
 	}
 	async componentDidMount() {
-		const res = await this.state.enigmaService.getEnigmas()
+		const res = await this.state.enigmaService.getNotDoneEnigmas(
+			this.props.userService.id
+		)
 		if (res) {
 			this.setState({ enigmas: res })
 		} else {
@@ -135,81 +138,108 @@ class EnigmasList extends Component {
 		document.body.style.backgroundColor = '#ae75e9'
 		return (
 			<div className={classes.root}>
-				<Paper className={classes.paper}>
-					<div className={classes.tableWrapper}>
-						<Table
-							className={classes.table}
-							aria-labelledby="tableTitle"
-							size="small">
-							<EnigmasTableHead
-								numSelected={this.state.selected.length}
-								order={this.state.order}
-								orderBy={this.state.orderBy}
-								onRequestSort={this.handleRequestSort}
-								rowCount={this.state.enigmas.length}
-							/>
-							<TableBody>
-								{this.tableSort(
-									this.state.enigmas,
-									this.getSorting(this.state.order, this.state.orderBy)
-								).map(enigma => {
-									if (enigma.status === true) {
-										const isItemSelected = this.isSelected(enigma.name)
-										return (
-											<TableRow
-												hover
-												onClick={event => this.handleClick(event, enigma)}
-												aria-checked={isItemSelected}
-												tabIndex={-1}
-												key={enigma.id}
-												selected={isItemSelected}>
-												<TableCell>
-													<LikeCount
-														liked={'enigma.likedByUser'}
-														likes={enigma.likes}
-													/>
-												</TableCell>
-												<TableCell component="th" scope="row" padding="none">
-													{enigma.name}
-												</TableCell>
-												<TableCell align="left">
-													{enigma.Enigme_User.username}
-												</TableCell>
-												<TableCell align="left">
-													{this.kind(enigma.type)}
-												</TableCell>
-												<TableCell align="left">
-													{Difficulties(enigma.scoreReward)}
-												</TableCell>
-												<TableCell align="left">
-													{this.formatDate(enigma.creationDate)}
-												</TableCell>
-												<TableCell align="left">{enigma.scoreReward}</TableCell>
-												<TableCell align="center">
-													<Button
-														variant="contained"
-														color={'primary'}
-														className={classes.button}>
-														<Forum fontSize={'large'} />
-													</Button>
-												</TableCell>
-											</TableRow>
-										)
-									}
-								})}
-							</TableBody>
-						</Table>
-					</div>
-				</Paper>
-				<PlayModeDialogue
-					{...this.props}
-					enigma={
-						this.state.enigmaClicked ? this.state.enigmaClicked : 'undefined'
-					}
-					open={this.state.open}
-					onOpen={this.state.handleClickDialogueOpen}
-					onClose={this.state.handleDialogueClose}
-				/>
+				{this.state.enigmas.length > 0 ? (
+					<>
+						<Paper className={classes.paper}>
+							<div className={classes.tableWrapper}>
+								<Table
+									className={classes.table}
+									aria-labelledby="tableTitle"
+									size="small">
+									<EnigmasTableHead
+										numSelected={this.state.selected.length}
+										order={this.state.order}
+										orderBy={this.state.orderBy}
+										onRequestSort={this.handleRequestSort}
+										rowCount={this.state.enigmas.length}
+									/>
+									<TableBody>
+										{this.tableSort(
+											this.state.enigmas,
+											this.getSorting(this.state.order, this.state.orderBy)
+										).map(enigma => {
+											const isItemSelected = this.isSelected(enigma.name)
+											return (
+												<TableRow
+													hover
+													onClick={event => this.handleClick(event, enigma)}
+													aria-checked={isItemSelected}
+													tabIndex={-1}
+													key={enigma.id}
+													selected={isItemSelected}>
+													<TableCell>
+														<LikeCount
+															liked={'enigma.likedByUser'}
+															likes={enigma.likes}
+														/>
+													</TableCell>
+													<TableCell component="th" scope="row" padding="none">
+														{enigma.name}
+													</TableCell>
+													<TableCell align="left">
+														{enigma.Enigme_User.username}
+													</TableCell>
+													<TableCell align="left">
+														{this.kind(enigma.type)}
+													</TableCell>
+													<TableCell align="left">
+														{Difficulties(enigma.scoreReward)}
+													</TableCell>
+													<TableCell align="left">
+														{this.formatDate(enigma.creationDate)}
+													</TableCell>
+													<TableCell align="left">
+														{enigma.scoreReward}
+													</TableCell>
+													<TableCell align="center">
+														<Button
+															variant="contained"
+															color={'primary'}
+															className={classes.button}>
+															<Forum fontSize={'large'} />
+														</Button>
+													</TableCell>
+												</TableRow>
+											)
+										})}
+									</TableBody>
+								</Table>
+							</div>
+						</Paper>
+
+						<PlayModeDialogue
+							{...this.props}
+							enigma={
+								this.state.enigmaClicked
+									? this.state.enigmaClicked
+									: 'undefined'
+							}
+							open={this.state.open}
+							onOpen={this.state.handleClickDialogueOpen}
+							onClose={this.state.handleDialogueClose}
+						/>
+					</>
+				) : (
+					<Paper className={classes.createEnigmaPaper}>
+						<div className={classes.createEnigma}>
+							<Typography>
+								Pas de nouvelles Énigmes. <br />
+								Mais vous pouvez en créer.
+							</Typography>
+							<Button
+								variant="contained"
+								color={'primary'}
+								className={classes.button}
+								onClick={() => {
+									this.props.history.push({
+										pathname: '/create-enigmas'
+									})
+								}}>
+								Créer une nouvelle Énigme
+							</Button>
+						</div>
+					</Paper>
+				)}
 			</div>
 		)
 	}

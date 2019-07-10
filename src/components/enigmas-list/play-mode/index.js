@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function PlayModeDialogue(props) {
+	const { userService } = props
 	const [toto, setToto] = React.useState()
 	const classes = useStyles()
 	const { onOpen, enigma, ...other } = props
@@ -45,7 +46,10 @@ function PlayModeDialogue(props) {
 	function handleLaunchGame() {
 		props.history.push({
 			pathname: '/enigma',
-			state: { type: enigma.type, enigma: enigma }
+			state: {
+				type: enigma.type,
+				enigma: enigma
+			}
 		})
 	}
 

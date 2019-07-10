@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { withStyles } from '@material-ui/core/styles'
-
+import withStyles from '@material-ui/core/styles/withStyles'
 import {
 	Table,
 	TableBody,
@@ -10,18 +8,16 @@ import {
 	TableFooter,
 	TablePagination,
 	TableRow,
-	TableHead
+	TableHead,
+	IconButton,
+	Paper
 } from '@material-ui/core'
-import { IconButton, Paper } from '@material-ui/core'
-
-import {
-	FirstPage,
-	KeyboardArrowLeft,
-	KeyboardArrowRight,
-	LastPage,
-	CheckRounded,
-	MoreHorizRounded
-} from '@material-ui/icons'
+import FirstPage from '@material-ui/icons/FirstPage'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import LastPage from '@material-ui/icons/LastPage'
+import CheckRounded from '@material-ui/icons/CheckRounded'
+import MoreHorizRounded from '@material-ui/icons/MoreHorizRounded'
 
 const actionsStyles = theme => ({})
 

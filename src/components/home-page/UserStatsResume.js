@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Grid, Typography, Paper, ButtonBase } from '@material-ui/core'
+import withStyles from '@material-ui/core/styles/withStyles'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import ButtonBase from '@material-ui/core/ButtonBase'
 
 const styles = theme => ({
 	root: {
@@ -26,15 +29,7 @@ const styles = theme => ({
 })
 
 function UserStatsResume(props) {
-	const {
-		classes,
-		theme,
-		score,
-		winNumber,
-		globalRank,
-		localRank,
-		profilePicture
-	} = props
+	const { classes, score, winNumber, globalRank, localRank } = props
 
 	return (
 		<div className={classes.root}>

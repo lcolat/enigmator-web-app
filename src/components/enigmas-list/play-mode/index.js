@@ -1,22 +1,17 @@
 import React from 'react'
-
-import { makeStyles } from '@material-ui/core/index'
-import {
-	DialogTitle,
-	DialogActions,
-	DialogContent,
-	Dialog
-} from '@material-ui/core/index'
-import { Tab, Tabs, Button } from '@material-ui/core/index'
-import {
-	AllInclusive,
-	Rowing,
-	SupervisedUserCircle,
-	Whatshot,
-	PlayCircleOutline
-} from '@material-ui/icons/index'
-import Paper from '@material-ui/core/Paper/index'
-
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import Dialog from '@material-ui/core/Dialog'
+import Tab from '@material-ui/core/Tab'
+import Tabs from '@material-ui/core/Tabs'
+import Button from '@material-ui/core/Button'
+import Rowing from '@material-ui/icons/Rowing'
+import SupervisedUserCircle from '@material-ui/icons/SupervisedUserCircle'
+import Whatshot from '@material-ui/icons/Whatshot'
+import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline'
+import Paper from '@material-ui/core/Paper'
 import TableUserConnected from './TableUserConnected'
 import Typography from '@material-ui/core/Typography'
 import Enigma from '../enigmas-play-ground'

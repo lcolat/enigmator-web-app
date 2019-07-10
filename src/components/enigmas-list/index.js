@@ -1,23 +1,16 @@
 import React, { Component } from 'react'
-import {
-	Paper,
-	FormControlLabel,
-	Switch,
-	Button,
-	Grid,
-	Table,
-	TableBody,
-	TableCell,
-	TableRow
-} from '@material-ui/core'
-import {
-	Forum,
-	Subject,
-	Photo,
-	MusicNote,
-	VideoLabel
-} from '@material-ui/icons'
-import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableRow from '@material-ui/core/TableRow'
+import Forum from '@material-ui/icons/Forum'
+import Subject from '@material-ui/icons/Subject'
+import Photo from '@material-ui/icons/Photo'
+import MusicNote from '@material-ui/icons/MusicNote'
+import VideoLabel from '@material-ui/icons/VideoLabel'
+import withStyles from '@material-ui/core/styles/withStyles'
 import style from './style'
 import EnigmasTableHead from './enigmas-table-head'
 import PlayModeDialogue from './play-mode'

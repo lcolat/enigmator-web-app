@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
-
-import { makeStyles, Typography } from '@material-ui/core/index'
-import {
-	DialogTitle,
-	DialogActions,
-	DialogContent,
-	Dialog,
-	TextField
-} from '@material-ui/core/index'
-import { Button } from '@material-ui/core/index'
-import { Check, Close } from '@material-ui/icons/index'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import Typography from '@material-ui/core/Typography'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import Dialog from '@material-ui/core/Dialog'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Check from '@material-ui/icons/Check'
+import Close from '@material-ui/icons/Close'
 import EnigmaContent from './enigma-content'
 import {
 	createNotification,

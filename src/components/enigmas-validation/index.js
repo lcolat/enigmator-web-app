@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
@@ -141,64 +143,90 @@ class EnigmasValidation extends Component {
 		document.body.style.backgroundColor = '#ae75e9'
 		return (
 			<div className={classes.root}>
-				<Paper className={classes.paper}>
-					<div className={classes.tableWrapper}>
-						<Table
-							className={classes.table}
-							aria-labelledby="tableTitle"
-							size="small">
-							<EnigmasTableHead
-								numSelected={this.state.selected.length}
-								order={this.state.order}
-								orderBy={this.state.orderBy}
-								onRequestSort={this.handleRequestSort}
-								rowCount={this.state.enigmas.length}
-							/>
-							<TableBody>
-								{this.tableSort(
-									this.state.enigmas,
-									this.getSorting(this.state.order, this.state.orderBy)
-								).map((enigma, index) => {
-									if (enigma.status === false) {
-										const isItemSelected = this.isSelected(enigma.name)
-										return (
-											<TableRow
-												hover
-												onClick={event =>
-													this.handleClick(event, enigma, index)
-												}
-												aria-checked={isItemSelected}
-												tabIndex={index}
-												key={enigma.id}
-												selected={isItemSelected}>
-												<TableCell
-													align="left"
-													component="th"
-													scope="row"
-													padding="none">
-													{enigma.name}
-												</TableCell>
-												<TableCell align="left">
-													{enigma.Enigme_User.username}
-												</TableCell>
-												<TableCell align="left">
-													{this.kind(enigma.type)}
-												</TableCell>
-												<TableCell align="left">
-													{Difficulties(enigma.scoreReward)}
-												</TableCell>
-												<TableCell align="left">
-													{this.formatDate(enigma.creationDate)}
-												</TableCell>
-												<TableCell align="left">{enigma.scoreReward}</TableCell>
-											</TableRow>
-										)
-									}
-								})}
-							</TableBody>
-						</Table>
-					</div>
-				</Paper>
+				{this.state.enigmas.every(enigma => {
+					return enigma.status === true
+				}) !== true ? (
+					<Paper className={classes.paper}>
+						<div className={classes.tableWrapper}>
+							<Table
+								className={classes.table}
+								aria-labelledby="tableTitle"
+								size="small">
+								<EnigmasTableHead
+									numSelected={this.state.selected.length}
+									order={this.state.order}
+									orderBy={this.state.orderBy}
+									onRequestSort={this.handleRequestSort}
+									rowCount={this.state.enigmas.length}
+								/>
+								<TableBody>
+									{this.tableSort(
+										this.state.enigmas,
+										this.getSorting(this.state.order, this.state.orderBy)
+									).map((enigma, index) => {
+										if (enigma.status === false) {
+											const isItemSelected = this.isSelected(enigma.name)
+											return (
+												<TableRow
+													hover
+													onClick={event =>
+														this.handleClick(event, enigma, index)
+													}
+													aria-checked={isItemSelected}
+													tabIndex={index}
+													key={enigma.id}
+													selected={isItemSelected}>
+													<TableCell
+														align="left"
+														component="th"
+														scope="row"
+														padding="none">
+														{enigma.name}
+													</TableCell>
+													<TableCell align="left">
+														{enigma.Enigme_User.username}
+													</TableCell>
+													<TableCell align="left">
+														{this.kind(enigma.type)}
+													</TableCell>
+													<TableCell align="left">
+														{Difficulties(enigma.scoreReward)}
+													</TableCell>
+													<TableCell align="left">
+														{this.formatDate(enigma.creationDate)}
+													</TableCell>
+													<TableCell align="left">
+														{enigma.scoreReward}
+													</TableCell>
+												</TableRow>
+											)
+										}
+									})}
+								</TableBody>
+							</Table>
+						</div>
+					</Paper>
+				) : (
+					<Paper className={classes.createEnigmaPaper}>
+						<div className={classes.createEnigma}>
+							<Typography>
+								Pas de nouvelles Énigmes à valider. <br />
+								Mais vous pouvez en créer.
+							</Typography>
+							<Button
+								variant="contained"
+								color={'primary'}
+								className={classes.button}
+								onClick={() => {
+									this.props.history.push({
+										pathname: '/create-enigmas'
+									})
+								}}>
+								Créer une nouvelle Énigme
+							</Button>
+						</div>
+					</Paper>
+				)}
 				{this.state.enigmaClicked !== undefined && (
 					<EnigmaDialog
 						{...this.props}

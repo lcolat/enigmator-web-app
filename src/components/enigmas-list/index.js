@@ -37,7 +37,9 @@ class EnigmasList extends Component {
 		}
 	}
 	async componentDidMount() {
-		const res = await this.state.enigmaService.getEnigmas()
+		const res = await this.state.enigmaService.getNotDoneEnigmas(
+			this.props.userService.id
+		)
 		if (res) {
 			this.setState({ enigmas: res })
 		} else {
@@ -153,49 +155,47 @@ class EnigmasList extends Component {
 									this.state.enigmas,
 									this.getSorting(this.state.order, this.state.orderBy)
 								).map(enigma => {
-									if (enigma.status === true) {
-										const isItemSelected = this.isSelected(enigma.name)
-										return (
-											<TableRow
-												hover
-												onClick={event => this.handleClick(event, enigma)}
-												aria-checked={isItemSelected}
-												tabIndex={-1}
-												key={enigma.id}
-												selected={isItemSelected}>
-												<TableCell>
-													<LikeCount
-														liked={'enigma.likedByUser'}
-														likes={enigma.likes}
-													/>
-												</TableCell>
-												<TableCell component="th" scope="row" padding="none">
-													{enigma.name}
-												</TableCell>
-												<TableCell align="left">
-													{enigma.Enigme_User.username}
-												</TableCell>
-												<TableCell align="left">
-													{this.kind(enigma.type)}
-												</TableCell>
-												<TableCell align="left">
-													{Difficulties(enigma.scoreReward)}
-												</TableCell>
-												<TableCell align="left">
-													{this.formatDate(enigma.creationDate)}
-												</TableCell>
-												<TableCell align="left">{enigma.scoreReward}</TableCell>
-												<TableCell align="center">
-													<Button
-														variant="contained"
-														color={'primary'}
-														className={classes.button}>
-														<Forum fontSize={'large'} />
-													</Button>
-												</TableCell>
-											</TableRow>
-										)
-									}
+									const isItemSelected = this.isSelected(enigma.name)
+									return (
+										<TableRow
+											hover
+											onClick={event => this.handleClick(event, enigma)}
+											aria-checked={isItemSelected}
+											tabIndex={-1}
+											key={enigma.id}
+											selected={isItemSelected}>
+											<TableCell>
+												<LikeCount
+													liked={'enigma.likedByUser'}
+													likes={enigma.likes}
+												/>
+											</TableCell>
+											<TableCell component="th" scope="row" padding="none">
+												{enigma.name}
+											</TableCell>
+											<TableCell align="left">
+												{enigma.Enigme_User.username}
+											</TableCell>
+											<TableCell align="left">
+												{this.kind(enigma.type)}
+											</TableCell>
+											<TableCell align="left">
+												{Difficulties(enigma.scoreReward)}
+											</TableCell>
+											<TableCell align="left">
+												{this.formatDate(enigma.creationDate)}
+											</TableCell>
+											<TableCell align="left">{enigma.scoreReward}</TableCell>
+											<TableCell align="center">
+												<Button
+													variant="contained"
+													color={'primary'}
+													className={classes.button}>
+													<Forum fontSize={'large'} />
+												</Button>
+											</TableCell>
+										</TableRow>
+									)
 								})}
 							</TableBody>
 						</Table>

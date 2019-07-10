@@ -10,11 +10,16 @@ import LocalActivity from '@material-ui/icons/LocalActivity'
 const headRows = [
 	{ id: 'likes', align: 'center', disablePadding: false, label: 'Likes' },
 	{ id: 'name', align: 'left', disablePadding: true, label: 'Nom' },
-	{ id: 'creator', align: 'left', disablePadding: false, label: 'Créateur' },
-	{ id: 'kind', align: 'left', disablePadding: false, label: 'Type' },
+	{
+		id: 'username',
+		align: 'left',
+		disablePadding: false,
+		label: 'Créateur'
+	},
+	{ id: 'type', align: 'left', disablePadding: false, label: 'Type' },
 	{ id: 'difficulty', align: 'left', disablePadding: false, label: 'Niveau' },
-	{ id: 'date', align: 'left', disablePadding: false, label: 'Date' },
-	{ id: 'value', align: 'left', disablePadding: false, label: 'Points' },
+	{ id: 'creationDate', align: 'left', disablePadding: false, label: 'Date' },
+	{ id: 'scoreReward', align: 'left', disablePadding: false, label: 'Points' },
 	{ id: 'forum', align: 'center', disablePadding: false, label: 'Forum' }
 ]
 

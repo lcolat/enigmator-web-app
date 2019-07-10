@@ -49,11 +49,27 @@ class EnigmasList extends Component {
 	}
 
 	desc = (a, b, orderBy) => {
-		if (b[orderBy] < a[orderBy]) {
-			return -1
-		}
-		if (b[orderBy] > a[orderBy]) {
-			return 1
+		if (orderBy === 'username') {
+			if (b['Enigme_User']['username'] < a['Enigme_User']['username']) {
+				return -1
+			}
+			if (b['Enigme_User']['username'] > a['Enigme_User']['username']) {
+				return 1
+			}
+		} else if (orderBy === 'difficulty') {
+			if (b['scoreReward'] < a['scoreReward']) {
+				return -1
+			}
+			if (b['scoreReward'] > a['scoreReward']) {
+				return 1
+			}
+		} else {
+			if (b[orderBy] < a[orderBy]) {
+				return -1
+			}
+			if (b[orderBy] > a[orderBy]) {
+				return 1
+			}
 		}
 		return 0
 	}

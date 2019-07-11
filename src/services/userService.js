@@ -134,15 +134,17 @@ export default class UserService {
 	}
 
 	verifyToken = async () => {
+		let isOk = false
 		try {
 			const res = await api.get(`/UserEnigmators/${this.id}/accessTokens`)
-			if (res.data.length < 1) {
-				return false
+			if (res.data.length > 0) {
+				res.data.forEach(token => {
+					if (token.id === this.accessToken) {
+						isOk = true
+					}
+				})
 			}
-			if (res.data[0].id !== this.accessToken) {
-				return false
-			}
-			return true
+			return isOk
 		} catch (err) {
 			return false
 		}

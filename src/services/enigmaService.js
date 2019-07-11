@@ -127,8 +127,9 @@ export default class EnigmaService {
 		}
 	}
 	setTriedEnigma = async (userId, enigmaId) => {
+		const date = new Date()
 		const req = {
-			date: Date.now().toJSON(),
+			date: date.toJSON(),
 			type: 'tried',
 			enigmeId: parseInt(enigmaId),
 			userEnigmatorId: parseInt(userId)

@@ -23,6 +23,7 @@ class Drawer extends Component {
 				text: 'Home',
 				icon: <Home fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/'
 					})
@@ -32,6 +33,7 @@ class Drawer extends Component {
 				text: 'Profile',
 				icon: <AccountBox fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/profile'
 					})
@@ -41,6 +43,7 @@ class Drawer extends Component {
 				text: 'Amis',
 				icon: <Contacts fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/friends'
 					})
@@ -50,6 +53,7 @@ class Drawer extends Component {
 				text: 'Enigmes',
 				icon: <ImageSearch fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/enigmas'
 					})
@@ -59,6 +63,7 @@ class Drawer extends Component {
 				text: 'Créer',
 				icon: <AddBox fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/create-enigmas'
 					})
@@ -68,6 +73,7 @@ class Drawer extends Component {
 				text: 'Rang',
 				icon: <Stars fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/rank'
 					})
@@ -77,6 +83,7 @@ class Drawer extends Component {
 				text: 'Forum',
 				icon: <Forum fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/forum'
 					})
@@ -86,6 +93,7 @@ class Drawer extends Component {
 				text: 'Réglages',
 				icon: <Tune fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/settings'
 					})
@@ -95,6 +103,7 @@ class Drawer extends Component {
 				text: 'RGPD',
 				icon: <Info fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/rgpd'
 					})
@@ -111,6 +120,7 @@ class Drawer extends Component {
 				text: 'Validation',
 				icon: <EventAvailable color="primary" fontSize={'large'} />,
 				handleClick: () => {
+					this.props.isValid()
 					this.props.history.push({
 						pathname: '/validation'
 					})

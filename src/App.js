@@ -28,11 +28,21 @@ const styles = theme => ({
 class App extends Component {
 	state = {
 		userService: new UserService(),
-		enigmaService: new EnigmaService()
+		enigmaService: new EnigmaService(),
+		valid: true
 	}
-
+	isValid = async () => {
+		const valid = await this.state.userService.verifyToken()
+		this.setState({ valid: valid })
+	}
+	componentDidMount = async () => {
+		this.isValid()
+	}
+	setValid = value => {
+		this.setState({ valid: value })
+	}
 	render() {
-		const { userService, enigmaService } = this.state
+		const { userService, enigmaService, valid } = this.state
 		const { classes } = this.props
 		return (
 			<BrowserRouter>
@@ -42,7 +52,11 @@ class App extends Component {
 							<Route
 								path="/login"
 								render={props => (
-									<Authentication {...props} userService={userService} />
+									<Authentication
+										{...props}
+										userService={userService}
+										setValid={this.setValid}
+									/>
 								)}
 							/>
 							<Route
@@ -58,48 +72,64 @@ class App extends Component {
 								component={<Profile />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 							<PrivateRoute
 								path="/friends"
 								component={<FriendsView />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 							<PrivateRoute
 								path="/enigma"
 								component={<Enigma />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 							<PrivateRoute
 								path="/enigmas"
 								component={<EnigmaList />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 							<PrivateRoute
 								path="/create-enigmas"
 								component={<CreateEnigma />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 							<PrivateRoute
 								path="/settings"
 								component={<Settings />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 							<PrivateRoute
 								path="/validation"
 								component={<EnigmasValidation />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 							<PrivateRoute
 								path="/"
 								component={<HomePage />}
 								userService={userService}
 								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
 							/>
 						</Switch>
 					</div>

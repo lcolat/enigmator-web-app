@@ -8,6 +8,8 @@ const PrivateRoute = ({
 	userService,
 	enigmaService,
 	redirect: pathname,
+	isValid,
+	valid,
 	history,
 	...rest
 }) => {
@@ -16,12 +18,13 @@ const PrivateRoute = ({
 		<Route
 			{...rest}
 			render={props =>
-				userService.isLogin() ? (
+				userService.isLogin() && valid ? (
 					<>
 						<HeaderDrawer
 							{...props}
 							userService={userService}
 							enigmaService={enigmaService}
+							isValid={isValid}
 						/>
 						<main>
 							<div className={classes.toolbar} />

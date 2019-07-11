@@ -98,7 +98,7 @@ export default class UserService {
 		}
 	}
 
-	isLogin = () => {
+	isLogin = async () => {
 		if (this.getAccessToken() && this.getAccessToken() !== undefined) {
 			return true
 		}
@@ -130,6 +130,21 @@ export default class UserService {
 			return true
 		} catch (err) {
 			throw new Error(err)
+		}
+	}
+
+	verifyToken = async () => {
+		try {
+			const res = await api.get(`/UserEnigmators/${this.id}/accessTokens`)
+			if (res.data.length < 1) {
+				return false
+			}
+			if (res.data[0].id !== this.accessToken) {
+				return false
+			}
+			return true
+		} catch (err) {
+			return false
 		}
 	}
 }

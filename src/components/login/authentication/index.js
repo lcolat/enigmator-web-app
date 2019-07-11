@@ -22,20 +22,20 @@ class Authentication extends Component {
 			error: false,
 			helperText: ''
 		}
-	};
+	}
 	validateForm = () => {
-		let isValid = true;
+		let isValid = true
 		Object.keys(this.state).forEach(key => {
 			if (this.state[key].value === '') {
-				let newValue = this.state[key];
-				newValue.error = true;
-				newValue.helperText = 'Veuillez remplir ce champ';
-				this.setState({[key]: newValue});
+				let newValue = this.state[key]
+				newValue.error = true
+				newValue.helperText = 'Veuillez remplir ce champ'
+				this.setState({ [key]: newValue })
 				isValid = false
 			} else {
 				isValid = true
 			}
-		});
+		})
 		return isValid
 	}
 	handleConnection = async () => {
@@ -45,6 +45,7 @@ class Authentication extends Component {
 				this.state.password.value
 			)
 			if (res === true) {
+				this.props.setValid(true)
 				this.props.history.push({
 					pathname: '/'
 				})
@@ -55,21 +56,21 @@ class Authentication extends Component {
 				})
 			}
 		}
-	};
-	
+	}
+
 	handleLogUp = () => {
 		this.props.history.push({
 			pathname: '/logup'
 		})
-	};
-	
+	}
+
 	handleChange = event => {
-		const {name, value} = event.target;
-		let newValue = this.state[name];
-		newValue.value = value;
-		this.setState({[name]: newValue})
-	};
-	
+		const { name, value } = event.target
+		let newValue = this.state[name]
+		newValue.value = value
+		this.setState({ [name]: newValue })
+	}
+
 	render() {
 		const classes = this.props.classes
 		document.body.style.backgroundColor = '#ae75e9'
@@ -151,4 +152,4 @@ class Authentication extends Component {
 	}
 }
 
-export default withStyles(style, {withTheme: true})(Authentication)
+export default withStyles(style, { withTheme: true })(Authentication)

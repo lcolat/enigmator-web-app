@@ -48,14 +48,15 @@ function EnigmaDialog(props) {
 		enigma.type !== 'text' && fetchMedia(content)
 	}, [content])
 
-	function handleChange(event, newValue) {
-		if (newValue > 100) {
-			newValue = 100
+	function handleChange(event) {
+		let value = parseInt(event.target.value)
+		if (value > 100) {
+			value = 100
 		}
-		if (newValue < 1) {
-			newValue = 1
+		if (value < 1) {
+			value = 1
 		}
-		setScore(newValue)
+		setScore(value)
 	}
 
 	const handleValidate = async () => {
@@ -69,7 +70,7 @@ function EnigmaDialog(props) {
 		} else {
 			createNotification({
 				level: Level.ERROR,
-				message: res
+				message: res.message || res.data.message
 			})
 		}
 		setOpen(false)

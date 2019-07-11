@@ -24,7 +24,10 @@ class Profile extends React.Component {
 					enigmaService={this.state.enigmaService}
 					{...this.props}
 				/>
-				<TableListEnigmasTried />
+				<TableListEnigmasTried
+					enigmaService={this.state.enigmaService}
+					{...this.props}
+				/>
 			</>
 		)
 	}

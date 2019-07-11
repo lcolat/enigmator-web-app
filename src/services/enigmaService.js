@@ -101,6 +101,46 @@ export default class EnigmaService {
 			return err
 		}
 	}
+	getTriedEnigmas = async userId => {
+		try {
+			const res = await api.get(`/UserEnigmators/${userId}/GetEnigmeTried`)
+			let enigmas = res.data
+			let newEnigmas = new Array(res.data.length)
+			await Promise.all(
+				enigmas.map(async (enigma, index) => {
+					const res = await api.get(
+						`/Media?filter[where][enigmeID]=${enigma.id}`
+					)
+					if (res.data.length === 0) {
+						newEnigmas[index] = { ...enigmas[index], ...{ type: 'text' } }
+					} else {
+						newEnigmas[index] = {
+							...enigmas[index],
+							...{ type: res.data[0].type }
+						}
+					}
+				})
+			)
+			return newEnigmas
+		} catch (err) {
+			return err
+		}
+	}
+	setTriedEnigma = async (userId, enigmaId) => {
+		const date = new Date()
+		const req = {
+			date: date.toJSON(),
+			type: 'tried',
+			enigmeId: parseInt(enigmaId),
+			userEnigmatorId: parseInt(userId)
+		}
+		try {
+			await api.post(`/Histories`, req)
+			return true
+		} catch (err) {
+			return err
+		}
+	}
 	getEnigmaFileUrl = async id => {
 		try {
 			const res = await api.get(`/Media?filter[where][enigmeID]=${id}`)

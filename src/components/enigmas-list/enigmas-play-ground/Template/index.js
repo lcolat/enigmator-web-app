@@ -60,6 +60,7 @@ function TemplateEnigma(props) {
 	)
 	const fetchMedia = async () => {
 		const res = await enigmaService.getEnigmaFileUrl(enigma.id)
+		await enigmaService.setTriedEnigma(props.userService.id, enigma.id)
 		setContent(res)
 	}
 

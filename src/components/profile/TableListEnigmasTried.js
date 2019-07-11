@@ -96,18 +96,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, {
 	withTheme: true
 })(TablePaginationActions)
 
-let counter = 0
-
-function createData(nameEnigma, dateLastTry, resolved) {
-	counter += 1
-	return {
-		id: counter,
-		name: nameEnigma,
-		date: dateLastTry,
-		resolved: resolved
-	}
-}
-
 const styles = theme => ({
 	root: {
 		marginLeft: theme.spacing(3),
@@ -125,27 +113,27 @@ const styles = theme => ({
 class TabUnresolvedEnigmas extends React.Component {
 	// formatDate = "HH:mm DD-MM-YY";
 	state = {
-		rows: [
-			createData('SuperEnigma', '23:36 10/05/19', true),
-			createData('GuessHerName', '10:01 10/04/19', false),
-			createData('Who have 4-2-3 paws?', '02:59 02/05/19', false),
-			createData('What did the third Dwarf take?', '23:10 10/05/19', true),
-			createData('hihihi', '01:59 07/05/18', true),
-			createData('Yolooo', '20:46 10/01/19', false),
-			createData('Palindromatique', '23:59 31/12/18', true),
-			createData('<><<><<>>>>', '09:00 11/11/17', false),
-			createData('Cachochachat', '03:33 03/03/19', false),
-			createData('Lollipop', '07:11 26/08/19', true),
-			createData('<^>v><<<^^v', '04:26 10/05/19', true),
-			createData('MIAM', '20:36 10/08/17', true),
-			createData(
-				'Thanos has erase the half of this sentence...',
-				'00:01 01/02/17',
-				true
-			)
-		].sort((a, b) => (a.date < b.date ? -1 : 1)),
+		rows: [],
 		page: 0,
 		rowsPerPage: 5
+	}
+	async componentDidMount() {
+		const res = await this.props.enigmaService.getTriedEnigmas(
+			this.props.userService.id
+		)
+		if (res) {
+			this.setState({
+				rows: res.sort((a, b) => (a.date < b.date ? -1 : 1))
+			})
+		}
+	}
+	formatDate(date) {
+		return new Date(date).toLocaleDateString('fr-FR', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		})
 	}
 
 	handleChangePage = (event, page) => {
@@ -168,10 +156,10 @@ class TabUnresolvedEnigmas extends React.Component {
 					<Table className={classes.table}>
 						<TableHead>
 							<TableCell align="left" style={{ height: 26 }}>
-								Enigmas Unresolved
+								Énigmes non résolues
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
-								Date of Last Try
+								Date du dernier essai
 							</TableCell>
 							<TableCell />
 						</TableHead>
@@ -189,7 +177,9 @@ class TabUnresolvedEnigmas extends React.Component {
 										<TableCell component="th" scope="row">
 											{row.name}
 										</TableCell>
-										<TableCell align="left">{row.date}</TableCell>
+										<TableCell align="left">
+											{this.formatDate(row.lastTryDate)}
+										</TableCell>
 										<TableCell align={'right'}>
 											{row.resolved === true ? (
 												<CheckRounded />

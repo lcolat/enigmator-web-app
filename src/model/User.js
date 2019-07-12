@@ -11,3 +11,15 @@ export const mapUserStatusColor = new Map([
 	[listUserStatus[2], "orange"],
 	[listUserStatus[3], "purple"]
 ]);
+
+var avatar = undefined
+
+export class AvatarPicture {
+	static set(newAvatar) {
+		avatar = newAvatar
+	}
+	
+	static get() {
+		return avatar
+	}
+}

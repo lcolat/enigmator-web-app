@@ -21,6 +21,10 @@ import {
 } from 'services/notifications'
 import userDataStyle from './userDataStyle'
 
+import PictureSelector from 'common/PictureSelector'
+import { AvatarPicture } from 'model/User'
+
+
 const statusList = [
 	{ value: 'Connected', label: 'Connected' },
 	{ value: 'Disconnected', label: 'Disconnected' },
@@ -44,9 +48,16 @@ class UserData extends React.Component {
 			password: '',
 			newPassword: '',
 			newPasswordConfirmation: '',
-			changes: false
+			changes: false,
+			picture: this.props.userService.avatar
 		}
 	}
+	
+	handleNewAvatar = (newAvatar) => {
+		this.props.userService.avatar = newAvatar
+		this.setState({ picture: newAvatar })
+	}
+	
 	handleClose = () => {
 		this.setState({ open: false })
 	}
@@ -135,16 +146,21 @@ class UserData extends React.Component {
 					<Grid item>
 						<Grid container direction={'row'} justify={'center'}>
 							<Grid item>
-								<ButtonBase>
-									<Avatar
-										alt="Profile picture"
-										src={
-											process.env.PUBLIC_URL +
-											'/img/default-profile-picture.jpg'
-										}
-										className={classes.avatar}
-									/>
-								</ButtonBase>
+								<PictureSelector setAvatar={this.handleNewAvatar}>
+									<ButtonBase variant="contained"
+									            color="secondary"
+									            component="span">
+										<Avatar
+											alt="Profile picture"
+											src={this.state.picture ?
+												this.state.picture :
+												process.env.PUBLIC_URL +
+												'/img/default-profile-picture.jpg'
+											}
+											className={classes.avatar}
+										/>
+									</ButtonBase>
+								</PictureSelector>
 							</Grid>
 							<Grid item>
 								<Grid container direction={'column'} justify={'center'}>

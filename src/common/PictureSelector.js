@@ -17,7 +17,7 @@ class PictureSelector extends React.Component {
 
 	handleChange = selected => {
 		this.setState({ fileName: selected[0].name })
-		this.props.setFile(selected[0])
+		this.props.setAvatar(window.URL.createObjectURL(selected[0]))
 	}
 
 	render() {

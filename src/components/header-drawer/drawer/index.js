@@ -92,7 +92,7 @@ class Drawer extends Component {
 					this.props.isValid()
 					this.haveValidation()
 					this.props.history.push({
-						pathname: '/forum'
+						pathname: '/forums'
 					})
 				}
 			},

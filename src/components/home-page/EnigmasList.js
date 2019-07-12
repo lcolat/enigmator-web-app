@@ -118,19 +118,19 @@ class EnigmasList extends React.Component {
 					<Table className={classes.table}>
 						<TableHead>
 							<TableCell align="left" style={{ height: 26 }}>
-								Name
+								Dernières Énigmes
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
-								Author
+								Créateur
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
-								Kind
+								Type
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
-								Level
+								Difficultée
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
-								Date
+								Date de création
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
 								<LocalActivity />

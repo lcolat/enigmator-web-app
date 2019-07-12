@@ -18,7 +18,7 @@ const styles = theme => ({
 	},
 	profilePicture: {},
 	globalRankPicture: {
-		width: '100%'
+		height: '183px'
 	},
 	image: {
 		width: 200,
@@ -32,7 +32,7 @@ function UserStatsResume(props) {
 	const { classes, score, winNumber, globalRank, localRank } = props
 
 	return (
-		<div className={classes.root}>
+		<Paper className={classes.root}>
 			<Grid container>
 				<Grid container direction={'row'}>
 					<Grid item xs>
@@ -54,7 +54,7 @@ function UserStatsResume(props) {
 							<Grid container direction={'row'}>
 								<Grid item xs>
 									<Typography gutterBottom variant="h4" align={'left'}>
-										Win
+										Victoires
 									</Typography>
 								</Grid>
 								<Grid item xs>
@@ -66,7 +66,13 @@ function UserStatsResume(props) {
 						</Paper>
 					</Grid>
 					<Grid item>
-						<ButtonBase className={classes.image}>
+						<ButtonBase
+							onClick={() => {
+								props.history.push({
+									pathname: '/profile'
+								})
+							}}
+							className={classes.image}>
 							<img
 								className={classes.profilePicture}
 								alt="Profile"
@@ -78,7 +84,7 @@ function UserStatsResume(props) {
 					</Grid>
 				</Grid>
 			</Grid>
-			<Grid container>
+			<Grid container alignItems="center">
 				<Grid item xs={4}>
 					<img
 						className={classes.globalRankPicture}
@@ -92,12 +98,7 @@ function UserStatsResume(props) {
 							<Grid xs container direction={'row'}>
 								<Grid item xs>
 									<Typography gutterBottom variant="h4" align={'left'} noWrap>
-										Global Rank
-									</Typography>
-								</Grid>
-								<Grid item xs>
-									<Typography variant="h4" align={'center'}>
-										{globalRank}
+										Classement Mondial : {globalRank}
 									</Typography>
 								</Grid>
 							</Grid>
@@ -106,12 +107,7 @@ function UserStatsResume(props) {
 							<Grid container direction={'row'}>
 								<Grid item xs>
 									<Typography gutterBottom variant="h4" align={'left'} noWrap>
-										Local Rank
-									</Typography>
-								</Grid>
-								<Grid item xs>
-									<Typography variant="h4" align={'center'}>
-										{localRank}
+										Classement Local : {localRank}
 									</Typography>
 								</Grid>
 							</Grid>
@@ -119,7 +115,7 @@ function UserStatsResume(props) {
 					</Grid>
 				</Grid>
 			</Grid>
-		</div>
+		</Paper>
 	)
 }
 

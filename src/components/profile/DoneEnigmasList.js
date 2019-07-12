@@ -131,7 +131,7 @@ class DoneEnigmasList extends React.Component {
 										</TableCell>
 										<TableCell align="left">{row.scoreReward}</TableCell>
 										<TableCell align="left">
-											{this.formatDate(row.lastTryDate)}
+											{this.formatDate(row.successDate)}
 										</TableCell>
 									</TableRow>
 								))}

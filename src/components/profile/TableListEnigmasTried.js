@@ -171,7 +171,13 @@ class TabUnresolvedEnigmas extends React.Component {
 										key={row.id}
 										style={{ height: 36, cursor: 'pointer' }}
 										onClick={() => {
-											alert('Soon able to go to the enigma :)')
+											this.props.history.push({
+												pathname: '/enigma',
+												state: {
+													type: row.type,
+													enigma: row
+												}
+											})
 										}}
 										hover>
 										<TableCell component="th" scope="row">

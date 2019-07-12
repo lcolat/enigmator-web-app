@@ -35,7 +35,7 @@ class PictureSelector extends React.Component {
 					type="file"
 				/>
 				<label htmlFor="file-explorer-button">
-					<ButtonBase.type/>
+					<ButtonBase.type component="span"/>
 				</label>
 			</Grid>
 		)

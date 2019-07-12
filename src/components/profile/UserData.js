@@ -68,6 +68,7 @@ class UserData extends React.Component {
 				email: res.email,
 				creationDate: this.formatDate(res.creationDate)
 			})
+			this.props.setUserDataLoaded(true)
 		} else {
 			createNotification({
 				level: Level.ERROR,

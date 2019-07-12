@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
+import Loader from 'components/loader'
 
 class LogUp extends Component {
 	state = {
@@ -41,7 +42,8 @@ class LogUp extends Component {
 			value: '',
 			error: false,
 			helperText: ''
-		}
+		},
+		loaded: true
 	}
 	validateForm = () => {
 		let isValid = true
@@ -75,12 +77,14 @@ class LogUp extends Component {
 	}
 	handleClick = async () => {
 		if (this.validateForm()) {
+			this.setState({ loaded: false })
 			const res = await this.props.userService.logup(
 				this.state.pseudo.value,
 				this.state.firstname.value,
 				this.state.password.value,
 				this.state.email.value
 			)
+			this.setState({ loaded: true })
 			if (res === true) {
 				this.props.history.push({
 					pathname: '/logup'
@@ -101,143 +105,145 @@ class LogUp extends Component {
 	render() {
 		const classes = this.props.classes
 		return (
-			<Grid container direction="column" justify="center" alignItems="center">
-				<Grid item xs>
-					<img
-						className={classes.enigmatorLogo}
-						alt="Enigmator"
-						src={process.env.PUBLIC_URL + '/img/logo_long.png'}
-					/>
-				</Grid>
-				<Grid
-					className={classes.content}
-					container
-					direction={'column'}
-					justify={'center'}>
+			<Loader loaded={this.state.loaded}>
+				<Grid container direction="column" justify="center" alignItems="center">
 					<Grid item xs>
-						<TextField
-							className={classes.textField}
-							id="pseudo"
-							name="pseudo"
-							label="Pseudo"
-							placeholder="Saisissez votre pseudo"
-							margin="normal"
-							required={true}
-							helperText={this.state.pseudo.helperText}
-							error={this.state.pseudo.error}
-							value={this.state.pseudo.value}
-							onChange={this.handleChange}
+						<img
+							className={classes.enigmatorLogo}
+							alt="Enigmator"
+							src={process.env.PUBLIC_URL + '/img/logo_long.png'}
 						/>
 					</Grid>
-					<Grid item xs>
-						<TextField
-							className={classes.textField}
-							id="firstname"
-							name="firstname"
-							label="Prénom"
-							placeholder="Saisissez votre prénom"
-							margin="normal"
-							required={true}
-							helperText={this.state.firstname.helperText}
-							error={this.state.firstname.error}
-							value={this.state.firstname.value}
-							onChange={this.handleChange}
-						/>
-					</Grid>
-					<Grid item xs>
-						<TextField
-							className={classes.textField}
-							id="lastname"
-							name="lastname"
-							label="Nom"
-							placeholder="Saisissez votre nom"
-							margin="normal"
-							required={true}
-							helperText={this.state.lastname.helperText}
-							error={this.state.lastname.error}
-							value={this.state.lastname.value}
-							onChange={this.handleChange}
-						/>
-					</Grid>
-					<Grid item xs>
-						<TextField
-							className={classes.textField}
-							id="birthdate"
-							name="birthdate"
-							label="Date de naissance"
-							type="date"
-							margin="normal"
-							required={true}
-							helperText={this.state.birthdate.helperText}
-							error={this.state.birthdate.error}
-							value={this.state.birthdate.value}
-							onChange={this.handleChange}
-							InputLabelProps={{
-								shrink: true
-							}}
-						/>
-					</Grid>
+					<Grid
+						className={classes.content}
+						container
+						direction={'column'}
+						justify={'center'}>
+						<Grid item xs>
+							<TextField
+								className={classes.textField}
+								id="pseudo"
+								name="pseudo"
+								label="Pseudo"
+								placeholder="Saisissez votre pseudo"
+								margin="normal"
+								required={true}
+								helperText={this.state.pseudo.helperText}
+								error={this.state.pseudo.error}
+								value={this.state.pseudo.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<TextField
+								className={classes.textField}
+								id="firstname"
+								name="firstname"
+								label="Prénom"
+								placeholder="Saisissez votre prénom"
+								margin="normal"
+								required={true}
+								helperText={this.state.firstname.helperText}
+								error={this.state.firstname.error}
+								value={this.state.firstname.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<TextField
+								className={classes.textField}
+								id="lastname"
+								name="lastname"
+								label="Nom"
+								placeholder="Saisissez votre nom"
+								margin="normal"
+								required={true}
+								helperText={this.state.lastname.helperText}
+								error={this.state.lastname.error}
+								value={this.state.lastname.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<TextField
+								className={classes.textField}
+								id="birthdate"
+								name="birthdate"
+								label="Date de naissance"
+								type="date"
+								margin="normal"
+								required={true}
+								helperText={this.state.birthdate.helperText}
+								error={this.state.birthdate.error}
+								value={this.state.birthdate.value}
+								onChange={this.handleChange}
+								InputLabelProps={{
+									shrink: true
+								}}
+							/>
+						</Grid>
 
-					<Grid item xs>
-						<TextField
-							className={classes.textField}
-							id="email"
-							name="email"
-							label="Email"
-							type="email"
-							placeholder="Saisissez votre email"
-							margin="normal"
-							required={true}
-							helperText={this.state.email.helperText}
-							error={this.state.email.error}
-							value={this.state.email.value}
-							onChange={this.handleChange}
-						/>
-					</Grid>
-					<Grid item xs>
-						<TextField
-							className={classes.textField}
-							id="password"
-							name="password"
-							label="Mot de passe"
-							type="password"
-							placeholder="Saisissez votre mot de passe"
-							margin="normal"
-							required={true}
-							helperText={this.state.password.helperText}
-							error={this.state.password.error}
-							value={this.state.password.value}
-							onChange={this.handleChange}
-						/>
-					</Grid>
-					<Grid item xs>
-						<TextField
-							className={classes.textField}
-							id="passwordConfirmation"
-							name="passwordConfirmation"
-							label="Confirmation du mot de passe"
-							type="password"
-							placeholder="Confirmez votre mot de passe"
-							margin="normal"
-							required={true}
-							helperText={this.state.passwordConfirmation.helperText}
-							error={this.state.passwordConfirmation.error}
-							value={this.state.passwordConfirmation.value}
-							onChange={this.handleChange}
-						/>
-					</Grid>
-					<Grid item xs>
-						<Button
-							className={classes.button}
-							variant="contained"
-							color="secondary"
-							type="button"
-							onClick={this.handleClick}>
-							Enregistrer
-						</Button>
+						<Grid item xs>
+							<TextField
+								className={classes.textField}
+								id="email"
+								name="email"
+								label="Email"
+								type="email"
+								placeholder="Saisissez votre email"
+								margin="normal"
+								required={true}
+								helperText={this.state.email.helperText}
+								error={this.state.email.error}
+								value={this.state.email.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<TextField
+								className={classes.textField}
+								id="password"
+								name="password"
+								label="Mot de passe"
+								type="password"
+								placeholder="Saisissez votre mot de passe"
+								margin="normal"
+								required={true}
+								helperText={this.state.password.helperText}
+								error={this.state.password.error}
+								value={this.state.password.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<TextField
+								className={classes.textField}
+								id="passwordConfirmation"
+								name="passwordConfirmation"
+								label="Confirmation du mot de passe"
+								type="password"
+								placeholder="Confirmez votre mot de passe"
+								margin="normal"
+								required={true}
+								helperText={this.state.passwordConfirmation.helperText}
+								error={this.state.passwordConfirmation.error}
+								value={this.state.passwordConfirmation.value}
+								onChange={this.handleChange}
+							/>
+						</Grid>
+						<Grid item xs>
+							<Button
+								className={classes.button}
+								variant="contained"
+								color="secondary"
+								type="button"
+								onClick={this.handleClick}>
+								Enregistrer
+							</Button>
+						</Grid>
 					</Grid>
 				</Grid>
-			</Grid>
+			</Loader>
 		)
 	}
 }

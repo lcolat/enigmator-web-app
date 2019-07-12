@@ -186,7 +186,7 @@ export default class EnigmaService {
 	validateEnigma = async (enigmaId, scoreReward) => {
 		const req = { scoreReward: scoreReward }
 		try {
-			await api.patch(`/Enigmes/${enigmaId}/ValidateEnigme`, req)
+			await api.put(`/Enigmes/${enigmaId}/ValidateEnigme`, req)
 			return true
 		} catch (err) {
 			return err

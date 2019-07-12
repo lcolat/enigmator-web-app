@@ -60,6 +60,7 @@ class Template extends Component {
 		this.setState({ mediaType: mediaType })
 	}
 	saveEnigma = async () => {
+		this.props.setLoaded(false)
 		const enigmaService = new EnigmaService()
 		const res = await enigmaService.create(
 			this.state.name,
@@ -70,6 +71,7 @@ class Template extends Component {
 			this.state.mediaType
 		)
 		if (res) {
+			this.props.setLoaded(true)
 			createNotification({
 				level: Level.SUCCESS,
 				message:

@@ -9,6 +9,7 @@ import {
 	createNotification,
 	LEVEL_NOTIF as Level
 } from 'services/notifications'
+import Loader from 'components/loader'
 
 class Authentication extends Component {
 	state = {
@@ -21,7 +22,8 @@ class Authentication extends Component {
 			value: '',
 			error: false,
 			helperText: ''
-		}
+		},
+		loaded: true
 	}
 	validateForm = () => {
 		let isValid = true
@@ -40,10 +42,12 @@ class Authentication extends Component {
 	}
 	handleConnection = async () => {
 		if (this.validateForm()) {
+			this.setState({ loaded: false })
 			const res = await this.props.userService.authenticate(
 				this.state.email.value,
 				this.state.password.value
 			)
+			this.setState({ loaded: true })
 			if (res === true) {
 				this.props.setValid(true)
 				this.props.history.push({
@@ -75,79 +79,81 @@ class Authentication extends Component {
 		const classes = this.props.classes
 		document.body.style.backgroundColor = '#ae75e9'
 		return (
-			<Grid container direction={'column'} justify={'center'}>
-				<div className="main" style={{ background: '#ae75e9' }}>
-					<Grid item xs>
-						<img
-							className={classes.enigmatorLogo}
-							alt="Enigmator"
-							src={process.env.PUBLIC_URL + '/img/logo_long.png'}
-						/>
-					</Grid>
-					<Grid
-						className={classes.content}
-						container
-						direction={'column'}
-						justify={'center'}>
+			<Loader loaded={this.state.loaded}>
+				<Grid container direction={'column'} justify={'center'}>
+					<div className="main" style={{ background: '#ae75e9' }}>
 						<Grid item xs>
-							<TextField
-								className={classes.email}
-								id="email"
-								name="email"
-								label="Email"
-								placeholder="Saisissez votre email"
-								margin="normal"
-								required={true}
-								helperText={this.state.email.helperText}
-								error={this.state.email.error}
-								value={this.state.email.value}
-								onChange={this.handleChange}
+							<img
+								className={classes.enigmatorLogo}
+								alt="Enigmator"
+								src={process.env.PUBLIC_URL + '/img/logo_long.png'}
 							/>
 						</Grid>
-						<Grid item xs>
-							<TextField
-								className={classes.password}
-								id="password"
-								name="password"
-								label="Mot de passe"
-								type="password"
-								placeholder="Saisissez votre mot de passe"
-								margin="normal"
-								required={true}
-								helperText={this.state.password.helperText}
-								error={this.state.password.error}
-								value={this.state.password.value}
-								onChange={this.handleChange}
-							/>
+						<Grid
+							className={classes.content}
+							container
+							direction={'column'}
+							justify={'center'}>
+							<Grid item xs>
+								<TextField
+									className={classes.email}
+									id="email"
+									name="email"
+									label="Email"
+									placeholder="Saisissez votre email"
+									margin="normal"
+									required={true}
+									helperText={this.state.email.helperText}
+									error={this.state.email.error}
+									value={this.state.email.value}
+									onChange={this.handleChange}
+								/>
+							</Grid>
+							<Grid item xs>
+								<TextField
+									className={classes.password}
+									id="password"
+									name="password"
+									label="Mot de passe"
+									type="password"
+									placeholder="Saisissez votre mot de passe"
+									margin="normal"
+									required={true}
+									helperText={this.state.password.helperText}
+									error={this.state.password.error}
+									value={this.state.password.value}
+									onChange={this.handleChange}
+								/>
+							</Grid>
+							<Grid item xs>
+								<div className="forgottenPassword">
+									<RouterLink to="/forgotten-password">
+										Mot de passe oublié :(?
+									</RouterLink>
+								</div>
+							</Grid>
+							<Grid item xs>
+								<Button
+									className={classes.button}
+									variant="contained"
+									color="secondary"
+									onClick={this.handleConnection}>
+									Connexion
+								</Button>
+							</Grid>
+							<Grid item xs>
+								<Button
+									className={classes.button}
+									variant="contained"
+									color="secondary"
+									onClick={this.handleLogUp}>
+									Inscription
+								</Button>
+							</Grid>
 						</Grid>
-						<Grid item xs>
-							<div className="forgottenPassword">
-								<RouterLink to="/forgotten-password">
-									Mot de passe oublié :(?
-								</RouterLink>
-							</div>
-						</Grid>
-						<Grid item xs>
-							<Button
-								className={classes.button}
-								variant="contained"
-								color="secondary"
-								onClick={this.handleConnection}>
-								Connexion
-							</Button>
-						</Grid>
-						<Grid item xs>
-							<Button
-								className={classes.button}
-								variant="contained"
-								color="secondary"
-								onClick={this.handleLogUp}>
-								Inscription
-							</Button>
-						</Grid>
-					</Grid>
-				</div>
-			</Grid>
+					</div>
+				</Grid>
+			</Loader>
 		)
 	}
 }

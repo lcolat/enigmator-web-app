@@ -52,6 +52,7 @@ class TabUnresolvedEnigmas extends React.Component {
 			this.setState({
 				rows: res.sort((a, b) => (a.date < b.date ? -1 : 1))
 			})
+			this.props.setEnigmasTriedLoaded(true)
 		}
 	}
 	formatDate(date) {

@@ -32,8 +32,7 @@ const PrivateRoute = ({
 								className={classes.content}
 								container
 								direction={'column'}
-								justify={'space-around'}
-								spacing={2}>
+								justify={'space-around'}>
 								<Component.type
 									{...rest}
 									{...props}

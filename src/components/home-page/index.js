@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, withStyles, LinearProgress } from '@material-ui/core'
+import { Grid, withStyles } from '@material-ui/core'
 
 import UserStatsResume from './UserStatsResume'
 import TabUnresolvedEnigmas from './TabUnresolvedEnigmas'
@@ -20,11 +20,14 @@ const styles = theme => ({
 })
 
 class HomePage extends React.Component {
+	state = { loaded: false }
+	isLoaded() {
+		this.setState({ loaded: true })
+	}
 	render() {
 		const { classes } = this.props
 		return (
 			<div>
-				<LinearProgress color="primary" />
 				<Grid item>
 					<Grid container direction={'row'}>
 						<Grid item xs={12} sm={5} className={classes.userStats}>

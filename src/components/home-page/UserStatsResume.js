@@ -5,10 +5,9 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import { Avatar } from '@material-ui/core'
+import Avatar from '@material-ui/core/Avatar'
 
 import PictureSelector from 'common/PictureSelector'
-
 
 const styles = theme => ({
 	root: {
@@ -26,7 +25,7 @@ const styles = theme => ({
 	},
 	image: {
 		width: 200,
-		height: 110,
+		height: 110
 		//backgroundColor: "White"
 		// border: '3px solid purple',
 		// borderRadius: '6px!important'
@@ -75,19 +74,20 @@ function UserStatsResume(props) {
 						</Paper>
 					</Grid>
 					<Grid item>
-						<PictureSelector ButtonBase={
-							<ButtonBase className={classes.image}
-							            variant="contained">
+						<PictureSelector>
+							<ButtonBase
+								className={classes.image}
+								variant="contained"
+								component="span">
 								<Avatar
 									alt="Profile picture"
 									src={
-										process.env.PUBLIC_URL +
-										'/img/default-profile-picture.jpg'
+										process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'
 									}
 									className={classes.profilePicture}
 								/>
 							</ButtonBase>
-						}/>
+						</PictureSelector>
 					</Grid>
 				</Grid>
 			</Grid>

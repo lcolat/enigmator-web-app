@@ -3,6 +3,7 @@ import UserData from './UserData'
 import { StatsTable } from '../../common'
 import TableListEnigmasTried from './TableListEnigmasTried'
 import TableListOwnEnigmas from './TableListOwnEnigmas'
+import DoneEnigmasList from './DoneEnigmasList'
 import Paper from '@material-ui/core/Paper'
 import withStyles from '@material-ui/core/styles/withStyles'
 import style from './style'
@@ -25,6 +26,10 @@ class Profile extends React.Component {
 					{...this.props}
 				/>
 				<TableListEnigmasTried
+					enigmaService={this.state.enigmaService}
+					{...this.props}
+				/>
+				<DoneEnigmasList
 					enigmaService={this.state.enigmaService}
 					{...this.props}
 				/>

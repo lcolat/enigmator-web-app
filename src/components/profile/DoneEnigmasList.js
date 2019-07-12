@@ -38,14 +38,14 @@ const styles = theme => ({
 	}
 })
 
-class TabUnresolvedEnigmas extends React.Component {
+class DoneEnigmasList extends React.Component {
 	state = {
 		rows: [],
 		page: 0,
 		rowsPerPage: 5
 	}
 	async componentDidMount() {
-		const res = await this.props.enigmaService.getTriedEnigmas(
+		const res = await this.props.enigmaService.getDoneEnigmas(
 			this.props.userService.id
 		)
 		if (res) {
@@ -96,7 +96,7 @@ class TabUnresolvedEnigmas extends React.Component {
 					<Table className={classes.table}>
 						<TableHead>
 							<TableCell align="left" style={{ height: 26 }}>
-								Énigmes non résolues
+								Énigmes résolues
 							</TableCell>
 							<TableCell id="username" align="left">
 								Créateur
@@ -111,26 +111,14 @@ class TabUnresolvedEnigmas extends React.Component {
 								Points
 							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
-								Date du dernier essai
+								Date de réussite
 							</TableCell>
 						</TableHead>
 						<TableBody>
 							{rows
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(row => (
-									<TableRow
-										key={row.id}
-										style={{ height: 36, cursor: 'pointer' }}
-										onClick={() => {
-											this.props.history.push({
-												pathname: '/enigma',
-												state: {
-													type: row.type,
-													enigma: row
-												}
-											})
-										}}
-										hover>
+									<TableRow key={row.id} style={{ height: 36 }}>
 										<TableCell component="th" scope="row">
 											{row.name}
 										</TableCell>
@@ -178,8 +166,8 @@ class TabUnresolvedEnigmas extends React.Component {
 	}
 }
 
-TabUnresolvedEnigmas.propTypes = {
+DoneEnigmasList.propTypes = {
 	classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(TabUnresolvedEnigmas)
+export default withStyles(styles)(DoneEnigmasList)

@@ -9,106 +9,20 @@ import {
 	TablePagination,
 	TableRow,
 	TableHead,
-	IconButton,
 	Paper
 } from '@material-ui/core'
-import FirstPage from '@material-ui/icons/FirstPage'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import LastPage from '@material-ui/icons/LastPage'
-import DeleteForever from '@material-ui/icons/DeleteForever'
+import Subject from '@material-ui/icons/Subject'
+import MusicNote from '@material-ui/icons/MusicNote'
+import Photo from '@material-ui/icons/Photo'
+import VideoLabel from '@material-ui/icons/VideoLabel'
+import TablePaginationActions from './TablePaginationActions'
+import { Difficulties } from 'model/Enigma'
 
 const actionsStyles = theme => ({})
-
-class TablePaginationActions extends React.Component {
-	handleFirstPageButtonClick = event => {
-		this.props.onChangePage(event, 0)
-	}
-
-	handleBackButtonClick = event => {
-		this.props.onChangePage(event, this.props.page - 1)
-	}
-
-	handleNextButtonClick = event => {
-		this.props.onChangePage(event, this.props.page + 1)
-	}
-
-	handleLastPageButtonClick = event => {
-		this.props.onChangePage(
-			event,
-			Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
-		)
-	}
-
-	render() {
-		const { classes, count, page, rowsPerPage, theme } = this.props
-
-		return (
-			<div className={classes.root}>
-				<IconButton
-					onClick={this.handleFirstPageButtonClick}
-					disabled={page === 0}
-					aria-label="First Page">
-					{theme.direction === 'rtl' ? (
-						<LastPage fontSize={'small'} />
-					) : (
-						<FirstPage fontSize={'small'} />
-					)}
-				</IconButton>
-				<IconButton
-					onClick={this.handleBackButtonClick}
-					disabled={page === 0}
-					aria-label="Previous Page">
-					{theme.direction === 'rtl' ? (
-						<KeyboardArrowRight fontSize={'small'} />
-					) : (
-						<KeyboardArrowLeft fontSize={'small'} />
-					)}
-				</IconButton>
-				<IconButton
-					onClick={this.handleNextButtonClick}
-					disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-					aria-label="Next Page">
-					{theme.direction === 'rtl' ? (
-						<KeyboardArrowLeft fontSize={'small'} />
-					) : (
-						<KeyboardArrowRight fontSize={'small'} />
-					)}
-				</IconButton>
-				<IconButton
-					onClick={this.handleLastPageButtonClick}
-					disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-					aria-label="Last Page">
-					{theme.direction === 'rtl' ? (
-						<FirstPage fontSize={'small'} />
-					) : (
-						<LastPage fontSize={'small'} />
-					)}
-				</IconButton>
-			</div>
-		)
-	}
-}
-
-TablePaginationActions.propTypes = {
-	classes: PropTypes.object.isRequired,
-	count: PropTypes.number.isRequired,
-	onChangePage: PropTypes.func.isRequired,
-	page: PropTypes.number.isRequired,
-	rowsPerPage: PropTypes.number.isRequired,
-	theme: PropTypes.object.isRequired
-}
 
 const TablePaginationActionsWrapped = withStyles(actionsStyles, {
 	withTheme: true
 })(TablePaginationActions)
-
-let counter = 0
-
-function createData(nameEnigma, creationDate) {
-	counter += 1
-	return { id: counter, name: nameEnigma, date: creationDate }
-}
 
 const styles = theme => ({
 	root: {
@@ -118,10 +32,10 @@ const styles = theme => ({
 	},
 	table: {
 		minWidth: 500
+	},
+	tableWrapper: {
+		overflowX: 'auto'
 	}
-	// tableWrapper: {
-	// 	overflowX: 'auto'
-	// }
 })
 
 class TableListOwnEnigmas extends React.Component {
@@ -155,6 +69,20 @@ class TableListOwnEnigmas extends React.Component {
 	handleChangeRowsPerPage = event => {
 		this.setState({ page: 0, rowsPerPage: event.target.value })
 	}
+	kind = value => {
+		switch (value) {
+			case 'text':
+				return <Subject fontSize={'small'} />
+			case 'audio':
+				return <MusicNote fontSize={'small'} />
+			case 'image':
+				return <Photo fontSize={'small'} />
+			case 'video':
+				return <VideoLabel fontSize={'small'} />
+			default:
+				break
+		}
+	}
 
 	render() {
 		const { classes } = this.props
@@ -170,26 +98,30 @@ class TableListOwnEnigmas extends React.Component {
 							<TableCell align="left" style={{ height: 26 }}>
 								Enigmes créées
 							</TableCell>
+							<TableCell id="difficulty" align="left">
+								Niveau
+							</TableCell>
+							<TableCell id="scoreReward" align="left">
+								Points
+							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
 								Date de création
 							</TableCell>
-							<TableCell align={'right'}> </TableCell>
 						</TableHead>
 						<TableBody>
 							{rows
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(row => (
-									<TableRow key={row.id} hover>
+									<TableRow key={row.id}>
 										<TableCell component="th" scope="row">
 											{row.name}
 										</TableCell>
+										<TableCell align="left">
+											{Difficulties(row.scoreReward)}
+										</TableCell>
+										<TableCell align="left">{row.scoreReward}</TableCell>
 										<TableCell scope={'row'} align={'left'}>
 											{this.formatDate(row.creationDate)}
-										</TableCell>
-										<TableCell align={'right'}>
-											<IconButton>
-												<DeleteForever fontSize={'small'} />
-											</IconButton>
 										</TableCell>
 									</TableRow>
 								))}
@@ -203,7 +135,7 @@ class TableListOwnEnigmas extends React.Component {
 							<TableRow className={classes.footer}>
 								<TablePagination
 									rowsPerPageOptions={[]}
-									colSpan={3}
+									colSpan={4}
 									count={rows.length}
 									rowsPerPage={rowsPerPage}
 									page={page}

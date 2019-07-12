@@ -24,6 +24,7 @@ class Drawer extends Component {
 				icon: <Home fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/'
 					})
@@ -34,6 +35,7 @@ class Drawer extends Component {
 				icon: <AccountBox fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/profile'
 					})
@@ -44,6 +46,7 @@ class Drawer extends Component {
 				icon: <Contacts fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/friends'
 					})
@@ -54,6 +57,7 @@ class Drawer extends Component {
 				icon: <ImageSearch fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/enigmas'
 					})
@@ -64,6 +68,7 @@ class Drawer extends Component {
 				icon: <AddBox fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/create-enigmas'
 					})
@@ -74,6 +79,7 @@ class Drawer extends Component {
 				icon: <Stars fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/rank'
 					})
@@ -84,6 +90,7 @@ class Drawer extends Component {
 				icon: <Forum fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/forum'
 					})
@@ -94,6 +101,7 @@ class Drawer extends Component {
 				icon: <Tune fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/settings'
 					})
@@ -104,6 +112,7 @@ class Drawer extends Component {
 				icon: <Info fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/rgpd'
 					})
@@ -111,16 +120,30 @@ class Drawer extends Component {
 			}
 		]
 	}
-	async componentDidMount() {
+	containsValidation = menuItems => {
+		let res = false
+		menuItems.forEach(item => {
+			if (item.text === 'Validation') {
+				res = true
+			}
+		})
+		return res
+	}
+	haveValidation = async () => {
 		const isValidator = await this.props.userService.isValidator
 		const haveUnvalidatedEnigma = await this.props.enigmaService.haveWaitingValidation()
-		if (isValidator === true && haveUnvalidatedEnigma === true) {
+		if (
+			isValidator === true &&
+			haveUnvalidatedEnigma === true &&
+			!this.containsValidation(this.state.menuItems)
+		) {
 			let newMenuItems = this.state.menuItems
 			newMenuItems.splice(1, 0, {
 				text: 'Validation',
 				icon: <EventAvailable color="primary" fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
+					this.haveValidation()
 					this.props.history.push({
 						pathname: '/validation'
 					})
@@ -130,6 +153,9 @@ class Drawer extends Component {
 				menuItems: newMenuItems
 			})
 		}
+	}
+	async componentDidMount() {
+		this.haveValidation()
 	}
 	render() {
 		const { menuItems } = this.state

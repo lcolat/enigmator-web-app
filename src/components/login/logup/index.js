@@ -5,7 +5,10 @@ import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
 import Loader from 'components/loader'
-
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
 class LogUp extends Component {
 	state = {
 		username: {
@@ -93,11 +96,18 @@ class LogUp extends Component {
 			)
 			this.setState({ loaded: true })
 			if (res === true) {
+				createNotification({
+					level: Level.SUCCESS,
+					message: 'Votre compte a bien été créé'
+				})
 				this.props.history.push({
-					pathname: '/logup'
+					pathname: '/login'
 				})
 			} else {
-				alert(res)
+				createNotification({
+					level: Level.ERROR,
+					message: res.message || res.data.message
+				})
 			}
 		}
 	}

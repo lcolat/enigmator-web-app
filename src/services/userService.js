@@ -130,7 +130,7 @@ export default class UserService {
 			await api.post('/UserEnigmators', req)
 			return true
 		} catch (err) {
-			throw new Error(err)
+			return err
 		}
 	}
 

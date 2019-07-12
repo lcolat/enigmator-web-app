@@ -11,6 +11,11 @@ import {
 import { SortableTable, TabChooser, LikeCount, SearchPick } from '../../common'
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd'
 
+import Topic from '../../model/Topic'
+
+import ForumService from '../../services/forumService'
+
+
 const tabs = [{ text: 'Enigmas' }, { text: 'Other' }]
 
 const header = [
@@ -31,35 +36,65 @@ const header = [
 	{ id: 'like', align: 'left', disablePadding: false, label: 'Like' }
 ]
 
-const body = [
-	[
-		{
-			name: 'enigma0',
-			creator: 'DamSauGoodMan',
-			creation: '18/08/2018, 18h42',
-			lastUpdate: '18/08/2018, 18h42',
-			like: { number: '10', byUser: true }
-		}
-	],
-	[
-		{
-			name: 'other0',
-			creator: 'DamSauGoodMan',
-			creation: '18/08/2018, 18h42',
-			lastUpdate: '18/08/2018, 18h42',
-			like: { number: '10', byUser: false }
-		},
-		{
-			name: 'other1',
-			creator: 'DamSauGoodMan',
-			creation: '18/08/2018, 18h42',
-			lastUpdate: '18/08/2018, 18h42',
-			like: { number: '10', byUser: true }
-		}
-	]
-]
+let body = [[], []]
+
+const service = new ForumService
+
+// async function getTopics() {
+// 	const res = await service.getEnigmasTopics()
+// 	console.log("res" + res)
+// 	body = res.forEach( topic => {
+// 			const top = new Topic(topic.title,
+// 				topic.creationDate,
+// 				topic.creationDate,
+// 				"Description",
+// 				0,
+// 				false,
+// 				true,
+// 				topic.userEnigmatorsId)
+//
+// 			//(topic.is)
+// 		}
+// 	)
+// }
+//
+// getTopics()
+
+//var body =
+
+// const body = [
+// 	[
+// 		{
+// 			name: 'enigma0',
+// 			creator: 'DamSauGoodMan',
+// 			creation: '18/08/2018, 18h42',
+// 			lastUpdate: '18/08/2018, 18h42',
+// 			like: { number: '10', byUser: true }
+// 		}
+// 	],
+// 	[
+// 		{
+// 			name: 'other0',
+// 			creator: 'DamSauGoodMan',
+// 			creation: '18/08/2018, 18h42',
+// 			lastUpdate: '18/08/2018, 18h42',
+// 			like: { number: '10', byUser: false }
+// 		},
+// 		{
+// 			name: 'other1',
+// 			creator: 'DamSauGoodMan',
+// 			creation: '18/08/2018, 18h42',
+// 			lastUpdate: '18/08/2018, 18h42',
+// 			like: { number: '10', byUser: true }
+// 		}
+// 	]
+// ]
 
 const useStyles = makeStyles(theme => ({
+	root: {
+		marginRight: theme.spacing(1),
+		marginLeft: theme.spacing(1)
+	},
 	rootMenu: {
 		marginBottom: theme.spacing(1)
 	},
@@ -99,7 +134,11 @@ function ListThreads(props) {
 				onClick={event => handleClick(event, bodyRow)}
 				tabIndex={-1}
 				key={bodyRow.name + '-' + bodyRow.creator}>
-				<TableCell component="th" id={labelId} scope="row" padding="none">
+				<TableCell component="th"
+				           id={labelId}
+				           scope="row"
+				           padding="none"
+				           align="center">
 					{bodyRow.name}
 				</TableCell>
 				<TableCell align="left">{bodyRow.creator}</TableCell>
@@ -113,14 +152,14 @@ function ListThreads(props) {
 	}
 
 	return (
-		<div>
+		<div className={classes.root}>
 			<Grid container direction={'row'} className={classes.rootMenu}>
 				<Grid item xs={8}>
 					<TabChooser tabList={tabs} eventChange={changeBody} />
 				</Grid>
 				<Grid item xs className={classes.search}>
 					<SearchPick
-						suggestions={body[numTab].map(thread => {
+						suggestions={body.map(thread => {
 							return { label: thread.name }
 						})}
 					/>
@@ -140,7 +179,7 @@ function ListThreads(props) {
 			<SortableTable
 				columnsHeader={header}
 				rowFormGenerator={formBody}
-				rows={body[numTab]}
+				rows={body}
 			/>
 		</div>
 	)

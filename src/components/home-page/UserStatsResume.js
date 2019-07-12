@@ -5,6 +5,10 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import { Avatar } from '@material-ui/core'
+
+import PictureSelector from 'common/PictureSelector'
+
 
 const styles = theme => ({
 	root: {
@@ -16,15 +20,20 @@ const styles = theme => ({
 	paperStats: {
 		paddingTop: 4
 	},
-	profilePicture: {},
 	globalRankPicture: {
-		width: '100%'
+		width: 170,
+		height: 120
 	},
 	image: {
 		width: 200,
 		height: 110,
-		border: '3px solid purple',
-		borderRadius: '6px!important'
+		//backgroundColor: "White"
+		// border: '3px solid purple',
+		// borderRadius: '6px!important'
+	},
+	profilePicture: {
+		width: 138,
+		height: 108
 	}
 })
 
@@ -66,15 +75,19 @@ function UserStatsResume(props) {
 						</Paper>
 					</Grid>
 					<Grid item>
-						<ButtonBase className={classes.image}>
-							<img
-								className={classes.profilePicture}
-								alt="Profile"
-								src={
-									process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'
-								}
-							/>
-						</ButtonBase>
+						<PictureSelector ButtonBase={
+							<ButtonBase className={classes.image}
+							            variant="contained">
+								<Avatar
+									alt="Profile picture"
+									src={
+										process.env.PUBLIC_URL +
+										'/img/default-profile-picture.jpg'
+									}
+									className={classes.profilePicture}
+								/>
+							</ButtonBase>
+						}/>
 					</Grid>
 				</Grid>
 			</Grid>

@@ -85,7 +85,7 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.props.history.push({
-						pathname: '/forum'
+						pathname: '/forums'
 					})
 				}
 			},

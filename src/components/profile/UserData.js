@@ -28,6 +28,7 @@ const statusList = [
 	{ value: 'Do not Disturb', label: 'Do not Disturb' }
 ]
 
+
 class UserData extends React.Component {
 	constructor(props) {
 		super(props)
@@ -133,7 +134,7 @@ class UserData extends React.Component {
 					<Grid item>
 						<Grid container direction={'row'} justify={'center'}>
 							<Grid item>
-								<ButtonBase className={classes.image}>
+								<ButtonBase>
 									<Avatar
 										alt="Profile picture"
 										src={

@@ -8,6 +8,7 @@ import ForgottentPassword from 'components/login/forgottenPassword'
 import LogUp from 'components/login/logup'
 import theme from './theme'
 import PrivateRoute from './privateRoute'
+
 import HomePage from 'components/home-page'
 import FriendsView from 'components/friend-page'
 import CreateEnigma from 'components/create-enigma'
@@ -17,6 +18,8 @@ import UserService from 'services/userService'
 import EnigmaService from 'services/enigmaService'
 import Settings from 'components/settings-page'
 import EnigmasValidation from 'components/enigmas-validation'
+import ListThreads from './components/forum'
+
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
 
@@ -25,6 +28,8 @@ const styles = theme => ({
 		textAlign: 'center'
 	}
 })
+
+
 class App extends Component {
 	state = {
 		userService: new UserService(),
@@ -102,6 +107,14 @@ class App extends Component {
 							<PrivateRoute
 								path="/create-enigmas"
 								component={<CreateEnigma />}
+								userService={userService}
+								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
+							/>
+							<PrivateRoute
+								path={'/forums'}
+								component={<ListThreads/>}
 								userService={userService}
 								enigmaService={enigmaService}
 								valid={valid}

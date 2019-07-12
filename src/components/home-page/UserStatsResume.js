@@ -75,17 +75,20 @@ function UserStatsResume(props) {
 						</Paper>
 					</Grid>
 					<Grid item>
-						<ButtonBase className={classes.image}
-						            variant="contained">
-							<Avatar
-								alt="Profile picture"
-								src={
-									process.env.PUBLIC_URL +
-									'/img/default-profile-picture.jpg'
-								}
-								className={classes.profilePicture}
-							/>
-						</ButtonBase>
+						<PictureSelector>
+							<ButtonBase
+								className={classes.image}
+								variant="contained"
+								component="span">
+								<Avatar
+									alt="Profile picture"
+									src={
+										process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'
+									}
+									className={classes.profilePicture}
+								/>
+							</ButtonBase>
+						</PictureSelector>
 					</Grid>
 				</Grid>
 			</Grid>

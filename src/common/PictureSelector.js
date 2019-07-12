@@ -22,7 +22,7 @@ class PictureSelector extends React.Component {
 	}
 	
 	render() {
-		const { classes, ButtonBase } = this.props
+		const { classes, children } = this.props
 		const {} = this.state
 		
 		return (
@@ -34,9 +34,7 @@ class PictureSelector extends React.Component {
 					onChange={event => this.handleChange(event.target.files)}
 					type="file"
 				/>
-				<label htmlFor="file-explorer-button">
-					<ButtonBase.type component="span"/>
-				</label>
+				<label htmlFor="file-explorer-button">{children}</label>
 			</Grid>
 		)
 	}

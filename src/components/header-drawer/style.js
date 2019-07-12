@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
-const drawerWidth = 240
+const drawerWidth = 160
 const useStyles = makeStyles(theme => ({
 	appBar: {
 		textAlign: 'left',
@@ -53,12 +53,12 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: 'flex-end',
 		padding: '0 8px',
 		...theme.mixins.toolbar
-	},
-	content: {
-		flexGrow: 1,
-		padding: theme.spacing(3)
-	},
-	logout: {}
+	}
+	// content: {
+	// 	flexGrow: 1,
+	// 	padding: theme.spacing(3)
+	// },
+	// logout: {}
 }))
 
 export default useStyles

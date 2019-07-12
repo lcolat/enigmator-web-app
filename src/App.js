@@ -25,7 +25,8 @@ import 'react-notifications/lib/notifications.css'
 
 const styles = theme => ({
 	app: {
-		textAlign: 'center'
+		textAlign: 'center',
+		display: 'flex'
 	}
 })
 

@@ -9,88 +9,16 @@ import {
 	TablePagination,
 	TableRow,
 	TableHead,
-	IconButton,
 	Paper
 } from '@material-ui/core'
-import FirstPage from '@material-ui/icons/FirstPage'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import LastPage from '@material-ui/icons/LastPage'
-import CheckRounded from '@material-ui/icons/CheckRounded'
-import MoreHorizRounded from '@material-ui/icons/MoreHorizRounded'
+import Subject from '@material-ui/icons/Subject'
+import MusicNote from '@material-ui/icons/MusicNote'
+import Photo from '@material-ui/icons/Photo'
+import VideoLabel from '@material-ui/icons/VideoLabel'
+import TablePaginationActions from './TablePaginationActions'
+import { Difficulties } from 'model/Enigma'
 
 const actionsStyles = theme => ({})
-
-class TablePaginationActions extends React.Component {
-	handleFirstPageButtonClick = event => {
-		this.props.onChangePage(event, 0)
-	}
-
-	handleBackButtonClick = event => {
-		this.props.onChangePage(event, this.props.page - 1)
-	}
-
-	handleNextButtonClick = event => {
-		this.props.onChangePage(event, this.props.page + 1)
-	}
-
-	handleLastPageButtonClick = event => {
-		this.props.onChangePage(
-			event,
-			Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
-		)
-	}
-
-	render() {
-		const { classes, count, page, rowsPerPage, theme } = this.props
-
-		return (
-			<div className={classes.root}>
-				<IconButton
-					onClick={this.handleFirstPageButtonClick}
-					disabled={page === 0}
-					aria-label="First Page">
-					{theme.direction === 'rtl' ? <LastPage /> : <FirstPage />}
-				</IconButton>
-				<IconButton
-					onClick={this.handleBackButtonClick}
-					disabled={page === 0}
-					aria-label="Previous Page">
-					{theme.direction === 'rtl' ? (
-						<KeyboardArrowRight />
-					) : (
-						<KeyboardArrowLeft />
-					)}
-				</IconButton>
-				<IconButton
-					onClick={this.handleNextButtonClick}
-					disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-					aria-label="Next Page">
-					{theme.direction === 'rtl' ? (
-						<KeyboardArrowLeft />
-					) : (
-						<KeyboardArrowRight />
-					)}
-				</IconButton>
-				<IconButton
-					onClick={this.handleLastPageButtonClick}
-					disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-					aria-label="Last Page">
-					{theme.direction === 'rtl' ? <FirstPage /> : <LastPage />}
-				</IconButton>
-			</div>
-		)
-	}
-}
-
-TablePaginationActions.propTypes = {
-	classes: PropTypes.object.isRequired,
-	count: PropTypes.number.isRequired,
-	onChangePage: PropTypes.func.isRequired,
-	page: PropTypes.number.isRequired,
-	rowsPerPage: PropTypes.number.isRequired,
-	theme: PropTypes.object.isRequired
-}
 
 const TablePaginationActionsWrapped = withStyles(actionsStyles, {
 	withTheme: true
@@ -111,7 +39,6 @@ const styles = theme => ({
 })
 
 class TabUnresolvedEnigmas extends React.Component {
-	// formatDate = "HH:mm DD-MM-YY";
 	state = {
 		rows: [],
 		page: 0,
@@ -143,7 +70,20 @@ class TabUnresolvedEnigmas extends React.Component {
 	handleChangeRowsPerPage = event => {
 		this.setState({ page: 0, rowsPerPage: event.target.value })
 	}
-
+	kind = value => {
+		switch (value) {
+			case 'text':
+				return <Subject fontSize={'small'} />
+			case 'audio':
+				return <MusicNote fontSize={'small'} />
+			case 'image':
+				return <Photo fontSize={'small'} />
+			case 'video':
+				return <VideoLabel fontSize={'small'} />
+			default:
+				break
+		}
+	}
 	render() {
 		const { classes } = this.props
 		const { rows, rowsPerPage, page } = this.state
@@ -158,10 +98,21 @@ class TabUnresolvedEnigmas extends React.Component {
 							<TableCell align="left" style={{ height: 26 }}>
 								Énigmes non résolues
 							</TableCell>
+							<TableCell id="username" align="left">
+								Créateur
+							</TableCell>
+							<TableCell id="type" align="left">
+								Type
+							</TableCell>
+							<TableCell id="difficulty" align="left">
+								Niveau
+							</TableCell>
+							<TableCell id="scoreReward" align="left">
+								Points
+							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
 								Date du dernier essai
 							</TableCell>
-							<TableCell />
 						</TableHead>
 						<TableBody>
 							{rows
@@ -184,14 +135,15 @@ class TabUnresolvedEnigmas extends React.Component {
 											{row.name}
 										</TableCell>
 										<TableCell align="left">
-											{this.formatDate(row.lastTryDate)}
+											{row.Enigme_User.username}
 										</TableCell>
-										<TableCell align={'right'}>
-											{row.resolved === true ? (
-												<CheckRounded />
-											) : (
-												<MoreHorizRounded />
-											)}
+										<TableCell align="left">{this.kind(row.type)}</TableCell>
+										<TableCell align="left">
+											{Difficulties(row.scoreReward)}
+										</TableCell>
+										<TableCell align="left">{row.scoreReward}</TableCell>
+										<TableCell align="left">
+											{this.formatDate(row.lastTryDate)}
 										</TableCell>
 									</TableRow>
 								))}
@@ -205,7 +157,7 @@ class TabUnresolvedEnigmas extends React.Component {
 							<TableRow className={classes.footer}>
 								<TablePagination
 									rowsPerPageOptions={[]}
-									colSpan={3}
+									colSpan={6}
 									count={rows.length}
 									rowsPerPage={rowsPerPage}
 									page={page}

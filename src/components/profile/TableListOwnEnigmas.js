@@ -9,11 +9,14 @@ import {
 	TablePagination,
 	TableRow,
 	TableHead,
-	IconButton,
 	Paper
 } from '@material-ui/core'
-import DeleteForever from '@material-ui/icons/DeleteForever'
+import Subject from '@material-ui/icons/Subject'
+import MusicNote from '@material-ui/icons/MusicNote'
+import Photo from '@material-ui/icons/Photo'
+import VideoLabel from '@material-ui/icons/VideoLabel'
 import TablePaginationActions from './TablePaginationActions'
+import { Difficulties } from 'model/Enigma'
 
 const actionsStyles = theme => ({})
 
@@ -29,10 +32,10 @@ const styles = theme => ({
 	},
 	table: {
 		minWidth: 500
+	},
+	tableWrapper: {
+		overflowX: 'auto'
 	}
-	// tableWrapper: {
-	// 	overflowX: 'auto'
-	// }
 })
 
 class TableListOwnEnigmas extends React.Component {
@@ -66,6 +69,20 @@ class TableListOwnEnigmas extends React.Component {
 	handleChangeRowsPerPage = event => {
 		this.setState({ page: 0, rowsPerPage: event.target.value })
 	}
+	kind = value => {
+		switch (value) {
+			case 'text':
+				return <Subject fontSize={'small'} />
+			case 'audio':
+				return <MusicNote fontSize={'small'} />
+			case 'image':
+				return <Photo fontSize={'small'} />
+			case 'video':
+				return <VideoLabel fontSize={'small'} />
+			default:
+				break
+		}
+	}
 
 	render() {
 		const { classes } = this.props
@@ -81,26 +98,30 @@ class TableListOwnEnigmas extends React.Component {
 							<TableCell align="left" style={{ height: 26 }}>
 								Enigmes créées
 							</TableCell>
+							<TableCell id="difficulty" align="left">
+								Niveau
+							</TableCell>
+							<TableCell id="scoreReward" align="left">
+								Points
+							</TableCell>
 							<TableCell align="left" style={{ height: 26 }}>
 								Date de création
 							</TableCell>
-							<TableCell align={'right'}> </TableCell>
 						</TableHead>
 						<TableBody>
 							{rows
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(row => (
-									<TableRow key={row.id} hover>
+									<TableRow key={row.id}>
 										<TableCell component="th" scope="row">
 											{row.name}
 										</TableCell>
+										<TableCell align="left">
+											{Difficulties(row.scoreReward)}
+										</TableCell>
+										<TableCell align="left">{row.scoreReward}</TableCell>
 										<TableCell scope={'row'} align={'left'}>
 											{this.formatDate(row.creationDate)}
-										</TableCell>
-										<TableCell align={'right'}>
-											<IconButton>
-												<DeleteForever fontSize={'small'} />
-											</IconButton>
 										</TableCell>
 									</TableRow>
 								))}
@@ -114,7 +135,7 @@ class TableListOwnEnigmas extends React.Component {
 							<TableRow className={classes.footer}>
 								<TablePagination
 									rowsPerPageOptions={[]}
-									colSpan={3}
+									colSpan={4}
 									count={rows.length}
 									rowsPerPage={rowsPerPage}
 									page={page}

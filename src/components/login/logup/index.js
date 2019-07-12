@@ -5,10 +5,13 @@ import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
 import Loader from 'components/loader'
-
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
 class LogUp extends Component {
 	state = {
-		pseudo: {
+		username: {
 			value: '',
 			error: false,
 			helperText: ''
@@ -19,6 +22,11 @@ class LogUp extends Component {
 			helperText: ''
 		},
 		lastname: {
+			value: '',
+			error: false,
+			helperText: ''
+		},
+		country: {
 			value: '',
 			error: false,
 			helperText: ''
@@ -79,18 +87,27 @@ class LogUp extends Component {
 		if (this.validateForm()) {
 			this.setState({ loaded: false })
 			const res = await this.props.userService.logup(
-				this.state.pseudo.value,
+				this.state.username.value,
 				this.state.firstname.value,
-				this.state.password.value,
-				this.state.email.value
+				this.state.lastname.value,
+				this.state.country,
+				this.state.email.value,
+				this.state.password.value
 			)
 			this.setState({ loaded: true })
 			if (res === true) {
+				createNotification({
+					level: Level.SUCCESS,
+					message: 'Votre compte a bien été créé'
+				})
 				this.props.history.push({
-					pathname: '/logup'
+					pathname: '/login'
 				})
 			} else {
-				alert(res)
+				createNotification({
+					level: Level.ERROR,
+					message: res.message || res.data.message
+				})
 			}
 		}
 	}
@@ -122,15 +139,15 @@ class LogUp extends Component {
 						<Grid item xs>
 							<TextField
 								className={classes.textField}
-								id="pseudo"
-								name="pseudo"
+								id="username"
+								name="username"
 								label="Pseudo"
 								placeholder="Saisissez votre pseudo"
 								margin="normal"
 								required={true}
-								helperText={this.state.pseudo.helperText}
-								error={this.state.pseudo.error}
-								value={this.state.pseudo.value}
+								helperText={this.state.username.helperText}
+								error={this.state.username.error}
+								value={this.state.username.value}
 								onChange={this.handleChange}
 							/>
 						</Grid>
@@ -167,19 +184,15 @@ class LogUp extends Component {
 						<Grid item xs>
 							<TextField
 								className={classes.textField}
-								id="birthdate"
-								name="birthdate"
-								label="Date de naissance"
-								type="date"
+								id="country"
+								name="country"
+								label="Pays"
 								margin="normal"
 								required={true}
-								helperText={this.state.birthdate.helperText}
-								error={this.state.birthdate.error}
-								value={this.state.birthdate.value}
+								helperText={this.state.country.helperText}
+								error={this.state.country.error}
+								value={this.state.country.value}
 								onChange={this.handleChange}
-								InputLabelProps={{
-									shrink: true
-								}}
 							/>
 						</Grid>
 

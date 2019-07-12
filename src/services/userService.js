@@ -117,19 +117,20 @@ export default class UserService {
 		}
 	}
 
-	logup = async (name, username, password, email) => {
+	logup = async (username, firstName, lastName, country, email, password) => {
 		const req = {
-			nom: name,
 			username: username,
-			password: password,
+			firstName: firstName,
+			lastName: lastName,
+			country: country,
 			email: email,
-			inscription_date: Date.now()
+			password: password
 		}
 		try {
 			await api.post('/UserEnigmators', req)
 			return true
 		} catch (err) {
-			throw new Error(err)
+			return err
 		}
 	}
 

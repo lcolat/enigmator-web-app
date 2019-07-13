@@ -1,17 +1,18 @@
 export default class Topic {
-	constructor(name,
-	            creation,
-	            lastUpdate,
-	            description,
-	            numberOfLikes,
-	            likedByUser,
-	            posts,
-	            isAutomaticTopic,
-	            ownerId) {
-		
-		this.name = name
-		this.creation = creation
-		this.lastUpdate = lastUpdate
+	constructor(
+		title,
+		creationDate,
+		lastEditDate,
+		description,
+		numberOfLikes,
+		likedByUser,
+		posts,
+		isAutomaticTopic,
+		ownerId
+	) {
+		this.title = title
+		this.creationDate = creationDate
+		this.lastEditDate = lastEditDate
 		this.description = description
 		this.like = { number: numberOfLikes, byUser: likedByUser }
 		this.posts = posts

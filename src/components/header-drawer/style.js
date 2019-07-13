@@ -54,11 +54,6 @@ const useStyles = makeStyles(theme => ({
 		padding: '0 8px',
 		...theme.mixins.toolbar
 	}
-	// content: {
-	// 	flexGrow: 1,
-	// 	padding: theme.spacing(3)
-	// },
-	// logout: {}
 }))
 
 export default useStyles

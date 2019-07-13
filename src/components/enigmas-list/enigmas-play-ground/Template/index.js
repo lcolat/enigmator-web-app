@@ -204,7 +204,7 @@ function TemplateEnigma(props) {
 }
 
 TemplateEnigma.propTypes = {
-	enigmaView: PropTypes.any.isRequired
+	// enigmaView: PropTypes.any.isRequired
 }
 
 export default TemplateEnigma

@@ -11,7 +11,7 @@ export default function HeaderDrawer(props) {
 		if (open === false) {
 			document.getElementById('domain').setAttribute(
 				'style',
-				`width :calc(100vw - ${theme.spacing(2) + 160 + 2}px);
+				`width :calc(100vw - 160px);
 					transition: ${theme.transitions.create('width', {
 						easing: theme.transitions.easing.sharp,
 						duration: theme.transitions.duration.enteringScreen
@@ -20,7 +20,7 @@ export default function HeaderDrawer(props) {
 		} else {
 			document.getElementById('domain').setAttribute(
 				'style',
-				`width :calc(100vw - ${theme.spacing(7) + theme.spacing(4) + 2}px);
+				`width :calc(100vw - ${theme.spacing(9) + 1}px);
 					transition:${theme.transitions.create('width', {
 						easing: theme.transitions.easing.sharp,
 						duration: theme.transitions.duration.leavingScreen

@@ -3,6 +3,8 @@ export default class UserService {
 	id = undefined
 	accessToken = undefined
 	isValidator = true
+	avatar = process.env.PUBLIC_URL +
+		'/img/default-profile-picture.jpg'
 	constructor() {
 		if (this.getAccessToken()) {
 			this.accessToken = this.getAccessToken()

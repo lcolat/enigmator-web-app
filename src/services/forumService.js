@@ -4,13 +4,23 @@ import { SERVER_URL } from '../config'
 export default class ForumService {
 	accessToken = localStorage.getItem('accessToken')
 	
-	getEnigmasTopics = async () => {
+	constructor() {
+		if (localStorage.hasOwnProperty('accessToken')) {
+			api.defaults.headers.common['Authorization'] = this.accessToken
+		}
+	}
+	
+	getTopics = async () => {
 		try {
 			const topics = await api.get('/Topics')
-			console.log(topics.data)
 			return topics.data
 		} catch (err) {
 			return err
 		}
+	}
+	
+	// /Histories/filter/filter[where][userId]=IDUSER&filter[where][type]=like&filter[where][topicId]=IDDUTOPIC
+	hasLikeTopic = async () => {
+	
 	}
 }

@@ -124,6 +124,7 @@ function SortableTable(props) {
 						<TableBody>
 							{stableSort(rows, getSorting(order, orderBy)).map(
 								(row, index) => {
+									console.log(row)
 									const labelId = `sortable-table-${index}`
 									return rowFormGenerator(row, labelId)
 								}

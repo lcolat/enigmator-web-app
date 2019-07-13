@@ -36,29 +36,7 @@ const header = [
 	{ id: 'like', align: 'left', disablePadding: false, label: 'Like' }
 ]
 
-let body = [[], []]
-
-const service = new ForumService
-
-// async function getTopics() {
-// 	const res = await service.getEnigmasTopics()
-// 	console.log("res" + res)
-// 	body = res.forEach( topic => {
-// 			const top = new Topic(topic.title,
-// 				topic.creationDate,
-// 				topic.creationDate,
-// 				"Description",
-// 				0,
-// 				false,
-// 				true,
-// 				topic.userEnigmatorsId)
-//
-// 			//(topic.is)
-// 		}
-// 	)
-// }
-//
-// getTopics()
+// let body = [[], []]
 
 //var body =
 
@@ -114,10 +92,40 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
+
 function ListThreads(props) {
 	const {} = props
 	const classes = useStyles()
+	const service = new ForumService
+	
 	const [numTab, setNumTab] = React.useState(0)
+	const [body, setBody] = React.useState([[], []])
+	
+	const getTopics = async () => {
+		const res = await service.getTopics()
+		let newBody = [[], []]
+		if (res) {
+			for (const topic in res) {
+				newBody[topic.isAutomatic ? 0 : 1].push(
+					new Topic(topic.title,
+						topic.creationDate,
+						topic.lastEditDate,
+						topic.description,
+						topic.likes,
+						false,
+						true,
+						topic.userEnigmatorsId))
+			}
+		}
+		setBody(newBody)
+		console.log('newBody' + newBody)
+		//return newBody
+	}
+	
+	React.useEffect(() => {
+		getTopics()
+		console.log('body' + body)
+	}, [body])
 
 	function handleClick(event, enigma) {
 		alert('Must open ' + enigma.name)
@@ -145,7 +153,8 @@ function ListThreads(props) {
 				<TableCell align="left">{bodyRow.creation}</TableCell>
 				<TableCell align="left">{bodyRow.lastUpdate}</TableCell>
 				<TableCell align="left">
-					<LikeCount liked={bodyRow.like.byUser} likes={bodyRow.like.number} />
+					<LikeCount liked={bodyRow.like && bodyRow.like.byUser}
+					           likes={bodyRow.like && bodyRow.like.number}/>
 				</TableCell>
 			</TableRow>
 		)

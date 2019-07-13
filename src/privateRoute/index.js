@@ -30,9 +30,9 @@ const PrivateRoute = ({
 							<div className={classes.toolbar} />
 							<Grid
 								className={classes.content}
+								id="domain"
 								container
-								direction={'column'}
-								justify={'space-around'}>
+								direction={'column'}>
 								<Component.type
 									{...rest}
 									{...props}

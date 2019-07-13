@@ -84,7 +84,7 @@ function UserStatsResume(props) {
 					</Grid>
 				</Grid>
 			</Grid>
-			<Grid container alignItems="center">
+			<Grid container direction={'row'} alignItems="center">
 				<Grid item xs={4}>
 					<img
 						className={classes.globalRankPicture}
@@ -92,26 +92,22 @@ function UserStatsResume(props) {
 						src={process.env.PUBLIC_URL + '/img/podium.png'}
 					/>
 				</Grid>
-				<Grid xs container direction={'column'}>
-					<Grid item xs>
-						<Paper className={classes.paperStats}>
-							<Grid xs container direction={'row'}>
-								<Grid item xs>
-									<Typography gutterBottom variant="h4" align={'left'} noWrap>
-										Classement Mondial : {globalRank}
-									</Typography>
-								</Grid>
-							</Grid>
-						</Paper>
-						<Paper className={classes.paperStats}>
-							<Grid container direction={'row'}>
-								<Grid item xs>
-									<Typography gutterBottom variant="h4" align={'left'} noWrap>
-										Classement Local : {localRank}
-									</Typography>
-								</Grid>
-							</Grid>
-						</Paper>
+				<Grid item xs={8}>
+					<Grid xs container direction={'column'}>
+						<Grid item xs>
+							<Paper className={classes.paperStats}>
+								<Typography gutterBottom variant="h5" align={'center'} noWrap>
+									Classement Mondial <br /> {globalRank}
+								</Typography>
+							</Paper>
+						</Grid>
+						<Grid item xs>
+							<Paper className={classes.paperStats}>
+								<Typography gutterBottom variant="h5" align={'center'} noWrap>
+									Classement Local <br /> {localRank}
+								</Typography>
+							</Paper>
+						</Grid>
 					</Grid>
 				</Grid>
 			</Grid>

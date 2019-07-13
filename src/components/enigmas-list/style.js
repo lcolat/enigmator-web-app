@@ -6,12 +6,12 @@ const style = theme => ({
 		width: '100%',
 		marginBottom: theme.spacing(2)
 	},
-	table: {
+	enigmas: {
 		minWidth: 500
 	},
-	tableWrapper: {
-		overflowX: 'auto'
-	},
+	// tableWrapper: {
+	// 	overflowX: 'auto'
+	// },
 	rightIcon: {
 		marginLeft: theme.spacing(1)
 	},

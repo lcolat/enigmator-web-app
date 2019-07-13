@@ -20,7 +20,7 @@ class Drawer extends Component {
 	state = {
 		menuItems: [
 			{
-				text: 'Home',
+				text: 'Accueil',
 				icon: <Home fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()

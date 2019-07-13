@@ -25,10 +25,10 @@ import 'react-notifications/lib/notifications.css'
 
 const styles = theme => ({
 	app: {
-		textAlign: 'center'
+		textAlign: 'center',
+		display: 'flex'
 	}
 })
-
 
 class App extends Component {
 	state = {
@@ -40,8 +40,31 @@ class App extends Component {
 		const valid = await this.state.userService.verifyToken()
 		this.setState({ valid: valid })
 	}
+	hasOverflow() {
+		const element = document.getElementById('body')
+		if (
+			element.scrollHeight > element.clientHeight ||
+			element.scrollWidth > element.clientWidth
+		) {
+			document
+				.getElementById('domain')
+				.setAttribute('style', `overflow-y :scroll;`)
+			document
+				.getElementById('body')
+				.setAttribute('style', `overflow-y :auto; overflow-x :hidden;`)
+		} else {
+			document
+				.getElementById('domain')
+				.setAttribute('style', `overflow :hidden;`)
+			document.getElementById('body').setAttribute('style', `overflow :auto`)
+		}
+	}
 	componentDidMount = async () => {
 		this.isValid()
+		this.hasOverflow()
+	}
+	componentDidUpdate() {
+		this.hasOverflow()
 	}
 	setValid = value => {
 		this.setState({ valid: value })
@@ -114,7 +137,7 @@ class App extends Component {
 							/>
 							<PrivateRoute
 								path={'/forums'}
-								component={<ListThreads/>}
+								component={<ListThreads />}
 								userService={userService}
 								enigmaService={enigmaService}
 								valid={valid}

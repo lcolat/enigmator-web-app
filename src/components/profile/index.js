@@ -64,30 +64,32 @@ class Profile extends React.Component {
 		const { classes } = this.props
 		return (
 			<Loader loaded={this.state.loaded}>
-				<Paper className={classes.userData}>
-					<UserData
+				<>
+					<Paper className={classes.userData}>
+						<UserData
+							{...this.props}
+							setUserDataLoaded={this.setUserDataLoaded}
+						/>
+					</Paper>
+					<Paper className={classes.ownEnigmas}>
+						<StatsTable />
+					</Paper>
+					<TableListOwnEnigmas
+						enigmaService={this.state.enigmaService}
 						{...this.props}
-						setUserDataLoaded={this.setUserDataLoaded}
+						setOwnEnigmasLoaded={this.setOwnEnigmasLoaded}
 					/>
-				</Paper>
-				<Paper className={classes.ownEnigmas}>
-					<StatsTable />
-				</Paper>
-				<TableListOwnEnigmas
-					enigmaService={this.state.enigmaService}
-					{...this.props}
-					setOwnEnigmasLoaded={this.setOwnEnigmasLoaded}
-				/>
-				<TableListEnigmasTried
-					enigmaService={this.state.enigmaService}
-					{...this.props}
-					setEnigmasTriedLoaded={this.setEnigmasTriedLoaded}
-				/>
-				<DoneEnigmasList
-					enigmaService={this.state.enigmaService}
-					{...this.props}
-					setEnigmasDoneLoaded={this.setEnigmasDoneLoaded}
-				/>
+					<TableListEnigmasTried
+						enigmaService={this.state.enigmaService}
+						{...this.props}
+						setEnigmasTriedLoaded={this.setEnigmasTriedLoaded}
+					/>
+					<DoneEnigmasList
+						enigmaService={this.state.enigmaService}
+						{...this.props}
+						setEnigmasDoneLoaded={this.setEnigmasDoneLoaded}
+					/>
+				</>
 			</Loader>
 		)
 	}

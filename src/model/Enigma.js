@@ -1,3 +1,9 @@
+import React from 'react'
+import Subject from '@material-ui/icons/Subject'
+import Photo from '@material-ui/icons/Photo'
+import MusicNote from '@material-ui/icons/MusicNote'
+import VideoLabel from '@material-ui/icons/VideoLabel'
+
 export const enigmasTypes = {
 	AUDIO: 'audio',
 	TEXT: 'text',
@@ -31,3 +37,18 @@ export const Difficulties = scoreReward => {
 }
 
 export const playMode = ['Solo', 'Multi', 'PvP']
+
+export const kind = value => {
+	switch (value) {
+		case 'text':
+			return <Subject fontSize={'small'} />
+		case 'audio':
+			return <MusicNote fontSize={'small'} />
+		case 'image':
+			return <Photo fontSize={'small'} />
+		case 'video':
+			return <VideoLabel fontSize={'small'} />
+		default:
+			break
+	}
+}

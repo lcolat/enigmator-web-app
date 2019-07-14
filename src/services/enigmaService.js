@@ -51,9 +51,14 @@ export default class EnigmaService {
 			}
 		}
 	}
-	getEnigmas = async () => {
+	getEnigmas = async last => {
+		let url = '/Enigmes?filter[include]=Enigme_User'
+		if (last === true) {
+			url =
+				'/Enigmes?filter[include]=Enigme_User&filter[order]=creationDate%20DESC&filter[limit]=5'
+		}
 		try {
-			const res = await api.get('/Enigmes?filter[include]=Enigme_User')
+			const res = await api.get(url)
 			let enigmas = res.data
 			let newEnigmas = new Array(res.data.length)
 			await Promise.all(

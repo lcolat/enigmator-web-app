@@ -37,6 +37,7 @@ const PrivateRoute = ({
 									{...rest}
 									{...props}
 									userService={userService}
+									enigmaService={enigmaService}
 								/>
 							</Grid>
 						</main>

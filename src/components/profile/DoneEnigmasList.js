@@ -119,7 +119,7 @@ class DoneEnigmasList extends React.Component {
 							{rows
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(row => (
-									<TableRow key={row.id} style={{ height: 36 }}>
+									<TableRow key={row.id} style={{ height: 48 }}>
 										<TableCell component="th" scope="row">
 											{row.name}
 										</TableCell>
@@ -137,7 +137,7 @@ class DoneEnigmasList extends React.Component {
 									</TableRow>
 								))}
 							{emptyRows > 0 && (
-								<TableRow style={{ height: 36 * emptyRows }}>
+								<TableRow style={{ height: 48 * emptyRows }}>
 									<TableCell colSpan={6} />
 								</TableRow>
 							)}

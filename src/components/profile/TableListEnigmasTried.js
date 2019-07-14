@@ -121,7 +121,7 @@ class TabUnresolvedEnigmas extends React.Component {
 								.map(row => (
 									<TableRow
 										key={row.id}
-										style={{ height: 36, cursor: 'pointer' }}
+										style={{ height: 48, cursor: 'pointer' }}
 										onClick={() => {
 											this.props.history.push({
 												pathname: '/enigma',
@@ -149,7 +149,7 @@ class TabUnresolvedEnigmas extends React.Component {
 									</TableRow>
 								))}
 							{emptyRows > 0 && (
-								<TableRow style={{ height: 36 * emptyRows }}>
+								<TableRow style={{ height: 48 * emptyRows }}>
 									<TableCell colSpan={6} />
 								</TableRow>
 							)}

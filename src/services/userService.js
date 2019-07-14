@@ -3,8 +3,7 @@ export default class UserService {
 	id = undefined
 	accessToken = undefined
 	isValidator = true
-	avatar = process.env.PUBLIC_URL +
-		'/img/default-profile-picture.jpg'
+	avatar = process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'
 	constructor() {
 		if (this.getAccessToken()) {
 			this.accessToken = this.getAccessToken()
@@ -97,6 +96,14 @@ export default class UserService {
 			return true
 		} catch (err) {
 			throw new Error(err)
+		}
+	}
+	getStats = async id => {
+		try {
+			const res = await api.get(`/UserEnigmators/${id}/GetStats`)
+			return res.data
+		} catch (err) {
+			return err
 		}
 	}
 

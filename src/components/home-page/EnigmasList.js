@@ -11,30 +11,8 @@ import LocalActivity from '@material-ui/icons/LocalActivity'
 import Tooltip from '@material-ui/core/Tooltip'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
-
-let counter = 0
-
-function createData(
-	nameEnigma,
-	creatorName,
-	kind,
-	difficulty,
-	dateOfCreation,
-	pointValue,
-	description
-) {
-	counter += 1
-	return {
-		id: counter,
-		name: nameEnigma,
-		author: creatorName,
-		type: kind,
-		level: difficulty,
-		date: dateOfCreation,
-		score: pointValue,
-		info: description
-	}
-}
+import { Difficulties, kind } from 'model/Enigma'
+import { FormatDate } from 'common/'
 
 const styles = theme => ({
 	root: {
@@ -65,51 +43,12 @@ class EnigmasList extends React.Component {
 	}
 
 	state = {
-		arrowRef: null,
-
-		rows: [
-			createData(
-				'SuperEnigma',
-				'DamSaulGoodMan',
-				'audio',
-				'easy',
-				'23:36, 10/05/19',
-				25,
-				'A free one :)'
-			),
-			createData(
-				'Who have 4-2-3 paws?',
-				'The Sphinx',
-				'text',
-				'hard',
-				'02:59, 02/05/19',
-				75,
-				'Œdipe solve it'
-			),
-			createData(
-				'What did the third Dwarf take?',
-				'Dora',
-				'text',
-				'medium',
-				'23:10, 10/05/19',
-				50,
-				'Brain f*ck*ng enigma'
-			),
-			createData(
-				'v<^<^>v<^^<><<>>v>',
-				'Saïtama',
-				'picture',
-				'demon',
-				'09:00, 11/11/17',
-				100,
-				'All the enigma is in the title ;), i hope you will follow the right way !'
-			)
-		].sort((a, b) => (a.date < b.date ? -1 : 1))
+		arrowRef: null
 	}
 
 	// const { classes } = props;
 	render() {
-		const { classes } = this.props
+		const { classes, enigmas } = this.props
 		const { rows } = this.state
 
 		return (
@@ -137,7 +76,7 @@ class EnigmasList extends React.Component {
 							</TableCell>
 						</TableHead>
 						<TableBody>
-							{rows.map(row => (
+							{enigmas.map(row => (
 								<Tooltip
 									TransitionComponent={Fade}
 									TransitionProps={{ timeout: 600 }}
@@ -156,7 +95,7 @@ class EnigmasList extends React.Component {
 									}}
 									title={
 										<React.Fragment>
-											<Typography color="inherit">{row.info}</Typography>
+											<Typography color="inherit">{row.question}</Typography>
 											<span
 												className={classes.arrow}
 												ref={this.handleArrowRef}
@@ -167,19 +106,29 @@ class EnigmasList extends React.Component {
 										key={row.id}
 										style={{ height: 36, cursor: 'pointer' }}
 										onClick={() => {
-											alert('Soon able to go to the enigma :)')
+											this.props.history.push({
+												pathname: '/enigma',
+												state: {
+													type: row.type,
+													enigma: row
+												}
+											})
 										}}
 										hover>
 										<TableCell component="th" scope="row">
 											{row.name}
 										</TableCell>
 										<TableCell align="left" scope="row">
-											{row.author}
+											{row.Enigme_User.username}
 										</TableCell>
-										<TableCell align="left">{row.type}</TableCell>
-										<TableCell align="left">{row.level}</TableCell>
-										<TableCell align="left">{row.date}</TableCell>
-										<TableCell align="left">{row.score}</TableCell>
+										<TableCell align="left">{kind(row.type)}</TableCell>
+										<TableCell align="left">
+											{Difficulties(row.scoreReward)}
+										</TableCell>
+										<TableCell align="left">
+											{FormatDate(row.creationDate)}
+										</TableCell>
+										<TableCell align="left">{row.scoreReward}</TableCell>
 									</TableRow>
 								</Tooltip>
 							))}

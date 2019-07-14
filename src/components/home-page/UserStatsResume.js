@@ -29,7 +29,7 @@ const styles = theme => ({
 })
 
 function UserStatsResume(props) {
-	const { classes, score, winNumber, globalRank, localRank } = props
+	const { classes, score, winNumber, globalRank, localRank, country } = props
 
 	return (
 		<Paper className={classes.root}>
@@ -104,7 +104,7 @@ function UserStatsResume(props) {
 						<Grid item xs>
 							<Paper className={classes.paperStats}>
 								<Typography gutterBottom variant="h5" align={'center'} noWrap>
-									Classement Local <br /> {localRank}
+									Classement en {country} <br /> {localRank}
 								</Typography>
 							</Paper>
 						</Grid>

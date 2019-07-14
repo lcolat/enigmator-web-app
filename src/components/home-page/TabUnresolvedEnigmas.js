@@ -16,6 +16,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import LastPage from '@material-ui/icons/LastPage'
 import TableHead from '@material-ui/core/TableHead'
+import { FormatDate } from 'common/'
 
 const actionsStyles = theme => ({
 	root: {
@@ -143,26 +144,7 @@ const theme = createMuiTheme({
 })
 
 class TabUnresolvedEnigmas extends React.Component {
-	// formatDate = "HH:mm DD-MM-YY";
 	state = {
-		rows: [
-			createData('SuperEnigma', '23:36 10/05/19'),
-			createData('GuessHerName', '10:01 10/04/19'),
-			createData('Who have 4-2-3 paws?', '02:59 02/05/19'),
-			createData('What did the third Dwarf take?', '23:10 10/05/19'),
-			createData('hihihi', '01:59 07/05/18'),
-			createData('Yolooo', '20:46 10/01/19'),
-			createData('Palindromatique', '23:59 31/12/18'),
-			createData('<><<><<>>>>', '09:00 11/11/17'),
-			createData('Cachochachat', '03:33 03/03/19'),
-			createData('Lollipop', '07:11 26/08/19'),
-			createData('<^>v><<<^^v', '04:26 10/05/19'),
-			createData('MIAM', '20:36 10/08/17'),
-			createData(
-				'Thanos has erase the half of this sentence...',
-				'00:01 01/02/17'
-			)
-		].sort((a, b) => (a.date < b.date ? -1 : 1)),
 		page: 0,
 		rowsPerPage: 4
 	}
@@ -176,10 +158,10 @@ class TabUnresolvedEnigmas extends React.Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, enigmas } = this.props
 		const { rows, rowsPerPage, page } = this.state
 		const emptyRows =
-			rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
+			rowsPerPage - Math.min(rowsPerPage, enigmas.length - page * rowsPerPage)
 
 		return (
 			<MuiThemeProvider theme={theme}>
@@ -188,19 +170,19 @@ class TabUnresolvedEnigmas extends React.Component {
 						<Table className={classes.table}>
 							<TableHead>
 								<TableCell align="left" style={{ height: 26 }}>
-									Enigmas Unresolved
+									Énigmes non résolues
 								</TableCell>
 								<TableCell align="right" style={{ height: 26 }}>
-									Date of Last Try
+									Date du dernier essai
 								</TableCell>
 							</TableHead>
 							<TableBody>
-								{rows
+								{enigmas
 									.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 									.map(row => (
 										<TableRow
 											key={row.id}
-											style={{ height: 36, cursor: 'pointer' }}
+											style={{ height: 48, cursor: 'pointer' }}
 											onClick={() => {
 												alert('Soon able to go to the enigma :)')
 											}}
@@ -208,11 +190,13 @@ class TabUnresolvedEnigmas extends React.Component {
 											<TableCell component="th" scope="row">
 												{row.name}
 											</TableCell>
-											<TableCell align="right">{row.date}</TableCell>
+											<TableCell align="right">
+												{FormatDate(row.lastTryDate)}
+											</TableCell>
 										</TableRow>
 									))}
 								{emptyRows > 0 && (
-									<TableRow style={{ height: 36 * emptyRows }}>
+									<TableRow style={{ height: 48 * emptyRows }}>
 										<TableCell colSpan={6} />
 									</TableRow>
 								)}
@@ -222,7 +206,7 @@ class TabUnresolvedEnigmas extends React.Component {
 									<TablePagination
 										rowsPerPageOptions={[]}
 										colSpan={3}
-										count={rows.length}
+										count={enigmas.length}
 										rowsPerPage={rowsPerPage}
 										page={page}
 										SelectProps={{

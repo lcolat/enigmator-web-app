@@ -127,7 +127,7 @@ class TableListOwnEnigmas extends React.Component {
 									</TableRow>
 								))}
 							{emptyRows > 0 && (
-								<TableRow style={{ height: 36 * emptyRows }}>
+								<TableRow style={{ height: 48 * emptyRows }}>
 									<TableCell colSpan={6} />
 								</TableRow>
 							)}

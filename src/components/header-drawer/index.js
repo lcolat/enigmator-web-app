@@ -9,6 +9,7 @@ export default function HeaderDrawer(props) {
 	const [open, setOpen] = React.useState(false)
 	function handleDrawer() {
 		if (open === false) {
+			// console.log(document.getElementById('domain').getAttribute('style'))
 			document.getElementById('domain').setAttribute(
 				'style',
 				`width :calc(100vw - 160px);

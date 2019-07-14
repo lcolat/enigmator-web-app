@@ -1,9 +1,9 @@
 import React from 'react'
 import { Grid, withStyles } from '@material-ui/core'
-
 import UserStatsResume from './UserStatsResume'
 import TabUnresolvedEnigmas from './TabUnresolvedEnigmas'
 import EnigmasList from './EnigmasList'
+import Loader from 'components/loader'
 import {
 	createNotification,
 	LEVEL_NOTIF as Level
@@ -24,7 +24,7 @@ const styles = theme => ({
 })
 
 class HomePage extends React.Component {
-	state = { loaded: false, userStats: {}, enigmas: [] }
+	state = { loaded: false, userStats: {}, enigmas: [], triedEnigmas: [] }
 	isLoaded() {
 		this.setState({ loaded: true })
 	}
@@ -35,6 +35,19 @@ class HomePage extends React.Component {
 				this.props.userService.id
 			)
 			this.setState({ userStats: res })
+		} catch (err) {
+			createNotification({
+				level: Level.ERROR,
+				message: err.message
+			})
+		}
+	}
+	fetchTriedEnigmas = async () => {
+		try {
+			const res = await this.props.enigmaService.getTriedEnigmas(
+				this.props.userService.id
+			)
+			this.setState({ triedEnigmas: res })
 		} catch (err) {
 			createNotification({
 				level: Level.ERROR,
@@ -53,14 +66,16 @@ class HomePage extends React.Component {
 			})
 		}
 	}
-	componentDidMount = () => {
-		this.fetchStats()
-		this.fetchEnigmas()
+	componentDidMount = async () => {
+		await this.fetchStats()
+		await this.fetchTriedEnigmas()
+		await this.fetchEnigmas()
+		this.setState({ loaded: true })
 	}
 	render() {
 		const { classes } = this.props
 		return (
-			<>
+			<Loader loaded={this.state.loaded}>
 				<Grid item container direction={'row'}>
 					<Grid item xs={12} sm={5} className={classes.userStats}>
 						<UserStatsResume
@@ -73,7 +88,10 @@ class HomePage extends React.Component {
 						/>
 					</Grid>
 					<Grid item xs className={classes.unresolvedEnigmas}>
-						<TabUnresolvedEnigmas />
+						<TabUnresolvedEnigmas
+							history={this.props.history}
+							enigmas={this.state.triedEnigmas}
+						/>
 					</Grid>
 				</Grid>
 				<Grid item xs={12} className={classes.enigmasList}>
@@ -82,7 +100,7 @@ class HomePage extends React.Component {
 						enigmas={this.state.enigmas}
 					/>
 				</Grid>
-			</>
+			</Loader>
 		)
 	}
 }

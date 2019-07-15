@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
 		marginRight: theme.spacing(1)
 	},
 	button: {
-		margin: theme.spacing(1)
+		margin: theme.spacing(1),
+		color: '#ae75e9'
 	},
 	rightIcon: {
 		marginLeft: theme.spacing(1)
@@ -44,11 +45,8 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-// const subject = {name: "Toto", creator: "DamSaulGoodMan", date: "18/08/1997, 00:00", avatar: "",
-// body: "C'est moi le body !!!!!!!!!!!!!!!!!!!!!!"};
-
 function HeaderThread(props) {
-	const { isEnigmaThread, subject } = props
+	const { subject } = props
 	const classes = useStyles()
 
 	return (
@@ -58,11 +56,7 @@ function HeaderThread(props) {
 					<Grid container direction={'row'} justify={'flex-start'}>
 						<Avatar
 							alt={subject.creator}
-							src={
-								subject.avatar !== ''
-									? subject.avatar
-									: process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'
-							}
+							src={props.avatar}
 							className={classes.avatar}
 						/>
 						<div>
@@ -73,35 +67,33 @@ function HeaderThread(props) {
 								alignItems={'flex-start'}
 								justify={'space-between'}>
 								<Typography className={classes.name} variant={'h4'}>
-									{subject.name}
+									{subject.title}
 								</Typography>
 								<div>
 									<Grid container direction={'row'} alignItems={'flex-end'}>
 										<Typography className={classes.creator} variant={'h5'}>
-											{subject.creator}
+											Créé par {props.username}
 										</Typography>
-										<Typography>{subject.date}</Typography>
+										<Typography>Le {subject.creationDate}</Typography>
 									</Grid>
 								</div>
 							</Grid>
 						</div>
 					</Grid>
 				</Grid>
-				{isEnigmaThread && (
-					<Grid item>
-						<Grid container alignItems={'flex-end'}>
-							<Grid item>
-								<Button
-									variant="contained"
-									color="primary"
-									className={classes.button}>
-									Enigma
-									<Input className={classes.rightIcon} />
-								</Button>
-							</Grid>
+				<Grid item>
+					<Grid container alignItems={'flex-end'}>
+						<Grid item>
+							<Button
+								variant="contained"
+								color="secondary"
+								className={classes.button}>
+								Enigme
+								<Input className={classes.rightIcon} />
+							</Button>
 						</Grid>
 					</Grid>
-				)}
+				</Grid>
 			</Grid>
 			<Grid
 				container
@@ -111,7 +103,7 @@ function HeaderThread(props) {
 				<div className={classes.rootPaper}>
 					<Paper className={classes.paper}>
 						<Grid container justify={'flex-start'}>
-							{subject.body}
+							{subject.description}
 						</Grid>
 					</Paper>
 				</div>

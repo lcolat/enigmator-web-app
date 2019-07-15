@@ -11,14 +11,6 @@ import AddComment from '@material-ui/icons/AddComment'
 import HeaderThread from './HeaderThread'
 import Post from './Post'
 
-const subject = {
-	name: 'Toto',
-	creator: 'DamSaulGoodMan',
-	date: '18/08/1997, 00:00',
-	avatar: '',
-	body: 'This is the description of the enigma'
-}
-
 const postsData = [
 	{
 		title: 'Hello Word',
@@ -40,41 +32,7 @@ const postsData = [
 				body: "Hello i'm a second comment"
 			}
 		]
-	} /*, {
-	title: "Yolo",
-	date: "19/08/1997, 10:01",
-	creator: {name: "DamSaulGoodMan", avatar: false},
-	like: {number: 10, byUser: false},
-	body: "Go there and you will...",
-	comment: [{
-		name: "DamSaulGoodMan",
-		date: "19/08/1997, 00:01",
-		like: {number: 10, byUser: false},
-		body: "Hello i'm a comment"
-	}, {
-		name: "DamSaulGoodMan",
-		date: "19/08/1997, 00:02",
-		like: {number: 10, byUser: true},
-		body: "Hello i'm a second comment"
-	}]
-}, {
-	title: "Swag",
-	date: "19/08/1997, 10:02",
-	creator: {name: "DamSaulGoodMan", avatar: false},
-	like: {number: 10, byUser: false},
-	body: "Go there and you will...",
-	comment: [{
-		name: "DamSaulGoodMan",
-		date: "19/08/1997, 00:01",
-		like: {number: 10, byUser: false},
-		body: "Hello i'm a comment"
-	}, {
-		name: "DamSaulGoodMan",
-		date: "19/08/1997, 00:02",
-		like: {number: 10, byUser: true},
-		body: "Hello i'm a second comment"
-	}]
-}*/
+	}
 ]
 
 const useStyles = makeStyles(theme => ({
@@ -103,8 +61,8 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-function Thread(props) {
-	const {} = props
+function Thread(rest) {
+	const topic = rest.location.state.topic
 	const classes = useStyles()
 	const [addNewPostView, setAddNewPostView] = React.useState(false)
 	const [labelNewPost, setLabelNewPost] = React.useState('ADD POST')
@@ -118,11 +76,15 @@ function Thread(props) {
 			setLabelNewPost('SEND')
 		}
 	}
-
 	return (
 		<div>
 			<div className={classes.rootHeader}>
-				<HeaderThread subject={subject} isEnigmaThread />
+				<HeaderThread
+					avatar={rest.userService.avatar}
+					username={rest.userService.username}
+					subject={topic}
+					isEnigmaThread
+				/>
 			</div>
 			{postsData.map(post => (
 				<div key={`${post.title}-${post.date}-${post.creator}`}>

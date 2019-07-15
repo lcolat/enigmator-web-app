@@ -50,26 +50,6 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-// const postData = {
-// 	title: "Hello Word",
-// 	date: "18/08/1997, 00:00",
-// 	creator: {name: "DamSaulGoodMan", avatar: false},
-// 	like: {number: 10, byUser: false},
-// 	body: "Where can i...",
-// 	comment: [{
-// 			name: "DamSaulGoodMan",
-// 			date: "18/08/1997, 00:01",
-// 			like: {number: 10, byUser: false},
-// 			body: "Hello i'm a comment"
-// 		}, {
-// 			name: "DamSaulGoodMan",
-// 			date: "18/08/1997, 00:02",
-// 			like: {number: 10, byUser: true},
-// 			body: "Hello i'm a second comment"
-// 		}
-// 	]
-// };
-
 function Post(props) {
 	const { postData } = props
 	const classes = useStyles()

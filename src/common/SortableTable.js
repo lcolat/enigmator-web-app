@@ -9,9 +9,7 @@ import {
 	TableSortLabel,
 	Table,
 	Tooltip,
-	FormControlLabel,
-	Paper,
-	Switch
+	Paper
 } from '@material-ui/core'
 
 function desc(a, b, orderBy) {
@@ -41,15 +39,6 @@ function getSorting(order, orderBy) {
 }
 
 const useStyles = makeStyles(theme => ({}))
-
-/// columnsHeader example :
-// const columnsHeader = [
-// 	{id: 'status', align: "center", disablePadding: true, label: ''},
-// 	{id: 'rank', align: "left", disablePadding: false, label: 'Rank'},
-// 	{id: 'pseudo', align: "left", disablePadding: false, label: 'Player'},
-// 	{id: 'victory', align: "left", disablePadding: false, label: 'Win'},
-// 	{id: 'score', align: "left", disablePadding: false, label: 'Score'},
-// ];
 
 function SortableTableHead(props) {
 	const { order, orderBy, onRequestSort, columnsHeader } = props
@@ -95,16 +84,11 @@ function SortableTable(props) {
 	const classes = useStyles()
 	const [order, setOrder] = React.useState('asc')
 	const [orderBy, setOrderBy] = React.useState('calories')
-	const [dense, setDense] = React.useState(false)
 
 	function handleRequestSort(event, property) {
 		const isDesc = orderBy === property && order === 'desc'
 		setOrder(isDesc ? 'asc' : 'desc')
 		setOrderBy(property)
-	}
-
-	function handleChangeDense(event) {
-		setDense(event.target.checked)
 	}
 
 	return (
@@ -114,7 +98,7 @@ function SortableTable(props) {
 					<Table
 						className={classes.table}
 						aria-labelledby="tableTitle"
-						size={dense ? 'small' : 'medium'}>
+						size={'small'}>
 						<SortableTableHead
 							order={order}
 							orderBy={orderBy}
@@ -124,18 +108,17 @@ function SortableTable(props) {
 						<TableBody>
 							{stableSort(rows, getSorting(order, orderBy)).map(
 								(row, index) => {
-									const labelId = `sortable-table-${index}`
-									return rowFormGenerator(row, labelId)
+									if (row.length === undefined) {
+										const labelId = `sortable-table-${index}`
+										return rowFormGenerator(row, labelId)
+									}
+									return undefined
 								}
 							)}
 						</TableBody>
 					</Table>
 				</div>
 			</Paper>
-			<FormControlLabel
-				control={<Switch checked={dense} onChange={handleChangeDense} />}
-				label="Dense padding"
-			/>
 		</div>
 	)
 }

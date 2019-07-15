@@ -1,9 +1,11 @@
 import api from 'services/api'
+import { SERVER_URL } from '../config'
 export default class UserService {
 	id = undefined
 	accessToken = undefined
 	isValidator = true
 	avatar = process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'
+	username = ''
 	constructor() {
 		if (this.getAccessToken()) {
 			this.accessToken = this.getAccessToken()
@@ -12,27 +14,47 @@ export default class UserService {
 		if (this.getIdFromStorage()) {
 			this.id = this.getIdFromStorage()
 		}
+		if (this.getAvatarInStorage()) {
+			this.avatar = this.getAvatarInStorage()
+		}
+		if (this.getUsernameInStorage()) {
+			this.username = this.getUsernameInStorage()
+		}
 	}
 
 	setAccessToken = accessToken => {
 		api.defaults.headers.common['Authorization'] = accessToken
-		localStorage.setItem('accessToken', accessToken)
-		//TODO: use more secure store
+		localStorage.setItem('enigmator.accessToken', accessToken)
+		// TODO use more secure store
 	}
 	setIdInStorage = id => {
-		localStorage.setItem('id', id)
+		localStorage.setItem('enigmator.id', id)
+	}
+	setAvatarInStorage = avatar => {
+		localStorage.setItem('enigmator.avatar', avatar)
+	}
+	setUsernameInStorage = username => {
+		localStorage.setItem('enigmator.username', username)
 	}
 	getAccessToken = () => {
-		return localStorage.getItem('accessToken')
+		return localStorage.getItem('enigmator.accessToken')
 	}
 	getIdFromStorage = () => {
-		return localStorage.getItem('id')
+		return localStorage.getItem('enigmator.id')
 	}
-	setUserData = (id, accessToken) => {
+	getAvatarInStorage = () => {
+		return localStorage.getItem('enigmator.avatar')
+	}
+	getUsernameInStorage = () => {
+		return localStorage.getItem('enigmator.username')
+	}
+	setUserData = (id, accessToken, avatar, username) => {
 		this.id = id
 		this.accessToken = accessToken
 		this.setIdInStorage(id)
 		this.setAccessToken(accessToken)
+		this.setAvatarInStorage(avatar)
+		this.setUsernameInStorage(username)
 	}
 	deleteUserData = () => {
 		this.deleteAccessToken()
@@ -51,7 +73,8 @@ export default class UserService {
 		}
 		try {
 			const res = await api.post('/UserEnigmators/login', req)
-			this.setUserData(res.data.userId, res.data.id)
+			await this.get(res.data.userId)
+			this.setUserData(res.data.userId, res.data.id, this.avatar, this.username)
 			return true
 		} catch (err) {
 			switch (err.response.status) {
@@ -77,6 +100,22 @@ export default class UserService {
 		}
 		try {
 			const res = await api.get(url)
+			let newUsers = []
+			if (res.data.length !== undefined) {
+				res.data.forEach(user => {
+					let newUser = user
+					newUser.profilePicture = `${SERVER_URL}/Containers/profile/download/${
+						user.profilePicture
+					}`
+					newUsers.push(newUser)
+				})
+				return newUsers
+			} else {
+				this.avatar = `${SERVER_URL}/Containers/profile/download/${
+					res.data.profilePicture
+				}`
+				this.username = res.data.username
+			}
 			return res.data
 		} catch (err) {
 			switch (err.response.status) {

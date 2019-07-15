@@ -76,9 +76,7 @@ function UserStatsResume(props) {
 							<img
 								className={classes.profilePicture}
 								alt="Profile"
-								src={
-									process.env.PUBLIC_URL + '/img/default-profile-picture.jpg'
-								}
+								src={props.avatar}
 							/>
 						</ButtonBase>
 					</Grid>

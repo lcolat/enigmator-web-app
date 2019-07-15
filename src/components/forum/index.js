@@ -1,94 +1,31 @@
 import React from 'react'
-import PropType from 'prop-types'
-
 import {
 	Grid,
 	makeStyles,
 	TableCell,
 	TableRow,
-	Button
+	Typography
 } from '@material-ui/core'
-import { SortableTable, TabChooser, LikeCount, SearchPick } from '../../common'
-import PlaylistAdd from '@material-ui/icons/PlaylistAdd'
-
+import { SortableTable, LikeCount, SearchPick, FormatDate } from '../../common'
 import Topic from '../../model/Topic'
-
 import ForumService from '../../services/forumService'
 
-
-const tabs = [{ text: 'Enigmas' }, { text: 'Other' }]
-
 const header = [
-	{ id: 'name', align: 'center', disablePadding: true, label: 'Name' },
-	{ id: 'creator', align: 'left', disablePadding: false, label: 'Creator' },
+	{ id: 'name', align: 'center', disablePadding: true, label: 'Nom' },
 	{
 		id: 'creation',
 		align: 'left',
 		disablePadding: false,
-		label: 'Date of Creation'
+		label: 'Date de création'
 	},
 	{
 		id: 'lastUpdate',
 		align: 'left',
 		disablePadding: false,
-		label: 'Date of Last Update'
+		label: 'Date de dernière édition'
 	},
 	{ id: 'like', align: 'left', disablePadding: false, label: 'Like' }
 ]
-
-let body = [[], []]
-
-const service = new ForumService
-
-// async function getTopics() {
-// 	const res = await service.getEnigmasTopics()
-// 	console.log("res" + res)
-// 	body = res.forEach( topic => {
-// 			const top = new Topic(topic.title,
-// 				topic.creationDate,
-// 				topic.creationDate,
-// 				"Description",
-// 				0,
-// 				false,
-// 				true,
-// 				topic.userEnigmatorsId)
-//
-// 			//(topic.is)
-// 		}
-// 	)
-// }
-//
-// getTopics()
-
-//var body =
-
-// const body = [
-// 	[
-// 		{
-// 			name: 'enigma0',
-// 			creator: 'DamSauGoodMan',
-// 			creation: '18/08/2018, 18h42',
-// 			lastUpdate: '18/08/2018, 18h42',
-// 			like: { number: '10', byUser: true }
-// 		}
-// 	],
-// 	[
-// 		{
-// 			name: 'other0',
-// 			creator: 'DamSauGoodMan',
-// 			creation: '18/08/2018, 18h42',
-// 			lastUpdate: '18/08/2018, 18h42',
-// 			like: { number: '10', byUser: false }
-// 		},
-// 		{
-// 			name: 'other1',
-// 			creator: 'DamSauGoodMan',
-// 			creation: '18/08/2018, 18h42',
-// 			lastUpdate: '18/08/2018, 18h42',
-// 			like: { number: '10', byUser: true }
-// 		}
-// 	]
-// ]
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -115,16 +52,44 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function ListThreads(props) {
-	const {} = props
 	const classes = useStyles()
-	const [numTab, setNumTab] = React.useState(0)
+	const service = new ForumService()
+	const [body, setBody] = React.useState([[], []])
 
-	function handleClick(event, enigma) {
-		alert('Must open ' + enigma.name)
+	const getTopics = async () => {
+		const res = await service.getTopics()
+		let newBody = []
+		if (res) {
+			res.forEach(topic => {
+				newBody.push(
+					new Topic(
+						topic.title,
+						FormatDate(topic.creationDate),
+						FormatDate(topic.lastEditDate),
+						topic.description,
+						topic.likes,
+						false,
+						true,
+						topic.isAutomatic,
+						topic.userEnigmatorsId
+					)
+				)
+			})
+		}
+		setBody(newBody)
 	}
 
-	function changeBody(num) {
-		setNumTab(num)
+	React.useEffect(() => {
+		getTopics()
+	}, [])
+
+	function handleClick(event, topic) {
+		props.history.push({
+			pathname: '/topic',
+			state: {
+				topic: topic
+			}
+		})
 	}
 
 	function formBody(bodyRow, labelId) {
@@ -133,19 +98,22 @@ function ListThreads(props) {
 				hover
 				onClick={event => handleClick(event, bodyRow)}
 				tabIndex={-1}
-				key={bodyRow.name + '-' + bodyRow.creator}>
-				<TableCell component="th"
-				           id={labelId}
-				           scope="row"
-				           padding="none"
-				           align="center">
-					{bodyRow.name}
+				key={bodyRow.title + '-' + bodyRow.ownerId}>
+				<TableCell
+					component="th"
+					id={labelId}
+					scope="row"
+					padding="none"
+					align="center">
+					{bodyRow.title}
 				</TableCell>
-				<TableCell align="left">{bodyRow.creator}</TableCell>
-				<TableCell align="left">{bodyRow.creation}</TableCell>
-				<TableCell align="left">{bodyRow.lastUpdate}</TableCell>
+				<TableCell align="left">{bodyRow.creationDate}</TableCell>
+				<TableCell align="left">{bodyRow.lastEditDate}</TableCell>
 				<TableCell align="left">
-					<LikeCount liked={bodyRow.like.byUser} likes={bodyRow.like.number} />
+					<LikeCount
+						liked={bodyRow.like && bodyRow.like.byUser}
+						likes={bodyRow.like && bodyRow.like.number}
+					/>
 				</TableCell>
 			</TableRow>
 		)
@@ -155,7 +123,7 @@ function ListThreads(props) {
 		<div className={classes.root}>
 			<Grid container direction={'row'} className={classes.rootMenu}>
 				<Grid item xs={8}>
-					<TabChooser tabList={tabs} eventChange={changeBody} />
+					<Typography>Topics</Typography>
 				</Grid>
 				<Grid item xs className={classes.search}>
 					<SearchPick
@@ -164,17 +132,6 @@ function ListThreads(props) {
 						})}
 					/>
 				</Grid>
-				{numTab === 1 && (
-					<Grid>
-						<Button
-							variant="contained"
-							color="primary"
-							className={classes.button}>
-							ADD
-							<PlaylistAdd className={classes.rightIcon} />
-						</Button>
-					</Grid>
-				)}
 			</Grid>
 			<SortableTable
 				columnsHeader={header}
@@ -184,7 +141,5 @@ function ListThreads(props) {
 		</div>
 	)
 }
-
-ListThreads.propTypes = {}
 
 export default ListThreads

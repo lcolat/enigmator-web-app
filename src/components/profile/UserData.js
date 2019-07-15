@@ -22,8 +22,6 @@ import {
 import userDataStyle from './userDataStyle'
 
 import PictureSelector from 'common/PictureSelector'
-import { AvatarPicture } from 'model/User'
-
 
 const statusList = [
 	{ value: 'Connected', label: 'Connected' },
@@ -31,7 +29,6 @@ const statusList = [
 	{ value: 'Absent', label: 'Absent' },
 	{ value: 'Do not Disturb', label: 'Do not Disturb' }
 ]
-
 
 class UserData extends React.Component {
 	constructor(props) {
@@ -52,12 +49,12 @@ class UserData extends React.Component {
 			picture: this.props.userService.avatar
 		}
 	}
-	
-	handleNewAvatar = (newAvatar) => {
+
+	handleNewAvatar = newAvatar => {
 		this.props.userService.avatar = newAvatar
-		this.setState({ picture: newAvatar })
+		this.setState({ picture: newAvatar, changes: true })
 	}
-	
+
 	handleClose = () => {
 		this.setState({ open: false })
 	}
@@ -89,7 +86,6 @@ class UserData extends React.Component {
 		}
 	}
 	validatePassword = () => {
-		console.log(this.state.password)
 		if (
 			this.state.newPassword !== this.state.newPasswordConfirmation &&
 			this.state.password !== ''
@@ -147,15 +143,17 @@ class UserData extends React.Component {
 						<Grid container direction={'row'} justify={'center'}>
 							<Grid item>
 								<PictureSelector setAvatar={this.handleNewAvatar}>
-									<ButtonBase variant="contained"
-									            color="secondary"
-									            component="span">
+									<ButtonBase
+										variant="contained"
+										color="secondary"
+										component="span">
 										<Avatar
 											alt="Profile picture"
-											src={this.state.picture ?
-												this.state.picture :
-												process.env.PUBLIC_URL +
-												'/img/default-profile-picture.jpg'
+											src={
+												this.state.picture
+													? this.state.picture
+													: process.env.PUBLIC_URL +
+													  '/img/default-profile-picture.jpg'
 											}
 											className={classes.avatar}
 										/>

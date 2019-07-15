@@ -112,6 +112,7 @@ function SortableTable(props) {
 										const labelId = `sortable-table-${index}`
 										return rowFormGenerator(row, labelId)
 									}
+									return undefined
 								}
 							)}
 						</TableBody>

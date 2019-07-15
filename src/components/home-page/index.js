@@ -80,6 +80,7 @@ class HomePage extends React.Component {
 					<Grid item xs={12} sm={5} className={classes.userStats}>
 						<UserStatsResume
 							score={this.state.userStats.score}
+							avatar={this.props.userService.avatar}
 							winNumber={'2'}
 							globalRank={this.state.userStats.globalRank}
 							localRank={this.state.userStats.localRank}

@@ -83,8 +83,13 @@ function ListThreads(props) {
 		getTopics()
 	}, [])
 
-	function handleClick(event, enigma) {
-		alert('Must open ' + enigma.title)
+	function handleClick(event, topic) {
+		props.history.push({
+			pathname: '/topic',
+			state: {
+				topic: topic
+			}
+		})
 	}
 
 	function formBody(bodyRow, labelId) {

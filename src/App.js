@@ -18,7 +18,8 @@ import UserService from 'services/userService'
 import EnigmaService from 'services/enigmaService'
 import Settings from 'components/settings-page'
 import EnigmasValidation from 'components/enigmas-validation'
-import ListThreads from './components/forum'
+import ListThreads from 'components/forum'
+import Thread from 'components/forum/thread'
 
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
@@ -42,21 +43,23 @@ class App extends Component {
 	}
 	hasOverflow() {
 		const element = document.getElementById('body')
-		if (
-			element.scrollHeight > element.clientHeight ||
-			element.scrollWidth > element.clientWidth
-		) {
-			document
-				.getElementById('domain')
-				.setAttribute('style', `overflow-y :scroll;`)
-			document
-				.getElementById('body')
-				.setAttribute('style', `overflow-y :auto; overflow-x :hidden;`)
-		} else {
-			document
-				.getElementById('domain')
-				.setAttribute('style', `overflow :hidden;`)
-			document.getElementById('body').setAttribute('style', `overflow :auto`)
+		if (document.getElementById('domain') !== null) {
+			if (
+				element.scrollHeight > element.clientHeight ||
+				element.scrollWidth > element.clientWidth
+			) {
+				document
+					.getElementById('domain')
+					.setAttribute('style', `overflow-y :scroll;`)
+				document
+					.getElementById('body')
+					.setAttribute('style', `overflow-y :auto; overflow-x :hidden;`)
+			} else {
+				document
+					.getElementById('domain')
+					.setAttribute('style', `overflow :hidden;`)
+				document.getElementById('body').setAttribute('style', `overflow :auto`)
+			}
 		}
 	}
 	componentDidMount = async () => {
@@ -138,6 +141,14 @@ class App extends Component {
 							<PrivateRoute
 								path={'/forums'}
 								component={<ListThreads />}
+								userService={userService}
+								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
+							/>
+							<PrivateRoute
+								path={'/topic'}
+								component={<Thread />}
 								userService={userService}
 								enigmaService={enigmaService}
 								valid={valid}

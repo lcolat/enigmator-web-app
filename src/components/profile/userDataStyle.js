@@ -20,7 +20,9 @@ const style = theme => ({
 	avatar: {
 		margin: 10,
 		width: 120,
-		height: 120
+		height: 120,
+		maxWidth: '100%',
+		maxHeight: '100%'
 	}
 })
 export default style

@@ -43,24 +43,24 @@ class App extends Component {
 	}
 	hasOverflow() {
 		const element = document.getElementById('body')
-		if (document.getElementById('domain') !== null) {
-			if (
-				element.scrollHeight > element.clientHeight ||
-				element.scrollWidth > element.clientWidth
-			) {
-				document
-					.getElementById('domain')
-					.setAttribute('style', `overflow-y :scroll;`)
-				document
-					.getElementById('body')
-					.setAttribute('style', `overflow-y :auto; overflow-x :hidden;`)
-			} else {
-				document
-					.getElementById('domain')
-					.setAttribute('style', `overflow :hidden;`)
-				document.getElementById('body').setAttribute('style', `overflow :auto`)
-			}
-		}
+		// if (document.getElementById('domain') !== null) {
+		// 	if (
+		// 		element.scrollHeight > element.clientHeight ||
+		// 		element.scrollWidth > element.clientWidth
+		// 	) {
+		// 		document
+		// 			.getElementById('domain')
+		// 			.setAttribute('style', `overflow-y :scroll;`)
+		// 		document
+		// 			.getElementById('body')
+		// 			.setAttribute('style', `overflow-y :auto; overflow-x :hidden;`)
+		// 	} else {
+		// 		document
+		// 			.getElementById('domain')
+		// 			.setAttribute('style', `overflow :hidden;`)
+		// 		document.getElementById('body').setAttribute('style', `overflow :auto`)
+		// 	}
+		// }
 	}
 	componentDidMount = async () => {
 		this.isValid()

@@ -16,7 +16,10 @@ const styles = theme => ({
 	paperStats: {
 		paddingTop: 4
 	},
-	profilePicture: {},
+	profilePicture: {
+		maxHeight: '100%',
+		maxWidth: '100%'
+	},
 	globalRankPicture: {
 		height: '183px'
 	},

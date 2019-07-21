@@ -74,17 +74,17 @@ class Drawer extends Component {
 					})
 				}
 			},
-			{
-				text: 'Rang',
-				icon: <Stars fontSize={'large'} />,
-				handleClick: () => {
-					this.props.isValid()
-					this.haveValidation()
-					this.props.history.push({
-						pathname: '/rank'
-					})
-				}
-			},
+			// {
+			// 	text: 'Rang',
+			// 	icon: <Stars fontSize={'large'} />,
+			// 	handleClick: () => {
+			// 		this.props.isValid()
+			// 		this.haveValidation()
+			// 		this.props.history.push({
+			// 			pathname: '/rank'
+			// 		})
+			// 	}
+			// },
 			{
 				text: 'Forum',
 				icon: <Forum fontSize={'large'} />,
@@ -106,18 +106,18 @@ class Drawer extends Component {
 						pathname: '/settings'
 					})
 				}
-			},
-			{
-				text: 'RGPD',
-				icon: <Info fontSize={'large'} />,
-				handleClick: () => {
-					this.props.isValid()
-					this.haveValidation()
-					this.props.history.push({
-						pathname: '/rgpd'
-					})
-				}
 			}
+			// {
+			// 	text: 'RGPD',
+			// 	icon: <Info fontSize={'large'} />,
+			// 	handleClick: () => {
+			// 		this.props.isValid()
+			// 		this.haveValidation()
+			// 		this.props.history.push({
+			// 			pathname: '/rgpd'
+			// 		})
+			// 	}
+			// }
 		]
 	}
 	containsValidation = menuItems => {

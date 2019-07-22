@@ -1,5 +1,6 @@
 export default class Topic {
 	constructor(
+		id,
 		title,
 		creationDate,
 		lastEditDate,
@@ -8,8 +9,10 @@ export default class Topic {
 		likedByUser,
 		posts,
 		isAutomaticTopic,
-		ownerId
+		ownerId,
+		creator
 	) {
+		this.id = id
 		this.title = title
 		this.creationDate = creationDate
 		this.lastEditDate = lastEditDate
@@ -18,5 +21,6 @@ export default class Topic {
 		this.posts = posts
 		this.isAutomaticTopic = isAutomaticTopic
 		this.ownerId = ownerId
+		this.creator = creator
 	}
 }

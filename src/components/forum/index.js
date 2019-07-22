@@ -29,8 +29,7 @@ const header = [
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		marginRight: theme.spacing(1),
-		marginLeft: theme.spacing(1)
+		margin: theme.spacing(3)
 	},
 	rootMenu: {
 		marginBottom: theme.spacing(1)
@@ -63,6 +62,7 @@ function ListThreads(props) {
 			res.forEach(topic => {
 				newBody.push(
 					new Topic(
+						topic.id,
 						topic.title,
 						FormatDate(topic.creationDate),
 						FormatDate(topic.lastEditDate),
@@ -71,7 +71,8 @@ function ListThreads(props) {
 						false,
 						true,
 						topic.isAutomatic,
-						topic.userEnigmatorsId
+						topic.userEnigmatorsId,
+						topic.creator
 					)
 				)
 			})
@@ -128,7 +129,10 @@ function ListThreads(props) {
 				<Grid item xs className={classes.search}>
 					<SearchPick
 						suggestions={body.map(thread => {
-							return { label: thread.name }
+							return { label: thread.title }
+						})}
+						topic={body.map(topic => {
+							return topic
 						})}
 					/>
 				</Grid>

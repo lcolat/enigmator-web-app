@@ -10,30 +10,8 @@ import {
 import AddComment from '@material-ui/icons/AddComment'
 import HeaderThread from './HeaderThread'
 import Post from './Post'
-
-const postsData = [
-	{
-		title: 'Hello Word',
-		date: '18/08/1997, 00:00',
-		creator: { name: 'DamSaulGoodMan', avatar: false },
-		like: { number: 10, byUser: false },
-		body: 'Where can i...',
-		comment: [
-			{
-				name: 'DamSaulGoodMan',
-				date: '18/08/1997, 00:01',
-				like: { number: 10, byUser: false },
-				body: "Hello i'm a comment"
-			},
-			{
-				name: 'DamSaulGoodMan',
-				date: '18/08/1997, 00:02',
-				like: { number: 10, byUser: true },
-				body: "Hello i'm a second comment"
-			}
-		]
-	}
-]
+import FormatDate from 'common/'
+import ForumService from 'services/forumService'
 
 const useStyles = makeStyles(theme => ({
 	rootHeader: {
@@ -65,28 +43,44 @@ function Thread(rest) {
 	const topic = rest.location.state.topic
 	const classes = useStyles()
 	const [addNewPostView, setAddNewPostView] = React.useState(false)
-	const [labelNewPost, setLabelNewPost] = React.useState('ADD POST')
-
-	function handleShowNewPostView() {
+	const [labelNewPost, setLabelNewPost] = React.useState('Ajouter un post')
+	const [posts, setPosts] = React.useState([])
+	const [newPostContent, setNewPostContent] = React.useState('')
+	const service = new ForumService()
+	const getPosts = async () => {
+		const res = await service.getPosts(topic.id)
+		if (res.length !== undefined) {
+			setPosts(res)
+		}
+	}
+	const addPost = async newPost => {
+		await service.addPost(topic.id, newPost)
+		getPosts()
+	}
+	React.useEffect(() => {
+		getPosts()
+	}, [])
+	async function handleShowNewPostView() {
 		if (addNewPostView) {
+			await addPost(newPostContent)
 			setAddNewPostView(false)
-			setLabelNewPost('ADD POST')
+			setLabelNewPost('Ajouter un post')
 		} else {
 			setAddNewPostView(true)
-			setLabelNewPost('SEND')
+			setLabelNewPost('Envoyer')
 		}
 	}
 	return (
 		<div>
 			<div className={classes.rootHeader}>
 				<HeaderThread
-					avatar={rest.userService.avatar}
-					username={rest.userService.username}
+					avatar={topic.creator.avatar}
+					username={topic.creator.username}
 					subject={topic}
 					isEnigmaThread
 				/>
 			</div>
-			{postsData.map(post => (
+			{posts.map(post => (
 				<div key={`${post.title}-${post.date}-${post.creator}`}>
 					<Divider variant={'middle'} />
 					<Divider variant={'middle'} />
@@ -101,19 +95,18 @@ function Thread(rest) {
 						alignItems={'stretch'}
 						justify={'flex-start'}>
 						<TextField
-							id="title-post"
-							label="Name"
-							className={classes.textField}
-							margin="normal"
-						/>
-						<TextField
 							id="body-post"
-							label="Post Body"
+							label="Post"
 							className={classes.textFieldNewPostBody}
 							multiline
 							rows="4"
 							margin="normal"
 							variant="outlined"
+							value={newPostContent}
+							onChange={event => {
+								const value = event.target.value
+								setNewPostContent(value)
+							}}
 							InputLabelProps={{
 								shrink: true
 							}}

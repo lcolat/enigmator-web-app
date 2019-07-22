@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function HeaderThread(props) {
-	const { subject } = props
+	const { subject, avatar } = props
 	const classes = useStyles()
 
 	return (
@@ -55,8 +55,8 @@ function HeaderThread(props) {
 				<Grid item>
 					<Grid container direction={'row'} justify={'flex-start'}>
 						<Avatar
-							alt={subject.creator}
-							src={props.avatar}
+							alt={'creator profile picture'}
+							src={avatar}
 							className={classes.avatar}
 						/>
 						<div>

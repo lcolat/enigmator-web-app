@@ -96,17 +96,17 @@ class Drawer extends Component {
 					})
 				}
 			},
-			{
-				text: 'Réglages',
-				icon: <Tune fontSize={'large'} />,
-				handleClick: () => {
-					this.props.isValid()
-					this.haveValidation()
-					this.props.history.push({
-						pathname: '/settings'
-					})
-				}
-			},
+			// {
+			// 	text: 'Réglages',
+			// 	icon: <Tune fontSize={'large'} />,
+			// 	handleClick: () => {
+			// 		this.props.isValid()
+			// 		this.haveValidation()
+			// 		this.props.history.push({
+			// 			pathname: '/settings'
+			// 		})
+			// 	}
+			// },
 			{
 				text: 'RGPD',
 				icon: <Info fontSize={'large'} />,

@@ -106,18 +106,18 @@ class Drawer extends Component {
 						pathname: '/settings'
 					})
 				}
+			},
+			{
+				text: 'RGPD',
+				icon: <Info fontSize={'large'} />,
+				handleClick: () => {
+					this.props.isValid()
+					this.haveValidation()
+					this.props.history.push({
+						pathname: '/privacy-policy'
+					})
+				}
 			}
-			// {
-			// 	text: 'RGPD',
-			// 	icon: <Info fontSize={'large'} />,
-			// 	handleClick: () => {
-			// 		this.props.isValid()
-			// 		this.haveValidation()
-			// 		this.props.history.push({
-			// 			pathname: '/rgpd'
-			// 		})
-			// 	}
-			// }
 		]
 	}
 	containsValidation = menuItems => {

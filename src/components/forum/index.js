@@ -23,8 +23,7 @@ const header = [
 		align: 'left',
 		disablePadding: false,
 		label: 'Date de dernière édition'
-	},
-	{ id: 'like', align: 'left', disablePadding: false, label: 'Like' }
+	}
 ]
 
 const useStyles = makeStyles(theme => ({
@@ -110,31 +109,19 @@ function ListThreads(props) {
 				</TableCell>
 				<TableCell align="left">{bodyRow.creationDate}</TableCell>
 				<TableCell align="left">{bodyRow.lastEditDate}</TableCell>
-				<TableCell align="left">
-					<LikeCount
-						liked={bodyRow.like && bodyRow.like.byUser}
-						likes={bodyRow.like && bodyRow.like.number}
-					/>
-				</TableCell>
 			</TableRow>
 		)
 	}
 
 	return (
 		<div className={classes.root}>
-			<Grid container direction={'row'} className={classes.rootMenu}>
-				<Grid item xs={8}>
-					<Typography>Topics</Typography>
-				</Grid>
-				<Grid item xs className={classes.search}>
-					<SearchPick
-						suggestions={body.map(thread => {
-							return { label: thread.title }
-						})}
-						topic={body.map(topic => {
-							return topic
-						})}
-					/>
+			<Grid
+				container
+				direction={'row'}
+				justify="center"
+				className={classes.rootMenu}>
+				<Grid item>
+					<Typography variant="h3">Topics</Typography>
 				</Grid>
 			</Grid>
 			<SortableTable

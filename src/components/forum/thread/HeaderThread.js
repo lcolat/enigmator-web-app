@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 		marginRight: theme.spacing(1)
 	},
 	button: {
-		margin: theme.spacing(1),
+		margin: theme.spacing(3),
 		color: '#ae75e9'
 	},
 	rightIcon: {
@@ -50,7 +50,7 @@ function HeaderThread(props) {
 	const classes = useStyles()
 
 	return (
-		<div>
+		<>
 			<Grid container direction={'row'} justify={'space-between'}>
 				<Grid item>
 					<Grid container direction={'row'} justify={'flex-start'}>
@@ -108,7 +108,7 @@ function HeaderThread(props) {
 					</Paper>
 				</div>
 			</Grid>
-		</div>
+		</>
 	)
 }
 

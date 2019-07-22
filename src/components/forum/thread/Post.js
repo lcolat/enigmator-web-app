@@ -13,12 +13,11 @@ import {
 } from '@material-ui/core'
 import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck'
 import FormatDate from 'common/FormatDate'
-import LikeCount from 'common/LikeCount'
 
 const useStyles = makeStyles(theme => ({
 	root: {
 		padding: theme.spacing(1),
-		margin: theme.spacing(1)
+		margin: theme.spacing(3)
 	},
 	gridRootPostBody: {
 		width: '100%',
@@ -51,16 +50,7 @@ const useStyles = makeStyles(theme => ({
 function Post(props) {
 	const { postData } = props
 	const classes = useStyles()
-	const [commentUp, setCommentUp] = React.useState(false)
 	const [addComment, setAddComment] = React.useState(false)
-
-	function changeArrow() {
-		setCommentUp(!commentUp)
-	}
-
-	function onAddComment() {
-		setAddComment(true)
-	}
 
 	function onSendComment() {
 		setAddComment(false)

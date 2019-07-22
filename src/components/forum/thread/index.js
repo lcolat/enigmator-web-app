@@ -10,12 +10,11 @@ import {
 import AddComment from '@material-ui/icons/AddComment'
 import HeaderThread from './HeaderThread'
 import Post from './Post'
-import FormatDate from 'common/'
 import ForumService from 'services/forumService'
 
 const useStyles = makeStyles(theme => ({
 	rootHeader: {
-		margin: theme.spacing(1)
+		margin: theme.spacing(3)
 	},
 	button: {
 		margin: theme.spacing(1)

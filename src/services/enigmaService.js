@@ -251,4 +251,31 @@ export default class EnigmaService {
 	deleteLastWords = enigmaID => {
 		sessionStorage.removeItem(`enigmator.enigma.${enigmaID}.words`)
 	}
+	getEnigmaByQuestion = async question => {
+		try {
+			const res = await api.get(
+				`/Enigmes?filter[include]=Enigme_User&filter[where][question]=${question}`
+			)
+			let enigmas = res.data
+			let newEnigmas = new Array(res.data.length)
+			await Promise.all(
+				enigmas.map(async (enigma, index) => {
+					const res = await api.get(
+						`/Media?filter[where][enigmeID]=${enigma.id}`
+					)
+					if (res.data.length === 0) {
+						newEnigmas[index] = { ...enigmas[index], ...{ type: 'text' } }
+					} else {
+						newEnigmas[index] = {
+							...enigmas[index],
+							...{ type: res.data[0].type }
+						}
+					}
+				})
+			)
+			return newEnigmas
+		} catch (err) {
+			return err
+		}
+	}
 }

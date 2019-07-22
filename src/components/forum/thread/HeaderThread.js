@@ -9,6 +9,7 @@ import {
 	Paper
 } from '@material-ui/core'
 import Input from '@material-ui/icons/Input'
+import EnigmaService from 'services/enigmaService'
 
 const useStyles = makeStyles(theme => ({
 	avatar: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 		marginRight: theme.spacing(1)
 	},
 	button: {
-		margin: theme.spacing(1),
+		margin: theme.spacing(3),
 		color: '#ae75e9'
 	},
 	rightIcon: {
@@ -46,17 +47,37 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function HeaderThread(props) {
-	const { subject } = props
+	const { subject, avatar, history } = props
 	const classes = useStyles()
-
+	const enigmaService = new EnigmaService()
+	const [enigma, setEnigma] = React.useState()
+	const getEnigma = async () => {
+		const res = await enigmaService.getEnigmaByQuestion(subject.description)
+		if (res.length !== undefined) {
+			setEnigma(res[0])
+		}
+	}
+	React.useEffect(() => {
+		getEnigma()
+	}, [])
+	function handleLaunchEnigma() {
+		console.log('enigma', enigma)
+		history.push({
+			pathname: '/enigma',
+			state: {
+				type: enigma.type,
+				enigma: enigma
+			}
+		})
+	}
 	return (
-		<div>
+		<>
 			<Grid container direction={'row'} justify={'space-between'}>
 				<Grid item>
 					<Grid container direction={'row'} justify={'flex-start'}>
 						<Avatar
-							alt={subject.creator}
-							src={props.avatar}
+							alt={'creator profile picture'}
+							src={avatar}
 							className={classes.avatar}
 						/>
 						<div>
@@ -87,7 +108,8 @@ function HeaderThread(props) {
 							<Button
 								variant="contained"
 								color="secondary"
-								className={classes.button}>
+								className={classes.button}
+								onClick={handleLaunchEnigma}>
 								Enigme
 								<Input className={classes.rightIcon} />
 							</Button>
@@ -108,7 +130,7 @@ function HeaderThread(props) {
 					</Paper>
 				</div>
 			</Grid>
-		</div>
+		</>
 	)
 }
 

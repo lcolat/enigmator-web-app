@@ -9,6 +9,7 @@ import {
 	Paper
 } from '@material-ui/core'
 import Input from '@material-ui/icons/Input'
+import EnigmaService from 'services/enigmaService'
 
 const useStyles = makeStyles(theme => ({
 	avatar: {
@@ -46,9 +47,29 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function HeaderThread(props) {
-	const { subject, avatar } = props
+	const { subject, avatar, history } = props
 	const classes = useStyles()
-
+	const enigmaService = new EnigmaService()
+	const [enigma, setEnigma] = React.useState()
+	const getEnigma = async () => {
+		const res = await enigmaService.getEnigmaByQuestion(subject.description)
+		if (res.length !== undefined) {
+			setEnigma(res[0])
+		}
+	}
+	React.useEffect(() => {
+		getEnigma()
+	}, [])
+	function handleLaunchEnigma() {
+		console.log('enigma', enigma)
+		history.push({
+			pathname: '/enigma',
+			state: {
+				type: enigma.type,
+				enigma: enigma
+			}
+		})
+	}
 	return (
 		<>
 			<Grid container direction={'row'} justify={'space-between'}>
@@ -87,7 +108,8 @@ function HeaderThread(props) {
 							<Button
 								variant="contained"
 								color="secondary"
-								className={classes.button}>
+								className={classes.button}
+								onClick={handleLaunchEnigma}>
 								Enigme
 								<Input className={classes.rightIcon} />
 							</Button>

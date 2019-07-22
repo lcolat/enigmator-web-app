@@ -40,6 +40,7 @@ const useStyles = makeStyles(theme => ({
 
 function Thread(rest) {
 	const topic = rest.location.state.topic
+	const history = rest.history
 	const classes = useStyles()
 	const [addNewPostView, setAddNewPostView] = React.useState(false)
 	const [labelNewPost, setLabelNewPost] = React.useState('Ajouter un post')
@@ -77,6 +78,7 @@ function Thread(rest) {
 					username={topic.creator.username}
 					subject={topic}
 					isEnigmaThread
+					history={history}
 				/>
 			</div>
 			{posts.map(post => (

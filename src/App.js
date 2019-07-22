@@ -8,7 +8,7 @@ import ForgottentPassword from 'components/login/forgottenPassword'
 import LogUp from 'components/login/logup'
 import theme from './theme'
 import PrivateRoute from './privateRoute'
-
+import PrivacyPolicy from 'components/privacy-policy'
 import HomePage from 'components/home-page'
 import FriendsView from 'components/friend-page'
 import CreateEnigma from 'components/create-enigma'
@@ -42,7 +42,7 @@ class App extends Component {
 		this.setState({ valid: valid })
 	}
 	hasOverflow() {
-		const element = document.getElementById('body')
+		// const element = document.getElementById('body')
 		// if (document.getElementById('domain') !== null) {
 		// 	if (
 		// 		element.scrollHeight > element.clientHeight ||
@@ -165,6 +165,14 @@ class App extends Component {
 							<PrivateRoute
 								path="/validation"
 								component={<EnigmasValidation />}
+								userService={userService}
+								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
+							/>
+							<PrivateRoute
+								path="/privacy-policy"
+								component={<PrivacyPolicy />}
 								userService={userService}
 								enigmaService={enigmaService}
 								valid={valid}

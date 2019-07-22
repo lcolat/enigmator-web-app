@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 import style from './style'
 import Loader from 'components/loader'
+import PrivacyPolicy from './PrivacyPolicy'
 import {
 	createNotification,
 	LEVEL_NOTIF as Level
@@ -36,11 +37,6 @@ class LogUp extends Component {
 			error: false,
 			helperText: ''
 		},
-		birthdate: {
-			value: '',
-			error: false,
-			helperText: ''
-		},
 		password: {
 			value: '',
 			error: false,
@@ -51,10 +47,23 @@ class LogUp extends Component {
 			error: false,
 			helperText: ''
 		},
-		loaded: true
+		loaded: true,
+		open: false
+	}
+	handleClickDialogueOpen = () => {
+		if (this.validateForm() === true) {
+			this.setState({ open: true })
+		}
+	}
+
+	handleDialogueClose = () => {
+		this.setState({ open: false })
+	}
+	setOpen = value => {
+		this.setState({ open: value })
 	}
 	validateForm = () => {
-		let isValid = true
+		var isValid = true
 		Object.keys(this.state).forEach(key => {
 			if (this.state[key].value === '') {
 				let newValue = this.state[key]
@@ -62,8 +71,6 @@ class LogUp extends Component {
 				newValue.helperText = 'Veuillez remplir ce champ'
 				this.setState({ [key]: newValue })
 				isValid = false
-			} else {
-				isValid = true
 			}
 		})
 		return isValid && this.validatePassword()
@@ -84,31 +91,29 @@ class LogUp extends Component {
 		return true
 	}
 	handleClick = async () => {
-		if (this.validateForm()) {
-			this.setState({ loaded: false })
-			const res = await this.props.userService.logup(
-				this.state.username.value,
-				this.state.firstname.value,
-				this.state.lastname.value,
-				this.state.country,
-				this.state.email.value,
-				this.state.password.value
-			)
-			this.setState({ loaded: true })
-			if (res === true) {
-				createNotification({
-					level: Level.SUCCESS,
-					message: 'Votre compte a bien été créé'
-				})
-				this.props.history.push({
-					pathname: '/login'
-				})
-			} else {
-				createNotification({
-					level: Level.ERROR,
-					message: res.message || res.data.message
-				})
-			}
+		this.setState({ loaded: false })
+		const res = await this.props.userService.logup(
+			this.state.username.value,
+			this.state.firstname.value,
+			this.state.lastname.value,
+			this.state.country,
+			this.state.email.value,
+			this.state.password.value
+		)
+		this.setState({ loaded: true })
+		if (res === true) {
+			createNotification({
+				level: Level.SUCCESS,
+				message: 'Votre compte a bien été créé'
+			})
+			this.props.history.push({
+				pathname: '/login'
+			})
+		} else {
+			createNotification({
+				level: Level.ERROR,
+				message: res.message || res.data.message
+			})
 		}
 	}
 
@@ -250,12 +255,19 @@ class LogUp extends Component {
 								variant="contained"
 								color="secondary"
 								type="button"
-								onClick={this.handleClick}>
+								onClick={this.handleClickDialogueOpen}>
 								Enregistrer
 							</Button>
 						</Grid>
 					</Grid>
 				</Grid>
+				<PrivacyPolicy
+					open={this.state.open}
+					onOpen={this.handleClickDialogueOpen}
+					onClose={this.handleDialogueClose}
+					setOpen={this.setOpen}
+					validate={this.handleClick}
+				/>
 			</Loader>
 		)
 	}

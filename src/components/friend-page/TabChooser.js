@@ -2,23 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles'
-import { Tab, Tabs, Grid } from '@material-ui/core'
-import AllInclusive from '@material-ui/icons/AllInclusive'
-import Rowing from '@material-ui/icons/Rowing'
-import SupervisedUserCircle from '@material-ui/icons/SupervisedUserCircle'
-import Whatshot from '@material-ui/icons/Whatshot'
-import { SearchPick } from '../../common'
+import { Tab, Typography, Grid } from '@material-ui/core'
 import AddFriendButton from './AddFriendButton'
 
 const styles = theme => ({
 	root: {
-		//flexGrow: 3,
+		margin: theme.spacing(3),
 		maxWidth: '100%'
 	},
 	rootButton: {
-		marginTop: theme.spacing(2),
-		marginRight: 0
-		//flexGrow: 1,
+		// marginTop: theme.spacing(2)
 	}
 })
 
@@ -38,9 +31,12 @@ class TabChooser extends React.Component {
 		const { classes, friendList, handleChange } = this.props
 
 		return (
-			<Paper square className={classes.root}>
-				<Grid container direction={'row'}>
-					<Tabs
+			<Paper className={classes.root}>
+				<Grid container direction={'row'} justify="center" alignItems="center">
+					<Grid item>
+						<Typography variant="h4">Amis</Typography>
+					</Grid>
+					{/* <Tabs
 						value={this.state.value}
 						onChange={handleChange}
 						variant="fullWidth"
@@ -51,10 +47,17 @@ class TabChooser extends React.Component {
 						<Tab icon={<SupervisedUserCircle />} label={tabType[2]} />
 						<Tab icon={<Whatshot />} label={tabType[3]} />
 					</Tabs>
-					<SearchPick suggestions={friendList} />
-					<div className={classes.rootButton}>
-						<AddFriendButton />
-					</div>
+					<SearchPick suggestions={friendList} /> */}
+					<Grid item>
+						<Grid
+							container
+							alignItems={'flex-end'}
+							className={classes.rootButton}>
+							<Grid item>
+								<AddFriendButton userService={this.props.userService} />
+							</Grid>
+						</Grid>
+					</Grid>
 				</Grid>
 			</Paper>
 		)

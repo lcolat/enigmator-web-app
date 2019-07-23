@@ -46,13 +46,18 @@ class UserData extends React.Component {
 			newPassword: '',
 			newPasswordConfirmation: '',
 			changes: false,
-			picture: this.props.userService.avatar
+			picture: this.props.userService.avatar,
+			tempPicture: this.props.userService.avatar
 		}
 	}
 
 	handleNewAvatar = newAvatar => {
-		this.props.userService.avatar = newAvatar
-		this.setState({ picture: newAvatar, changes: true })
+		this.props.userService.avatar = window.URL.createObjectURL(newAvatar)
+		this.setState({
+			picture: newAvatar,
+			changes: true,
+			tempPicture: window.URL.createObjectURL(newAvatar)
+		})
 	}
 
 	handleClose = () => {
@@ -95,14 +100,17 @@ class UserData extends React.Component {
 		return true
 	}
 	prepareData = () => {
-		return {
+		let data = {
 			username: this.state.username,
 			firstName: this.state.firstName,
 			lastName: this.state.lastName,
 			country: this.state.country,
-			email: this.state.email,
-			password: this.state.newPassword
+			email: this.state.email
 		}
+		if (this.state.newPassword !== '') {
+			data.password = this.state.newPassword
+		}
+		return data
 	}
 	updateProfile = async () => {
 		this.setState({ open: false })
@@ -111,7 +119,7 @@ class UserData extends React.Component {
 				this.props.userService.id,
 				this.prepareData()
 			)
-			// await this.props.userService.addProfilePicture(this.state.picture)
+			await this.props.userService.addProfilePicture(this.state.picture)
 			if (res === true) {
 				this.setState({ changes: false })
 				createNotification({
@@ -121,7 +129,7 @@ class UserData extends React.Component {
 			} else {
 				createNotification({
 					level: Level.ERROR,
-					message: res
+					message: res.message || res.data.message
 				})
 			}
 		} else {
@@ -187,8 +195,8 @@ class UserData extends React.Component {
 										<Avatar
 											alt="Profile picture"
 											src={
-												this.state.picture
-													? this.state.picture
+												this.state.tempPicture
+													? this.state.tempPicture
 													: process.env.PUBLIC_URL +
 													  '/img/default-profile-picture.jpg'
 											}

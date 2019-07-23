@@ -2,7 +2,7 @@ import React from 'react'
 import Subject from '@material-ui/icons/Subject'
 import Photo from '@material-ui/icons/Photo'
 import MusicNote from '@material-ui/icons/MusicNote'
-import VideoLabel from '@material-ui/icons/VideoLabel'
+import PlayArrow from '@material-ui/icons/PlayArrow'
 
 export const enigmasTypes = {
 	AUDIO: 'audio',
@@ -47,7 +47,7 @@ export const kind = value => {
 		case 'image':
 			return <Photo fontSize={'small'} />
 		case 'video':
-			return <VideoLabel fontSize={'small'} />
+			return <PlayArrow fontSize={'small'} />
 		default:
 			break
 	}

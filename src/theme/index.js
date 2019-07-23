@@ -11,6 +11,9 @@ export default createMuiTheme({
 		},
 		secondary: {
 			main: '#ffffff'
+		},
+		error: {
+			main: '#c62828'
 		}
 	}
 })

@@ -23,6 +23,11 @@ const style = theme => ({
 		height: 120,
 		maxWidth: '100%',
 		maxHeight: '100%'
+	},
+	buttonDel: {
+		marginTop: theme.spacing(1),
+		color: 'white',
+		background: '#c62828'
 	}
 })
 export default style

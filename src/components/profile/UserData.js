@@ -46,13 +46,18 @@ class UserData extends React.Component {
 			newPassword: '',
 			newPasswordConfirmation: '',
 			changes: false,
-			picture: this.props.userService.avatar
+			picture: this.props.userService.avatar,
+			tempPicture: this.props.userService.avatar
 		}
 	}
 
 	handleNewAvatar = newAvatar => {
-		this.props.userService.avatar = newAvatar
-		this.setState({ picture: newAvatar, changes: true })
+		this.props.userService.avatar = window.URL.createObjectURL(newAvatar)
+		this.setState({
+			picture: newAvatar,
+			changes: true,
+			tempPicture: window.URL.createObjectURL(newAvatar)
+		})
 	}
 
 	handleClose = () => {
@@ -95,14 +100,17 @@ class UserData extends React.Component {
 		return true
 	}
 	prepareData = () => {
-		return {
+		let data = {
 			username: this.state.username,
 			firstName: this.state.firstName,
 			lastName: this.state.lastName,
 			country: this.state.country,
 			email: this.state.email
-			// password: this.state.newPassword
 		}
+		if (this.state.newPassword !== '') {
+			data.password = this.state.newPassword
+		}
+		return data
 	}
 	updateProfile = async () => {
 		this.setState({ open: false })
@@ -111,6 +119,7 @@ class UserData extends React.Component {
 				this.props.userService.id,
 				this.prepareData()
 			)
+			await this.props.userService.addProfilePicture(this.state.picture)
 			if (res === true) {
 				this.setState({ changes: false })
 				createNotification({
@@ -120,7 +129,7 @@ class UserData extends React.Component {
 			} else {
 				createNotification({
 					level: Level.ERROR,
-					message: res
+					message: res.message || res.data.message
 				})
 			}
 		} else {
@@ -134,13 +143,49 @@ class UserData extends React.Component {
 		this.setState({ [prop]: event.target.value, changes: true })
 	}
 
+	getData = async () => {
+		const res = await this.props.userService.getData()
+		if (res === true) {
+			createNotification({
+				level: Level.SUCCESS,
+				message: 'Vous recevrez par email vos données'
+			})
+		} else {
+			createNotification({
+				level: Level.ERROR,
+				message: res.message || res.data.message
+			})
+		}
+	}
+
+	deleteAccount = async () => {
+		const res = await this.props.userService.deleteAccount()
+		if (res === true) {
+			this.props.history.push({
+				pathname: '/login'
+			})
+			createNotification({
+				level: Level.SUCCESS,
+				message: 'Votre compte a bien été supprimé'
+			})
+		} else {
+			createNotification({
+				level: Level.ERROR,
+				message: res.message || res.data.message
+			})
+		}
+	}
 	render() {
 		const { classes } = this.props
 		return (
 			<>
 				<Grid container direction={'column'} justify={'center'}>
 					<Grid item>
-						<Grid container direction={'row'} justify={'center'}>
+						<Grid
+							container
+							direction={'row'}
+							justify={'center'}
+							alignItems="center">
 							<Grid item>
 								<PictureSelector setAvatar={this.handleNewAvatar}>
 									<ButtonBase
@@ -150,8 +195,8 @@ class UserData extends React.Component {
 										<Avatar
 											alt="Profile picture"
 											src={
-												this.state.picture
-													? this.state.picture
+												this.state.tempPicture
+													? this.state.tempPicture
 													: process.env.PUBLIC_URL +
 													  '/img/default-profile-picture.jpg'
 											}
@@ -161,30 +206,30 @@ class UserData extends React.Component {
 								</PictureSelector>
 							</Grid>
 							<Grid item>
-								<Grid container direction={'column'} justify={'center'}>
-									<Typography variant="subtitle1" gutterBottom>
-										{`Inscrit depuis le ${this.state.creationDate}`}
-									</Typography>
-									<TextField
-										id="text-field-status"
-										label="Status"
-										select
-										className={classNames(classes.margin, classes.textField)}
-										value={this.state.status}
-										onChange={this.handleChange('status')}
-										SelectProps={{
-											MenuProps: {
-												className: classes.menu
-											}
-										}}
-										margin="normal"
-										variant="outlined">
-										{statusList.map(option => (
-											<MenuItem key={option.value} value={option.value}>
-												{option.label}
-											</MenuItem>
-										))}
-									</TextField>
+								<Typography variant="subtitle1" gutterBottom>
+									{`Inscrit depuis le ${this.state.creationDate}`}
+								</Typography>
+							</Grid>
+							<Grid item style={{ marginLeft: '10px' }}>
+								<Grid
+									container
+									direction={'column'}
+									justify={'center'}
+									alignItems="center">
+									<Button
+										variant="contained"
+										color="primary"
+										className={classes.button}
+										onClick={this.getData}>
+										Récupérer mes données
+									</Button>
+									<Button
+										variant="contained"
+										color="error"
+										className={classes.buttonDel}
+										onClick={this.deleteAccount}>
+										Supprimer mon compte
+									</Button>
 								</Grid>
 							</Grid>
 						</Grid>
@@ -248,7 +293,7 @@ class UserData extends React.Component {
 							label="Nouveau mot de passe"
 							type="password"
 							className={classNames(classes.margin, classes.textField)}
-							value={this.state.password}
+							value={this.state.newPassword}
 							onChange={this.handleChange('newPassword')}
 							margin="normal"
 							variant="outlined"
@@ -277,7 +322,7 @@ class UserData extends React.Component {
 							variant="contained"
 							color="primary"
 							className={classes.button}
-							onClick={() => this.setState({ open: true })}>
+							onClick={this.updateProfile}>
 							Enregistrer les modifications
 						</Button>
 					) : (

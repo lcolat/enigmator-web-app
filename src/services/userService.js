@@ -1,5 +1,6 @@
 import api from 'services/api'
 import { SERVER_URL } from '../config'
+import { async } from 'q'
 export default class UserService {
 	id = undefined
 	accessToken = undefined
@@ -250,6 +251,33 @@ export default class UserService {
 				})
 			)
 			return newFriends
+		} catch (err) {
+			return err
+		}
+	}
+	addProfilePicture = async picture => {
+		var formdata = new FormData()
+		formdata.append('file', picture)
+		try {
+			await api.post(`/UserEnigmators/AddProfilePic`, formdata)
+			return true
+		} catch (err) {
+			return err
+		}
+	}
+	getData = async () => {
+		try {
+			await api.post(`/UserEnigmators/SendMailWithData`)
+			return true
+		} catch (err) {
+			return err
+		}
+	}
+	deleteAccount = async () => {
+		try {
+			await api.post(`/UserEnigmators/DeleteAccount`)
+			this.deleteUserData()
+			return true
 		} catch (err) {
 			return err
 		}

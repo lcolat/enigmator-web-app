@@ -19,8 +19,7 @@ const headRows = [
 	{ id: 'type', align: 'left', disablePadding: false, label: 'Type' },
 	{ id: 'difficulty', align: 'left', disablePadding: false, label: 'Niveau' },
 	{ id: 'creationDate', align: 'left', disablePadding: false, label: 'Date' },
-	{ id: 'scoreReward', align: 'left', disablePadding: false, label: 'Points' },
-	{ id: 'forum', align: 'center', disablePadding: false, label: 'Forum' }
+	{ id: 'scoreReward', align: 'left', disablePadding: false, label: 'Points' }
 ]
 
 function EnigmasTableHead(props) {

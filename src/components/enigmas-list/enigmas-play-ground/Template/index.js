@@ -99,6 +99,9 @@ function TemplateEnigma(props) {
 			}
 		}
 	}
+	const likeEnigma = async () => {
+		await enigmaService.likeEnigma(enigma.id)
+	}
 	const handleChange = event => {
 		setAnswer(event.target.value)
 	}
@@ -174,14 +177,11 @@ function TemplateEnigma(props) {
 							/>
 						</Grid>
 						<Grid item container justify={'flex-end'} alignItems={'stretch'}>
-							<LikeCount liked={enigma.isLikedByUser} likes={enigma.likes} />
-							<Button
-								variant="contained"
-								color="secondary"
-								className={classes.button}>
-								Forum
-								<OpenInNew className={classes.rightIcon}>Forum</OpenInNew>
-							</Button>
+							<LikeCount
+								likeEnigma={likeEnigma}
+								liked={enigma.isLikedByUser}
+								likes={enigma.likes}
+							/>
 						</Grid>
 						<Grid item>
 							<Button

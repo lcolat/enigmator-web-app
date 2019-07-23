@@ -14,7 +14,7 @@ import {
 import Subject from '@material-ui/icons/Subject'
 import MusicNote from '@material-ui/icons/MusicNote'
 import Photo from '@material-ui/icons/Photo'
-import VideoLabel from '@material-ui/icons/VideoLabel'
+import PlayArrow from '@material-ui/icons/PlayArrow'
 import TablePaginationActions from './TablePaginationActions'
 import { Difficulties } from 'model/Enigma'
 
@@ -79,7 +79,7 @@ class TableListOwnEnigmas extends React.Component {
 			case 'image':
 				return <Photo fontSize={'small'} />
 			case 'video':
-				return <VideoLabel fontSize={'small'} />
+				return <PlayArrow fontSize={'small'} />
 			default:
 				break
 		}

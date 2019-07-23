@@ -106,8 +106,13 @@ class EnigmasList extends Component {
 		this.setState({ open: false })
 	}
 	handleClick = (event, row) => {
-		this.setState({ enigmaClicked: row })
-		this.handleClickDialogueOpen()
+		this.props.history.push({
+			pathname: '/enigma',
+			state: {
+				type: row.type,
+				enigma: row
+			}
+		})
 	}
 	formatDate(date) {
 		return new Date(date).toLocaleDateString('fr-FR', {
@@ -119,6 +124,9 @@ class EnigmasList extends Component {
 	}
 
 	isSelected = name => this.state.selected.indexOf(name) !== -1
+	likeEnigma = async enigma => {
+		await this.state.enigmaService.likeEnigma(enigma.id)
+	}
 
 	kind = value => {
 		switch (value) {
@@ -172,6 +180,9 @@ class EnigmasList extends Component {
 														selected={isItemSelected}>
 														<TableCell>
 															<LikeCount
+																likeEnigma={() => {
+																	this.likeEnigma(enigma)
+																}}
 																liked={'enigma.likedByUser'}
 																likes={enigma.likes}
 															/>
@@ -196,14 +207,6 @@ class EnigmasList extends Component {
 														</TableCell>
 														<TableCell align="left">
 															{enigma.scoreReward}
-														</TableCell>
-														<TableCell align="center">
-															<Button
-																variant="contained"
-																color={'primary'}
-																className={classes.button}>
-																<Forum fontSize={'large'} />
-															</Button>
 														</TableCell>
 													</TableRow>
 												)

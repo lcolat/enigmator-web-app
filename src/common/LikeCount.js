@@ -16,7 +16,11 @@ function LikeCount(props) {
 	const { liked, likes } = props
 
 	return (
-		<Button variant="contained" color="secondary" style={{ color: '#ae75e9' }}>
+		<Button
+			onClick={props.likeEnigma}
+			variant="contained"
+			color="secondary"
+			style={{ color: '#ae75e9' }}>
 			{likes}
 			<ThumbUp className={classes.rightIcon}>like</ThumbUp>
 		</Button>

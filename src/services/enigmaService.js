@@ -278,4 +278,12 @@ export default class EnigmaService {
 			return err
 		}
 	}
+	likeEnigma = async id => {
+		try {
+			const res = await api.post(`/Enigmes/${id}/LikeEnigme`)
+			return res
+		} catch (err) {
+			return err
+		}
+	}
 }

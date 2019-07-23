@@ -7,7 +7,8 @@ import {
 	TableCell,
 	TableSortLabel,
 	Table,
-	TableBody
+	TableBody,
+	Button
 } from '@material-ui/core'
 import { Tooltip, Paper } from '@material-ui/core'
 
@@ -38,9 +39,11 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-	{ id: 'globalRank', align: 'left', disablePadding: false, label: 'Rang' },
 	{ id: 'username', align: 'left', disablePadding: false, label: 'Pseudo' },
-	{ id: 'score', align: 'left', disablePadding: false, label: 'Score' }
+	{ id: 'country', align: 'left', disablePadding: false, label: 'Pays' },
+	{ id: 'score', align: 'left', disablePadding: false, label: 'Score' },
+	{},
+	{}
 ]
 
 class EnhancedTableHead extends React.Component {
@@ -93,6 +96,7 @@ EnhancedTableHead.propTypes = {
 
 const styles = theme => ({
 	root: {
+		marginTop: theme.spacing(3),
 		marginLeft: theme.spacing(3),
 		marginRight: theme.spacing(3)
 	},
@@ -101,10 +105,16 @@ const styles = theme => ({
 	},
 	tableWrapper: {
 		overflowX: 'auto'
+	},
+	buttonAccept: {
+		color: '#4caf50'
+	},
+	buttonDeny: {
+		color: '#c62828'
 	}
 })
 
-class TableFriends extends React.Component {
+class TableWaitingFriends extends React.Component {
 	state = {
 		order: 'asc',
 		orderBy: 'rank',
@@ -132,21 +142,21 @@ class TableFriends extends React.Component {
 		this.setState({ selected: [] })
 	}
 
-	handleClick = (event, friend) => {
-		this.props.history.push({
-			pathname: '/friend-profile',
-			state: {
-				friend: friend
-			}
-		})
+	handleAcceptRequest = async (event, id) => {
+		await this.props.userService.acceptFriendRequest(id)
+		this.props.fetchFriends()
+		this.props.fetchWaitingFriends()
+	}
+	handleDenyRequest = async (event, id) => {
+		await this.props.userService.denyFriendRequest(id)
+		this.props.fetchWaitingFriends()
 	}
 
 	isSelected = id => this.state.selected.indexOf(id) !== -1
 
 	render() {
-		const { classes, friends } = this.props
+		const { classes, waitingFriends } = this.props
 		const { order, orderBy, selected } = this.state
-
 		return (
 			<Paper className={classes.root}>
 				<div className={classes.tableWrapper}>
@@ -157,26 +167,48 @@ class TableFriends extends React.Component {
 							orderBy={orderBy}
 							onSelectAllClick={this.handleSelectAllClick}
 							onRequestSort={this.handleRequestSort}
-							rowCount={friends.length}
+							rowCount={waitingFriends.length}
 						/>
 						<TableBody>
-							{stableSort(friends, getSorting(order, orderBy)).map(row => {
-								const isSelected = this.isSelected(row.id)
-								return (
-									<TableRow
-										hover
-										onClick={event => this.handleClick(event, row)}
-										role="checkbox"
-										aria-checked={isSelected}
-										tabIndex={-1}
-										key={row.id}
-										selected={isSelected}>
-										<TableCell align="left">{row.stats.globalRank}</TableCell>
-										<TableCell align="left">{row.username}</TableCell>
-										<TableCell align="left">{row.score}</TableCell>
-									</TableRow>
-								)
-							})}
+							{stableSort(waitingFriends, getSorting(order, orderBy)).map(
+								row => {
+									const isSelected = this.isSelected(row.id)
+									return (
+										<TableRow
+											hover
+											role="checkbox"
+											aria-checked={isSelected}
+											tabIndex={-1}
+											key={row.id}
+											selected={isSelected}>
+											<TableCell align="left">{row.FROM.username}</TableCell>
+											<TableCell align="left">{row.FROM.country}</TableCell>
+											<TableCell align="left">{row.FROM.score}</TableCell>
+											<TableCell align="left">
+												<Button
+													className={classes.buttonAccept}
+													color={'secondary'}
+													onClick={event => {
+														this.handleAcceptRequest(event, row.FROM.id)
+													}}>
+													Accepter
+												</Button>
+											</TableCell>
+
+											<TableCell align="left">
+												<Button
+													className={classes.buttonDeny}
+													color={'secondary'}
+													onClick={event => {
+														this.handleDenyRequest(event, row.FROM.id)
+													}}>
+													Refuser
+												</Button>
+											</TableCell>
+										</TableRow>
+									)
+								}
+							)}
 						</TableBody>
 					</Table>
 				</div>
@@ -185,8 +217,8 @@ class TableFriends extends React.Component {
 	}
 }
 
-TableFriends.propTypes = {
+TableWaitingFriends.propTypes = {
 	classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(TableFriends)
+export default withStyles(styles)(TableWaitingFriends)

@@ -93,9 +93,9 @@ export default class UserService {
 		if (id !== undefined) {
 			url = `/UserEnigmators/${id}`
 		} else if (criteria !== undefined) {
-			url += '?'
+			url += '?filter[where]'
 			for (let criterion in criteria) {
-				url += `${criterion}=${criteria[criterion]}&`
+				url += `[${criterion}]=${criteria[criterion]}&`
 			}
 		}
 		try {
@@ -196,6 +196,62 @@ export default class UserService {
 			return isOk
 		} catch (err) {
 			return false
+		}
+	}
+
+	addFriend = async id => {
+		try {
+			await api.post(`/UserEnigmators/${id}/AddAFriend`)
+			return true
+		} catch (err) {
+			return err
+		}
+	}
+	getFriendRequest = async () => {
+		try {
+			const res = await api.get(
+				`/friends?filter[where][state]=request&filter[where][ID_TO]=${
+					this.id
+				}&filter[include]=FROM`
+			)
+			return res.data
+		} catch (err) {
+			return err
+		}
+	}
+	acceptFriendRequest = async userId => {
+		try {
+			await api.post(`/UserEnigmators/${userId}/AcceptAFriendRequest`)
+			return true
+		} catch (err) {
+			return err
+		}
+	}
+	denyFriendRequest = async userId => {
+		try {
+			await api.post(`/UserEnigmators/${userId}/DenyAFriendRequest`)
+			return true
+		} catch (err) {
+			return err
+		}
+	}
+	getFriends = async () => {
+		try {
+			const res = await api.get('/UserEnigmators/GetMyFriend')
+			const friends = res.data
+			let newFriends = new Array(res.data.length)
+			await Promise.all(
+				friends.map(async (friend, index) => {
+					const res = await this.getStats(friend.id)
+					newFriends[index] = {
+						...friends[index],
+						...{ stats: res }
+					}
+				})
+			)
+			return newFriends
+		} catch (err) {
+			return err
 		}
 	}
 }

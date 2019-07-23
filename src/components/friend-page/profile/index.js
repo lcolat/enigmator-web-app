@@ -10,11 +10,21 @@ import Avatar from '@material-ui/core/Avatar'
 import DonutSmall from '@material-ui/icons/DonutSmall'
 import CompareArrows from '@material-ui/icons/CompareArrows'
 import { mapUserStatusColor, listUserStatus } from '../../../model/User'
-import TableEnigmas from './TableEnigmas'
+import DoneEnigmasList from './DoneEnigmasList'
 import { StatsTable } from '../../../common'
 import { playMode } from '../../../model/Enigma'
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
+import { SERVER_URL } from '../../../config'
 
 const styles = theme => ({
+	root: {
+		marginTop: theme.spacing(3),
+		marginLeft: theme.spacing(3),
+		marginRight: theme.spacing(3)
+	},
 	avatar: {
 		margin: theme.spacing(),
 		width: 120,
@@ -61,18 +71,33 @@ const rows = [
 rows.push(createData('Global', 127, getMTotalScore(rows), getTotalWin(rows)))
 
 class ProfileFriend extends React.Component {
-	state = { compare: false }
+	state = { compare: false, userStats: {} }
 
 	handleCompare = () => {
 		this.setState({ compare: !this.state.compare })
 	}
-
+	componentDidMount = async () => {
+		try {
+			const res = await this.props.userService.getStats(
+				this.props.userService.id
+			)
+			this.setState({ userStats: res })
+		} catch (err) {
+			createNotification({
+				level: Level.ERROR,
+				message: err.message
+			})
+		}
+	}
 	render() {
-		const { classes, pseudo, profilePicture, status } = this.props
-
+		const { classes } = this.props
+		const friend = this.props.location.state.friend
+		const profilePicture =
+			friend.profilePicture !== undefined &&
+			`${SERVER_URL}/Containers/profile/download/${friend.profilePicture}`
 		return (
-			<div>
-				<Paper>
+			<>
+				<Paper className={classes.root}>
 					<Grid
 						container
 						direction={'row'}
@@ -85,21 +110,13 @@ class ProfileFriend extends React.Component {
 								alignItems={'center'}
 								justify={'center'}>
 								<Grid item>
-									<Tooltip title={status}>
-										<DonutSmall
-											style={{ color: mapUserStatusColor.get(status) }}
-											className={classes.statusIcon}
-										/>
-									</Tooltip>
-								</Grid>
-								<Grid item>
-									<Typography variant="h4">{pseudo}</Typography>
+									<Typography variant="h4">{friend.username}</Typography>
 								</Grid>
 							</Grid>
 						</Grid>
 						<Grid item>
 							<Avatar
-								alt={pseudo}
+								alt={friend.username}
 								src={
 									profilePicture
 										? profilePicture
@@ -123,9 +140,16 @@ class ProfileFriend extends React.Component {
 						</Grid>
 					</Grid>
 				</Paper>
-				<StatsTable currentUserStats={rows} isCompared={this.state.compare} />
-				<TableEnigmas />
-			</div>
+				<StatsTable
+					friendStats={friend.stats}
+					currentUserStats={this.state.userStats}
+					isCompared={this.state.compare}
+				/>
+				<DoneEnigmasList
+					enigmaService={this.props.enigmaService}
+					friendId={friend.id}
+				/>
+			</>
 		)
 	}
 }

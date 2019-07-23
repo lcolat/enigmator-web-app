@@ -71,9 +71,6 @@ class Profile extends React.Component {
 							setUserDataLoaded={this.setUserDataLoaded}
 						/>
 					</Paper>
-					<Paper className={classes.ownEnigmas}>
-						<StatsTable />
-					</Paper>
 					<TableListOwnEnigmas
 						enigmaService={this.state.enigmaService}
 						{...this.props}

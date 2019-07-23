@@ -20,6 +20,7 @@ import Settings from 'components/settings-page'
 import EnigmasValidation from 'components/enigmas-validation'
 import ListThreads from 'components/forum'
 import Thread from 'components/forum/thread'
+import ProfileFriend from 'components/friend-page/profile'
 
 import { NotificationContainer } from 'react-notifications'
 import 'react-notifications/lib/notifications.css'
@@ -109,6 +110,14 @@ class App extends Component {
 							<PrivateRoute
 								path="/friends"
 								component={<FriendsView />}
+								userService={userService}
+								enigmaService={enigmaService}
+								valid={valid}
+								isValid={this.isValid}
+							/>
+							<PrivateRoute
+								path="/friend-profile"
+								component={<ProfileFriend />}
 								userService={userService}
 								enigmaService={enigmaService}
 								valid={valid}

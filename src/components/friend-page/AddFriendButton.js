@@ -8,6 +8,10 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import withStyles from '@material-ui/core/styles/withStyles'
 import PersonAdd from '@material-ui/icons/PersonAdd'
+import {
+	createNotification,
+	LEVEL_NOTIF as Level
+} from 'services/notifications'
 
 const styles = theme => ({
 	button: {
@@ -18,9 +22,9 @@ const styles = theme => ({
 	}
 })
 
-function AddFriendButton(classes) {
+function AddFriendButton(props, classes) {
 	const [open, setOpen] = React.useState(false)
-
+	const [username, setUsername] = React.useState('')
 	function handleClickOpen() {
 		setOpen(true)
 	}
@@ -29,6 +33,34 @@ function AddFriendButton(classes) {
 		setOpen(false)
 	}
 
+	async function handleAddFriend() {
+		const user = await props.userService.get(undefined, { username: username })
+		if (user.length === undefined || user.length === 0) {
+			createNotification({
+				level: Level.INFO,
+				message: 'Aucun utilisateur trouvé avec ce pseudo'
+			})
+		} else {
+			const res = await props.userService.addFriend(user[0].id)
+			if (res === true) {
+				createNotification({
+					level: Level.SUCCESS,
+					message: "Demande d'amis envoyé"
+				})
+			} else {
+				createNotification({
+					level: Level.ERROR,
+					message: res.message || res.data.message
+				})
+			}
+		}
+		handleClose()
+	}
+
+	function handleChange(event) {
+		const value = event.target.value
+		setUsername(value)
+	}
 	return (
 		<div>
 			<Button
@@ -44,25 +76,25 @@ function AddFriendButton(classes) {
 				aria-labelledby="form-dialog-title"
 				fullWidth={true}
 				maxWidth={'sm'}>
-				<DialogTitle id="form-dialog-title">Add Friend</DialogTitle>
+				<DialogTitle id="form-dialog-title">Ajouter un ami</DialogTitle>
 				<DialogContent>
-					<DialogContentText>
-						Write the name of your friend down
-					</DialogContentText>
+					<DialogContentText>Saisissez le nom de l'ami</DialogContentText>
 					<TextField
 						autoFocus
 						margin="dense"
-						id="name"
-						label="Name"
+						id="username"
+						label="Pseudo"
 						type="email"
+						value={username}
+						onChange={handleChange}
 						fullWidth
 					/>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">
-						Cancel
+						Annuler
 					</Button>
-					<Button onClick={handleClose} color="primary">
+					<Button onClick={handleAddFriend} color="primary">
 						<PersonAdd className={classes.buttonRightIcon} />
 					</Button>
 				</DialogActions>

@@ -25,6 +25,7 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/'
 					})
@@ -36,6 +37,7 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/profile'
 					})
@@ -47,6 +49,7 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/friends'
 					})
@@ -58,6 +61,7 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/enigmas'
 					})
@@ -69,6 +73,7 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/create-enigmas'
 					})
@@ -80,6 +85,7 @@ class Drawer extends Component {
 			// 	handleClick: () => {
 			// 		this.props.isValid()
 			// 		this.haveValidation()
+			//		this.haveWaitingFriends()
 			// 		this.props.history.push({
 			// 			pathname: '/rank'
 			// 		})
@@ -91,34 +97,38 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/forums'
 					})
 				}
 			},
-			{
-				text: 'Réglages',
-				icon: <Tune fontSize={'large'} />,
-				handleClick: () => {
-					this.props.isValid()
-					this.haveValidation()
-					this.props.history.push({
-						pathname: '/settings'
-					})
-				}
-			},
+			// {
+			// 	text: 'Réglages',
+			// 	icon: <Tune fontSize={'large'} />,
+			// 	handleClick: () => {
+			// 		this.props.isValid()
+			// 		this.haveValidation()
+			//		this.haveWaitingFriends()
+			// 		this.props.history.push({
+			// 			pathname: '/settings'
+			// 		})
+			// 	}
+			// },
 			{
 				text: 'RGPD',
 				icon: <Info fontSize={'large'} />,
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/privacy-policy'
 					})
 				}
 			}
-		]
+		],
+		haveValidation: false
 	}
 	containsValidation = menuItems => {
 		let res = false
@@ -144,11 +154,30 @@ class Drawer extends Component {
 				handleClick: () => {
 					this.props.isValid()
 					this.haveValidation()
+					this.haveWaitingFriends()
 					this.props.history.push({
 						pathname: '/validation'
 					})
 				}
 			})
+			this.setState({
+				menuItems: newMenuItems,
+				haveValidation: true
+			})
+		}
+	}
+	haveWaitingFriends = async () => {
+		const haveWaitingFriends = await this.props.userService.getFriendRequest()
+		const index = this.state.haveValidation ? 3 : 2
+		if (haveWaitingFriends.length > 0) {
+			let newMenuItems = this.state.menuItems
+			newMenuItems[index].icon = <Contacts color="primary" fontSize={'large'} />
+			this.setState({
+				menuItems: newMenuItems
+			})
+		} else {
+			let newMenuItems = this.state.menuItems
+			newMenuItems[index].icon = <Contacts fontSize={'large'} />
 			this.setState({
 				menuItems: newMenuItems
 			})
@@ -156,6 +185,7 @@ class Drawer extends Component {
 	}
 	async componentDidMount() {
 		this.haveValidation()
+		this.haveWaitingFriends()
 	}
 	render() {
 		const { menuItems } = this.state

@@ -32,12 +32,12 @@ const styles = theme => ({
 })
 
 function UserStatsResume(props) {
-	const { classes, score, winNumber, globalRank, localRank, country } = props
+	const { classes, score, globalRank, localRank, country } = props
 
 	return (
 		<Paper className={classes.root}>
 			<Grid container>
-				<Grid container direction={'row'}>
+				<Grid container direction={'row'} alignItems="center">
 					<Grid item xs>
 						<Paper className={classes.paperStats}>
 							<Grid xs container direction={'row'}>
@@ -49,20 +49,6 @@ function UserStatsResume(props) {
 								<Grid item xs>
 									<Typography variant="h4" align={'center'}>
 										{score}
-									</Typography>
-								</Grid>
-							</Grid>
-						</Paper>
-						<Paper className={classes.paperStats}>
-							<Grid container direction={'row'}>
-								<Grid item xs>
-									<Typography gutterBottom variant="h4" align={'left'}>
-										Victoires
-									</Typography>
-								</Grid>
-								<Grid item xs>
-									<Typography variant="h4" align={'center'}>
-										{winNumber}
 									</Typography>
 								</Grid>
 							</Grid>

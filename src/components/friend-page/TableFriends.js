@@ -38,7 +38,7 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-	{ id: 'rank', align: 'left', disablePadding: false, label: 'Rank' },
+	{ id: 'globalRank', align: 'left', disablePadding: false, label: 'Rang' },
 	{ id: 'username', align: 'left', disablePadding: false, label: 'Pseudo' },
 	{ id: 'score', align: 'left', disablePadding: false, label: 'Score' }
 ]
@@ -132,7 +132,14 @@ class TableFriends extends React.Component {
 		this.setState({ selected: [] })
 	}
 
-	handleClick = (event, friend) => {}
+	handleClick = (event, friend) => {
+		this.props.history.push({
+			pathname: '/friend-profile',
+			state: {
+				friend: friend
+			}
+		})
+	}
 
 	isSelected = id => this.state.selected.indexOf(id) !== -1
 

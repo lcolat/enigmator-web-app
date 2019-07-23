@@ -157,7 +157,6 @@ class TableWaitingFriends extends React.Component {
 	render() {
 		const { classes, waitingFriends } = this.props
 		const { order, orderBy, selected } = this.state
-		// console.log(this.props)
 		return (
 			<Paper className={classes.root}>
 				<div className={classes.tableWrapper}>

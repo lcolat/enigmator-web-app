@@ -31,7 +31,10 @@ class FriendsView extends React.Component {
 			<>
 				<TabChooser userService={this.props.userService} />
 				{this.state.friends.length > 0 && (
-					<TableFriends friends={this.state.friends} />
+					<TableFriends
+						history={this.props.history}
+						friends={this.state.friends}
+					/>
 				)}
 				{this.state.waitingFriends.length > 0 && (
 					<TableWaitingFriends
